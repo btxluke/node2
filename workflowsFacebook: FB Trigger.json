@@ -1,0 +1,386 @@
+{
+  "active": true,
+  "connections": {
+    "Facebook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Slack",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Change",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack": {
+      "main": [
+        [
+          {
+            "node": "Slack1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "New Post": {
+      "main": [
+        [
+          {
+            "node": "Slack2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Change": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Messaging",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Messaging": {
+      "main": [
+        [
+          {
+            "node": "Slack3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "NoOp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "New Post",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "NoOp1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2022-07-14T11:17:37.073Z",
+  "id": "64",
+  "name": "Facebook: FB Trigger",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        220,
+        720
+      ],
+      "id": "926f5fe0-3677-492f-a1c7-b3aedbf2bada"
+    },
+    {
+      "parameters": {
+        "channel": "C032STC0J2Z",
+        "text": "=New FB webhook trigger",
+        "otherOptions": {
+          "icon_emoji": "btxBot",
+          "sendAsUser": "btxBot"
+        },
+        "attachments": []
+      },
+      "name": "Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        440,
+        300
+      ],
+      "id": "7d4a61ae-bacf-479b-b9ed-28470ad387f9",
+      "credentials": {
+        "slackApi": {
+          "id": "8",
+          "name": "Slack (Bot User)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "appId": "448750827093712",
+        "object": "page",
+        "fields": [
+          "feed"
+        ],
+        "options": {}
+      },
+      "name": "Facebook Trigger",
+      "type": "n8n-nodes-base.facebookTrigger",
+      "typeVersion": 1,
+      "position": [
+        220,
+        540
+      ],
+      "webhookId": "17072094-6903-464d-9f1f-09001f6a3ae5",
+      "id": "55243179-0ff9-4970-b6ab-f1a00ca6dcb2",
+      "credentials": {
+        "facebookGraphAppApi": {
+          "id": "29",
+          "name": "Facebook Graph (App) account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{$json[\"changes\"][0][\"value\"][\"item\"]}}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "status"
+            }
+          ]
+        }
+      },
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        760,
+        440
+      ],
+      "id": "11ef6980-219d-4f95-a8ba-068de5ae3e89"
+    },
+    {
+      "parameters": {
+        "workflowId": "62"
+      },
+      "name": "New Post",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        340
+      ],
+      "id": "9c4ac87a-4f96-4c3f-8987-d8366889feb4"
+    },
+    {
+      "parameters": {
+        "channel": "C032STC0J2Z",
+        "text": "={{JSON.stringify($node[\"Facebook Trigger\"].json, null, \"\\t\")}}",
+        "otherOptions": {
+          "icon_emoji": "::btx::",
+          "thread_ts": "={{$node[\"Slack\"].json[\"ts\"]}}",
+          "sendAsUser": "btxBot"
+        },
+        "attachments": []
+      },
+      "name": "Slack1",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        600,
+        300
+      ],
+      "id": "96918d5c-7457-42c3-8eb4-962bee72b224",
+      "credentials": {
+        "slackApi": {
+          "id": "8",
+          "name": "Slack (Bot User)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "channel": "C032STC0J2Z",
+        "text": "=New FB Post Detected, Reposted to LinkedIn",
+        "otherOptions": {
+          "icon_emoji": "::btx::",
+          "thread_ts": "={{$node[\"Slack\"].json[\"ts\"]}}",
+          "sendAsUser": "btxBot"
+        },
+        "attachments": []
+      },
+      "name": "Slack2",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        340
+      ],
+      "id": "013fb82f-3cde-41cd-b963-4c7066a0ded9",
+      "credentials": {
+        "slackApi": {
+          "id": "8",
+          "name": "Slack (Bot User)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"messaging\"]}}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "name": "Messaging",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        540,
+        760
+      ],
+      "id": "9000d80f-7920-4a60-a8d2-d5565c006105"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"changes\"]}}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "name": "Change",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        540,
+        540
+      ],
+      "id": "dee91bf3-c86a-4194-97c0-24f285206875"
+    },
+    {
+      "parameters": {},
+      "name": "NoOp",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        540,
+        1000
+      ],
+      "id": "f5b94189-3d50-47c4-810b-b781b9da25bb"
+    },
+    {
+      "parameters": {
+        "channel": "C032STC0J2Z",
+        "text": "=New Message conversation detected",
+        "otherOptions": {
+          "icon_emoji": "::btx::",
+          "thread_ts": "={{$node[\"Slack\"].json[\"ts\"]}}",
+          "sendAsUser": "btxBot"
+        },
+        "attachments": []
+      },
+      "name": "Slack3",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        760,
+        760
+      ],
+      "id": "6ed75a9e-efa7-4107-b4f0-2cc9850f74c4",
+      "credentials": {
+        "slackApi": {
+          "id": "8",
+          "name": "Slack (Bot User)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"changes\"][0][\"value\"][\"verb\"]}}",
+              "value2": "add"
+            }
+          ]
+        }
+      },
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        340
+      ],
+      "id": "0f7ee28c-2c91-4a08-b334-808f56bf2160"
+    },
+    {
+      "parameters": {},
+      "name": "NoOp1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        520
+      ],
+      "id": "e5dfc684-8074-4dbc-b6f0-a257b7ba2146"
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": {
+    "node:Facebook Trigger": {
+      "verifyToken": "0dbd90b7-2996-4461-9513-b3850aa09604"
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2023-02-16T12:27:16.145Z",
+      "updatedAt": "2023-02-16T12:27:16.145Z",
+      "id": "22",
+      "name": "facebook"
+    }
+  ],
+  "triggerCount": 2,
+  "updatedAt": "2023-02-16T12:27:22.000Z",
+  "versionId": "b24e83f2-de45-47b0-ac55-f2d1d28c18df"
+}
