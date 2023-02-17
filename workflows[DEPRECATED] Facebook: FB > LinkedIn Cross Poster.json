@@ -1,0 +1,354 @@
+{
+  "active": false,
+  "connections": {
+    "Facebook Graph API": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Facebook Graph API1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "LinkedIn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Facebook Graph API2": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Facebook Graph API1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Facebook Graph API",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "NoOp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Facebook Graph API2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command": {
+      "main": [
+        [
+          {
+            "node": "FunctionItem - To Flow Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2022-07-02T13:50:01.070Z",
+  "id": "62",
+  "name": "[DEPRECATED] Facebook: FB > LinkedIn Cross Poster",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        220,
+        280
+      ],
+      "id": "2c6f6656-4cac-4dc0-8d4e-62026a3cc1ed"
+    },
+    {
+      "parameters": {
+        "graphApiVersion": "v14.0",
+        "node": "={{$json[\"id\"]}}",
+        "edge": "attachments",
+        "options": {}
+      },
+      "name": "Facebook Graph API",
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        520
+      ],
+      "id": "5fb1d4ef-1650-4533-a4a8-fe2a88e06c5a",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "30",
+          "name": "Biketrax Page"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "postAs": "organization",
+        "organization": "18461917",
+        "text": "={{$node[\"Merge\"].json[\"message\"]}}",
+        "shareMediaCategory": "IMAGE",
+        "binaryPropertyName": "post",
+        "additionalFields": {}
+      },
+      "name": "LinkedIn",
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        260
+      ],
+      "id": "c99b6d24-c22b-48ce-9f6b-835a6a7ad7ee",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "31",
+          "name": "LinkedIn account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{$json[\"data\"][0][\"media\"][\"image\"][\"src\"]}}",
+        "responseFormat": "file",
+        "dataPropertyName": "post",
+        "options": {}
+      },
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        1620,
+        520
+      ],
+      "id": "f4f46fb9-2c6a-49fc-b216-81e19c285a92"
+    },
+    {
+      "parameters": {
+        "graphApiVersion": "v14.0",
+        "node": "={{$json[\"id\"]}}",
+        "options": {}
+      },
+      "name": "Facebook Graph API1",
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        100
+      ],
+      "id": "1789be4d-a392-4a8e-a69c-dad82580657e",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "30",
+          "name": "Biketrax Page"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "mergeByIndex"
+      },
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        260
+      ],
+      "id": "fbd8d032-ca6b-49cd-bddc-d5b8b02a2bf0"
+    },
+    {
+      "parameters": {
+        "graphApiVersion": "v14.0",
+        "node": "={{$json[\"changes\"][0][\"value\"][\"post_id\"]}}",
+        "options": {}
+      },
+      "name": "Facebook Graph API2",
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        760,
+        280
+      ],
+      "id": "ad717a7b-8f85-4f74-aa01-874a49baa6d9",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "30",
+          "name": "Biketrax Page"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"message\"]}}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        900,
+        280
+      ],
+      "id": "f6baa66d-e6a6-44d0-accf-43d2f55dfeec"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v13.0",
+        "node": "377132685636619",
+        "edge": "subscribed_apps",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "subscribed_fields",
+                "value": "feed"
+              }
+            ]
+          }
+        }
+      },
+      "name": "Facebook Graph API3",
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        220,
+        520
+      ],
+      "id": "545a5fba-d926-498d-ac5a-9b2be095095a",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "30",
+          "name": "Biketrax Page"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "name": "NoOp",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        520
+      ],
+      "id": "7eeb48e6-4b62-4d83-9093-d7abc7dcc279"
+    },
+    {
+      "parameters": {
+        "command": "echo \"{\\\"id\\\":\\\"377132685636619\\\",\\\"time\\\":1659468080,\\\"changes\\\":[{\\\"value\\\":{\\\"from\\\":{\\\"id\\\":\\\"377132685636619\\\",\\\"name\\\":\\\"Biketrax - Edinburgh\\\"},\\\"message\\\":\\\"This was too glorious not to post - here's that CdF 853 from last month, now finished up with @hopetech anodized purple wheels.\\\\n\\\\nCan I get an \\\\\\\"oof\\\\\\\"?\\\\n\\\\nGenesis Bikes Shimano-Road Panaracer \\\\n\\\\n#lbs #btxcustom #shopsmall #biketrax #biketraxedinburgh #dreamitbuildit #yournextadventurestartshere\\\",\\\"photos\\\":[\\\"https:\\/\\/z-p3-scontent-man2-1.xx.fbcdn.net\\/v\\/t39.30808-6\\/296011862_6036382526378245_495587131872008198_n.jpg?stp=cp0_dst-jpg_e15_fr_q65&_nc_cat=108&ccb=1-7&_nc_sid=110474&_nc_eui2=AeEEiBd2QAGfxtXSs08rDygJXtwTig6FeUJe3BOKDoV5QgVUaktCtLgvDUAxW8TxLug&_nc_ohc=Um-eZN0cMuAAX_3yEtC&_nc_ht=z-p3-scontent-man2-1.xx&oh=00_AT_4dltI0QUoMlvBhLIx5Dll-uqq6OX3VXl_g-ss2963SQ&oe=62EF1855\\\",\\\"https:\\/\\/z-p3-scontent-man2-1.xx.fbcdn.net\\/v\\/t39.30808-6\\/295929380_6036382676378230_1514338542504454708_n.jpg?stp=cp0_dst-jpg_e15_fr_q65&_nc_cat=108&ccb=1-7&_nc_sid=110474&_nc_eui2=AeH3yt2teutgDFnIkHQ5KzQLv_x6jmhlMFi__HqOaGUwWEILoMN6rjdFXYON2GxBXkI&_nc_ohc=nK_bY_orfUMAX9tWhpz&_nc_ht=z-p3-scontent-man2-1.xx&oh=00_AT_42eKdLHVtqzVUZh-ZU7nJyuUC5HE8FYulker7DZKC0A&oe=62EDC990\\\",\\\"https:\\/\\/z-p3-scontent-man2-1.xx.fbcdn.net\\/v\\/t39.30808-6\\/295918374_6036382843044880_3254249238633893921_n.jpg?stp=cp0_dst-jpg_e15_fr_q65&_nc_cat=105&ccb=1-7&_nc_sid=110474&_nc_eui2=AeFveHRrWt5G1KsunglKMnd5ZXMFK628IkplcwUrrbwiSs40kPweMCyt7snpew3lToQ&_nc_ohc=TW9Y0x5vbAUAX85rj3k&_nc_ht=z-p3-scontent-man2-1.xx&oh=00_AT9vwqc1rE1fd1jlEUOIgSv33Ulf_a3T8lyb08Ff7MKulA&oe=62EEADCB\\\",\\\"https:\\/\\/z-p3-scontent-man2-1.xx.fbcdn.net\\/v\\/t39.30808-6\\/296009914_6036382993044865_7843439018163491590_n.jpg?stp=cp0_dst-jpg_e15_fr_q65&_nc_cat=101&ccb=1-7&_nc_sid=110474&_nc_eui2=AeGlfbiTCshbC_cekwKIYIZMOx90Wzn8S1Q7H3RbOfxLVJvPOv8EAovUBQ17o1hLHFA&_nc_ohc=Ru17Y8Ur8vMAX9wPzws&_nc_ht=z-p3-scontent-man2-1.xx&oh=00_AT-T3kFZ6klFsphRrOPAkuCuUDwwhglVYi_urQlZWSHLxg&oe=62EDDE7E\\\",\\\"https:\\/\\/z-p3-scontent-man2-1.xx.fbcdn.net\\/v\\/t39.30808-6\\/295865190_6036383136378184_471999414640621560_n.jpg?stp=cp0_dst-jpg_e15_fr_q65&_nc_cat=108&ccb=1-7&_nc_sid=110474&_nc_eui2=AeEpvxbk-yJB2xlszZGzGzGN9kQkPtjrs2n2RCQ-2OuzaUooX3s1quaEjqcNak7Diuo&_nc_ohc=WVHsyiu4AJgAX86WY7k&_nc_ht=z-p3-scontent-man2-1.xx&oh=00_AT9luNG3wR9YttkekF8DcM5SXZfILZ1TfB2owTEhuj4yRg&oe=62EE15B7\\\",\\\"https:\\/\\/z-p3-scontent-man2-1.xx.fbcdn.net\\/v\\/t39.30808-6\\/295984169_6036383283044836_1414266293971980582_n.jpg?stp=cp0_dst-jpg_e15_fr_q65&_nc_cat=102&ccb=1-7&_nc_sid=110474&_nc_eui2=AeHexWHSAvJkRYxIDiYbMXRcr3s-KvC6Xtmvez4q8Lpe2RV00H7ZyptAR0k2kCYIzqw&_nc_ohc=YDEqoKGktZ4AX-1OQ3d&_nc_ht=z-p3-scontent-man2-1.xx&oh=00_AT_x7HOn5mqoNjFNyySePJsxSLEpeHjhqst2TNjOk5SunA&oe=62EDC4E2\\\"],\\\"post_id\\\":\\\"377132685636619_6036383929711438\\\",\\\"created_time\\\":1659468047,\\\"item\\\":\\\"status\\\",\\\"published\\\":1,\\\"verb\\\":\\\"add\\\"},\\\"field\\\":\\\"feed\\\"}]}\""
+      },
+      "name": "Execute Command",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        440,
+        100
+      ],
+      "id": "0aa892a6-e6ab-4319-ba07-01ce1330276f",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "functionCode": "item = JSON.parse(item.stdout);\nreturn item;"
+      },
+      "name": "FunctionItem - To Flow Data",
+      "type": "n8n-nodes-base.functionItem",
+      "typeVersion": 1,
+      "position": [
+        580,
+        100
+      ],
+      "id": "496574be-5593-4714-81dd-ea77886800a0",
+      "disabled": true
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": {
+    "node:Facebook Trigger": {
+      "verifyToken": "468f629d-7709-4317-8747-4d5bf55e34d2"
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2023-02-16T12:27:16.145Z",
+      "updatedAt": "2023-02-16T12:27:16.145Z",
+      "id": "22",
+      "name": "facebook"
+    },
+    {
+      "createdAt": "2023-02-16T12:27:47.024Z",
+      "updatedAt": "2023-02-16T12:27:47.024Z",
+      "id": "23",
+      "name": "instagram"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2023-02-17T07:53:29.000Z",
+  "versionId": "5e1c1689-f5e7-4ec8-9178-8c0795e5f24b"
+}
