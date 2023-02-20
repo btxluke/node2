@@ -1,0 +1,284 @@
+{
+  "active": false,
+  "connections": {
+    "Email Trigger (IMAP)": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Madison",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sportline",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Madison": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sportline": {
+      "main": [
+        [
+          {
+            "node": "Set1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Compression",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set1": {
+      "main": [
+        [
+          {
+            "node": "Product Table Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compression": {
+      "main": [
+        [
+          {
+            "node": "Product Table Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-02-20T11:11:22.084Z",
+  "id": "97",
+  "name": "Product Feeds: Imap: Save to Node3",
+  "nodes": [
+    {
+      "parameters": {
+        "format": "resolved",
+        "options": {}
+      },
+      "id": "7a82cdfb-54c0-4e7d-8cdf-b051d7aa94e2",
+      "name": "Email Trigger (IMAP)",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [
+        820,
+        400
+      ],
+      "credentials": {
+        "imap": {
+          "id": "43",
+          "name": "IMAP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.from.value[0].address }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "customercare@madison.co.uk"
+            },
+            {
+              "value2": "customercare@sportline.co.uk",
+              "output": 1
+            },
+            {
+              "value2": "noreply@extrauk.co.uk",
+              "output": 2
+            }
+          ]
+        },
+        "fallbackOutput": 3
+      },
+      "id": "6be3d6f9-e863-414c-917a-bc9e9b1afa33",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.from.value[0].address }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "sales@ison-distribution.com"
+            }
+          ]
+        }
+      },
+      "id": "d8882fe9-3f4b-4982-882a-f428d5ac995d",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        640
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "a198080a-64ab-461a-98a9-683838b4ceb3",
+      "name": "Madison",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        100
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "98892cea-b5fb-4e7e-a437-ccb2ba4542c9",
+      "name": "Sportline",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Supplier",
+              "value": "Madison"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b574c757-52e6-4210-abe0-642691e49448",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Supplier",
+              "value": "Sportline"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "162fa128-32a0-4934-96f4-36c256943c3f",
+      "name": "Set1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "98"
+      },
+      "id": "4a1e7643-c072-4ac1-8726-d72e391252f8",
+      "name": "Product Table Writer",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        2100,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "binaryPropertyName": "attachment_0",
+        "outputPrefix": "attachment_"
+      },
+      "id": "baddc370-065f-4496-8398-9cf438ea8449",
+      "name": "Compression",
+      "type": "n8n-nodes-base.compression",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        100
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2023-02-20T11:11:07.850Z",
+      "updatedAt": "2023-02-20T11:11:07.850Z",
+      "id": "24",
+      "name": "IMAP"
+    },
+    {
+      "createdAt": "2023-02-20T11:11:19.530Z",
+      "updatedAt": "2023-02-20T11:11:19.530Z",
+      "id": "25",
+      "name": "Product Feed"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2023-02-20T11:24:49.000Z",
+  "versionId": "416dee81-1803-407f-a929-a4ae95775233"
+}
