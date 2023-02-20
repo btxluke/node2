@@ -1,0 +1,158 @@
+{
+  "active": false,
+  "connections": {
+    "SSH1": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "SSH1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-02-20T11:02:39.152Z",
+  "id": "96",
+  "name": "Stock Feeds: odooData Writer",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "4a891f5d-1424-4af1-9fa2-795b82cf2045",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "binaryPropertyName": "attachment_0",
+        "path": "/home/luke/feeds",
+        "options": {
+          "fileName": "=Stock-{{$json.Supplier}}.csv"
+        }
+      },
+      "id": "1c730103-62a4-4e62-ad80-5a4c081a4892",
+      "name": "SSH1",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        360
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "41",
+          "name": "node3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=TRUNCATE `Stock-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}`; "
+      },
+      "id": "ac9caef4-9e37-497c-9b55-fc6100f5e2a2",
+      "name": "MySQL",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        360
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "42",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=mysqlimport --user='root' --password='L0chr!nPl@ce' \\\n--fields-terminated-by=',' --lines-terminated-by=0x0d0a \\\n--replace --low-priority --fields-enclosed-by='\"' \\\n --fields-escaped-by='#' --ignore-lines='1' --verbose --force --local \\\nodooData '/home/luke/feeds/Stock-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv'",
+        "cwd": "/home/luke/feeds/"
+      },
+      "id": "2aca14b4-34fb-4096-b4f5-25a2f93bb0e2",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        360
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "41",
+          "name": "node3"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Execute Workflow Trigger": [
+      {
+        "json": {
+          "Supplier": "Extra"
+        }
+      }
+    ]
+  },
+  "settings": {},
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2022-02-16T11:16:15.628Z",
+      "updatedAt": "2022-02-16T11:16:15.628Z",
+      "id": "8",
+      "name": "Feed"
+    },
+    {
+      "createdAt": "2023-02-20T11:19:11.851Z",
+      "updatedAt": "2023-02-20T11:19:11.851Z",
+      "id": "26",
+      "name": "imap"
+    },
+    {
+      "createdAt": "2023-02-20T11:19:15.007Z",
+      "updatedAt": "2023-02-20T11:19:15.007Z",
+      "id": "27",
+      "name": "ssh"
+    },
+    {
+      "createdAt": "2023-02-20T11:19:20.976Z",
+      "updatedAt": "2023-02-20T11:19:20.976Z",
+      "id": "28",
+      "name": "stock"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2023-02-20T11:19:22.000Z",
+  "versionId": "0ebd6b5e-577d-48f3-884e-cda05478c85b"
+}
