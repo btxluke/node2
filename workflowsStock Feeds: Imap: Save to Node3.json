@@ -1,0 +1,371 @@
+{
+  "active": true,
+  "connections": {
+    "Email Trigger (IMAP)": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Madison",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sportline",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extra",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Ison",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Madison": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sportline": {
+      "main": [
+        [
+          {
+            "node": "Set1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extra": {
+      "main": [
+        [
+          {
+            "node": "Set2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Stock Table Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ison": {
+      "main": [
+        [
+          {
+            "node": "Set3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set2": {
+      "main": [
+        [
+          {
+            "node": "Stock Table Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set1": {
+      "main": [
+        [
+          {
+            "node": "Stock Table Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set3": {
+      "main": [
+        [
+          {
+            "node": "Stock Table Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-02-20T09:09:16.295Z",
+  "id": "95",
+  "name": "Stock Feeds: Imap: Save to Node3",
+  "nodes": [
+    {
+      "parameters": {
+        "format": "resolved",
+        "options": {}
+      },
+      "id": "d06c27db-9a78-42b7-9a58-4f52904ce7c0",
+      "name": "Email Trigger (IMAP)",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [
+        820,
+        400
+      ],
+      "credentials": {
+        "imap": {
+          "id": "39",
+          "name": "stockfeeds"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.from.value[0].address }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "customercare@madison.co.uk"
+            },
+            {
+              "value2": "customercare@sportline.co.uk",
+              "output": 1
+            },
+            {
+              "value2": "noreply@extrauk.co.uk",
+              "output": 2
+            }
+          ]
+        },
+        "fallbackOutput": 3
+      },
+      "id": "109ef198-f8c1-42f1-ae0f-387e099de5d6",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.from.value[0].address }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "sales@ison-distribution.com"
+            }
+          ]
+        }
+      },
+      "id": "75e258b6-436d-4c7e-8730-a540fa5f2cd5",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        640
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "af44ead5-ebdc-4495-b74b-07933bc11c56",
+      "name": "Madison",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        100
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "c22b4e68-3fa4-4e37-9357-ddde64903784",
+      "name": "Sportline",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        240
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "d39880d7-3532-4015-970c-ad3ba1da24c5",
+      "name": "Extra",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        380
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "a8191f58-0f89-48f3-8767-062f4a453036",
+      "name": "Ison",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Supplier",
+              "value": "Madison"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "010d703f-79c8-41d7-bcec-d6d3cfacc2fd",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Supplier",
+              "value": "Sportline"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5ce35a09-6ce5-4fd1-8ac7-6d9e82b46657",
+      "name": "Set1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Supplier",
+              "value": "Extra"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f65f5926-1a3f-4d91-b907-b808beb7e28d",
+      "name": "Set2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Supplier",
+              "value": "Ison"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9a92d9ac-7e2b-460e-bda9-56d7b29ed9c0",
+      "name": "Set3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "96"
+      },
+      "id": "564200ad-c7a7-4452-8da0-0b5d0ec9e815",
+      "name": "Stock Table Writer",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        380
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-02-20T11:07:32.000Z",
+  "versionId": "f131c8fe-91df-40ef-944f-befdaf341485"
+}
