@@ -16,7 +16,7 @@
       "main": [
         [
           {
-            "node": "SSH",
+            "node": "MySQL1",
             "type": "main",
             "index": 0
           }
@@ -28,6 +28,39 @@
         [
           {
             "node": "SSH1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH2": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL1": {
+      "main": [
+        [
+          {
+            "node": "MySQL2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL2": {
+      "main": [
+        [
+          {
+            "node": "SSH2",
             "type": "main",
             "index": 0
           }
@@ -104,7 +137,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1300,
+        2040,
         360
       ],
       "credentials": {
@@ -113,17 +146,69 @@
           "name": "node3"
         }
       }
-    }
-  ],
-  "pinData": {
-    "Execute Workflow Trigger": [
-      {
-        "json": {
-          "Supplier": "Extra"
+    },
+    {
+      "parameters": {
+        "command": "=LANG=C sed -i 's/[\\d128-\\d255]//g' /feeds/Upload-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv",
+        "cwd": "/home/luke/feeds/"
+      },
+      "id": "6decf54f-6ad4-4cd6-a129-5e1375300c7e",
+      "name": "SSH2",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        360
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "41",
+          "name": "node3"
         }
       }
-    ]
-  },
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=DROP TABLE `Upload-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}`;"
+      },
+      "id": "5923b056-6701-4365-b731-626e59e6aa71",
+      "name": "MySQL1",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        360
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "42",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=CREATE TABLE `Upload-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}` AS\nSELECT *\nFROM `Template-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}`;"
+      },
+      "id": "6c5501c6-70c4-4db7-9ca5-9157ec75c0c3",
+      "name": "MySQL2",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        360
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "42",
+          "name": "odooData"
+        }
+      }
+    }
+  ],
+  "pinData": {},
   "settings": {},
   "staticData": null,
   "tags": [
@@ -159,6 +244,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-02-20T11:26:20.000Z",
-  "versionId": "24dd66f1-c557-4a56-9a80-4501a2637f68"
+  "updatedAt": "2023-02-20T14:47:29.000Z",
+  "versionId": "ddac658d-7593-4afd-ba41-fc511f5e8c13"
 }
