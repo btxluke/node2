@@ -1,0 +1,297 @@
+{
+  "active": false,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Spreadsheet File": {
+      "main": [
+        [
+          {
+            "node": "Set1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Spreadsheet File1": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Write to Node3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set1": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-02-21T09:35:36.348Z",
+  "id": "103",
+  "name": "Product Feeds: Extra: Retrieve",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "id": "127c8abb-0274-4b16-8b7f-20b60ac0876c",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://content.dropboxapi.com/2/sharing/get_shared_link_file",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "dropboxOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer sl.BZMtOSobZtGvbFhB_tIT9tf6hZ1P8QUuPqX_J5Jd_sOicKqOIWsf5puyez8zq_dvOvEPt5sP0D7TgLbZ-op-z1IHD9HCwIt6wzUwd5BILssY0kFy-aMaf682BitUVujeW5eszCw"
+            },
+            {
+              "name": "Dropbox-API-Arg",
+              "value": "{\"path\":\"/ExtraUK_Ecommerce_File_17thFeb2023.xlsx\",\"url\":\"https://www.dropbox.com/sh/zwbl0v5ledgt962/AAAXBEkngAkPWAN3BU3DxXjTa?dl=0\"}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "32ad2544-b69a-4e59-9838-e49ce8c40cfa",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        980,
+        500
+      ],
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "46",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.dropboxapi.com/2/sharing/get_shared_link_metadata",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "dropboxOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer sl.BZMtOSobZtGvbFhB_tIT9tf6hZ1P8QUuPqX_J5Jd_sOicKqOIWsf5puyez8zq_dvOvEPt5sP0D7TgLbZ-op-z1IHD9HCwIt6wzUwd5BILssY0kFy-aMaf682BitUVujeW5eszCw"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "path",
+              "value": "/"
+            },
+            {
+              "name": "url",
+              "value": "https://www.dropbox.com/sh/zwbl0v5ledgt962/AAAXBEkngAkPWAN3BU3DxXjTa?dl=0"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e5d8cfd0-f7f6-45c2-b996-469b6480a051",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        980,
+        300
+      ],
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "46",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "headerRow": true,
+          "includeEmptyCells": true,
+          "rawData": true,
+          "readAsString": true
+        }
+      },
+      "id": "d263ccd2-7736-4aa5-9619-54b63e06c678",
+      "name": "Spreadsheet File",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toFile",
+        "fileFormat": "csv",
+        "binaryPropertyName": "attachment_0",
+        "options": {
+          "fileName": "Upload-Extra.csv",
+          "headerRow": true
+        }
+      },
+      "id": "6437ce73-67e6-4697-8249-664539daeff5",
+      "name": "Spreadsheet File1",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Supplier",
+              "value": "Extra"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2f1ce68e-1b3a-41d4-a8d7-f88ec99d85c0",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "98"
+      },
+      "id": "efd3b9e2-04c7-483f-81e5-047afeb161e0",
+      "name": "Write to Node3",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "UPC/EAN",
+              "value": "={{ $json[\"UPC/EAN\"].toString() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f6050a39-eb7b-4221-8a86-beb8bd2e0c17",
+      "name": "Set1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1420,
+        500
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2023-02-20T11:11:19.530Z",
+      "updatedAt": "2023-02-20T11:11:19.530Z",
+      "id": "25",
+      "name": "Product Feed"
+    },
+    {
+      "createdAt": "2023-02-21T10:15:18.993Z",
+      "updatedAt": "2023-02-21T10:15:18.993Z",
+      "id": "30",
+      "name": "dropbox"
+    },
+    {
+      "createdAt": "2023-02-21T10:15:21.582Z",
+      "updatedAt": "2023-02-21T10:15:21.582Z",
+      "id": "31",
+      "name": "extra"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2023-02-21T11:38:04.000Z",
+  "versionId": "fb577ccc-9c6f-40bf-80e8-d9de54b39a20"
+}
