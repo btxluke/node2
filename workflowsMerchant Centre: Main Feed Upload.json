@@ -1,0 +1,134 @@
+{
+  "active": false,
+  "connections": {
+    "MySQL": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Spreadsheet File": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-02-21T08:46:56.013Z",
+  "id": "101",
+  "name": "Merchant Centre: Main Feed Upload",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM `Final-MerchantFeed`"
+      },
+      "id": "e8ca8224-b598-4114-9c31-a22e486b3c6f",
+      "name": "MySQL",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        440
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "45",
+          "name": "node3: dataTransit"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toFile",
+        "fileFormat": "csv",
+        "options": {
+          "fileName": "odooFeed.csv"
+        }
+      },
+      "id": "3c7981a1-83fa-4d0f-8155-bde39f68ea57",
+      "name": "Spreadsheet File",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 1,
+      "position": [
+        1620,
+        440
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "088bf86b-26ba-4500-a4ca-b3e7cc349980",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "path": "/var/www/node3/",
+        "options": {
+          "fileName": "odooFeed.csv"
+        }
+      },
+      "id": "60be535f-d5c6-4d0e-976d-124177ce625c",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        440
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "44",
+          "name": "node3 (root)"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2023-02-20T11:19:15.007Z",
+      "updatedAt": "2023-02-20T11:19:15.007Z",
+      "id": "27",
+      "name": "ssh"
+    },
+    {
+      "createdAt": "2023-02-21T08:39:38.678Z",
+      "updatedAt": "2023-02-21T08:39:38.678Z",
+      "id": "29",
+      "name": "google"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2023-02-21T08:47:27.000Z",
+  "versionId": "9f0a4b77-e90c-45e8-b5be-484fc4712f05"
+}
