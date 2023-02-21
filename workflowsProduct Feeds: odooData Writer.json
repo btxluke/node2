@@ -149,7 +149,7 @@
     },
     {
       "parameters": {
-        "command": "=LANG=C sed -i 's/[\\d128-\\d255]//g' /feeds/Upload-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv",
+        "command": "=LANG=C sed -i 's/[\\d128-\\d255]//g' /home/luke/feeds/Upload-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv",
         "cwd": "/home/luke/feeds/"
       },
       "id": "6decf54f-6ad4-4cd6-a129-5e1375300c7e",
@@ -208,7 +208,16 @@
       }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Execute Workflow Trigger": [
+      {
+        "json": {
+          "Supplier": "Extra",
+          "code": 1
+        }
+      }
+    ]
+  },
   "settings": {},
   "staticData": null,
   "tags": [
@@ -244,6 +253,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-02-20T14:47:29.000Z",
-  "versionId": "ddac658d-7593-4afd-ba41-fc511f5e8c13"
+  "updatedAt": "2023-02-21T11:18:43.000Z",
+  "versionId": "90d9f4f8-e13d-4b8b-8e62-c5851bbbec8d"
 }
