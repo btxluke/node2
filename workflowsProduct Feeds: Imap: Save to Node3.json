@@ -1,11 +1,11 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Email Trigger (IMAP)": {
       "main": [
         [
           {
-            "node": "Switch",
+            "node": "IF1",
             "type": "main",
             "index": 0
           }
@@ -75,7 +75,7 @@
       "main": [
         [
           {
-            "node": "Product Table Writer",
+            "node": "Compression1",
             "type": "main",
             "index": 0
           }
@@ -87,6 +87,35 @@
         [
           {
             "node": "Product Table Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compression1": {
+      "main": [
+        [
+          {
+            "node": "Product Table Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reject",
             "type": "main",
             "index": 0
           }
@@ -108,7 +137,7 @@
       "type": "n8n-nodes-base.emailReadImap",
       "typeVersion": 2,
       "position": [
-        820,
+        660,
         400
       ],
       "credentials": {
@@ -259,11 +288,61 @@
         1640,
         100
       ]
+    },
+    {
+      "parameters": {
+        "binaryPropertyName": "attachment_0",
+        "outputPrefix": "attachment_"
+      },
+      "id": "419f7cff-b7be-4fc0-8ced-9099d2b341ca",
+      "name": "Compression1",
+      "type": "n8n-nodes-base.compression",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $binary.attachment_0.fileSize.split(\" \")[1] }}",
+              "operation": "notEqual",
+              "value2": "B"
+            }
+          ]
+        }
+      },
+      "id": "b5d885d8-53fe-4563-ac23-36ba33810d52",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        860,
+        400
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "45b8b5b5-6696-460f-ab5f-b3c2f4223e0a",
+      "name": "Reject",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        660,
+        620
+      ]
     }
   ],
   "pinData": {},
   "settings": {},
-  "staticData": null,
+  "staticData": {
+    "node:Email Trigger (IMAP)": {
+      "lastMessageUid": 106
+    }
+  },
   "tags": [
     {
       "createdAt": "2023-02-20T11:11:07.850Z",
@@ -279,6 +358,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-02-20T11:24:49.000Z",
-  "versionId": "416dee81-1803-407f-a929-a4ae95775233"
+  "updatedAt": "2023-02-20T22:25:28.000Z",
+  "versionId": "fca83875-290e-41ec-a741-eb495558e503"
 }
