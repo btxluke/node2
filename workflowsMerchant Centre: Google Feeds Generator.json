@@ -1,0 +1,382 @@
+{
+  "active": true,
+  "connections": {
+    "MySQL": {
+      "main": [
+        [
+          {
+            "node": "MySQL1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL1": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "MySQL2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL2": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "MySQL3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL3": {
+      "main": [
+        [
+          {
+            "node": "Retrieve Live Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL5": {
+      "main": [
+        [
+          {
+            "node": "Google Feed Upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL6": {
+      "main": [
+        [
+          {
+            "node": "MySQL5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Feed Upload": {
+      "main": [
+        [
+          {
+            "node": "Local Feed Upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Live Data": {
+      "main": [
+        [
+          {
+            "node": "MySQL6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-02-21T08:39:14.707Z",
+  "id": "99",
+  "name": "Merchant Centre: Google Feeds Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "TRUNCATE `Google-MerchantFeed`;"
+      },
+      "id": "e8f67bcf-b0c1-433b-9232-09e5309255a9",
+      "name": "MySQL",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        700,
+        380
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "45",
+          "name": "node3: dataTransit"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM `Map-SupplierInfo`"
+      },
+      "id": "b4210d0a-9194-4a1e-ad54-222b99724806",
+      "name": "MySQL1",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        920,
+        380
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "42",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "83c12d0e-db94-4ec4-8573-3f924a85d3eb",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=INSERT IGNORE INTO `dataTransit`.`Google-MerchantFeed` \n(title,\ndescription,\nprice,\nbrand,\ngtin,\nmpn,\ncolour,\nsize)\nSELECT \nProductName AS title, \nLongDescription AS description,\nCONCAT(CONVERT(ROUND(Rrp * (1+(Vat/100)),2),char),\" GBP\") AS price,\nBrand,\nEan AS gtin,\nProductCode AS mpn,\nColour AS colour,\nSize AS size\nFROM `odooData`.`Feed-{{ $json.Name }}`"
+      },
+      "id": "ba04a379-89e2-458d-9ce1-c38859829d41",
+      "name": "MySQL2",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        380
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "45",
+          "name": "node3: dataTransit"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $node[\"Split In Batches\"].context[\"noItemsLeft\"] }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "6b992b5d-5c9e-4634-afc5-89db9416f1ac",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "TRUNCATE `Odoo-MerchantFeed`;"
+      },
+      "id": "05fe689a-5a70-4a82-a1d6-80aa1489ab52",
+      "name": "MySQL3",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        480,
+        680
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "45",
+          "name": "node3: dataTransit"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO `Final-MerchantFeed`\n(link,id,title,description,image_link,quantity,availability,price,brand,gtin,mpn,`condition`,colour,gender,size,age_group,item_group_id) \nSELECT  \n`Odoo-MerchantFeed`.`link`,\n`Odoo-MerchantFeed`.`id`,\n`Google-MerchantFeed`.`title`,\n`Google-MerchantFeed`.`description`,\n`Odoo-MerchantFeed`.`image_link`,\n`Odoo-MerchantFeed`.`quantity`,\n`Odoo-MerchantFeed`.`availability`,\n`Google-MerchantFeed`.`price`,\n`Google-MerchantFeed`.`brand`,\n`Google-MerchantFeed`.`gtin`,\n`Google-MerchantFeed`.`mpn`,\n`Odoo-MerchantFeed`.`condition`,\n`Google-MerchantFeed`.`colour`,\n`Odoo-MerchantFeed`.`gender`,\n`Google-MerchantFeed`.`size`,\n`Odoo-MerchantFeed`.`age_group`,\n`Odoo-MerchantFeed`.`item_group_id`\nFROM `Google-MerchantFeed` INNER JOIN `Odoo-MerchantFeed`  ON `Google-MerchantFeed`.`gtin` = `Odoo-MerchantFeed`.`gtin` \nWHERE `Google-MerchantFeed`.`gtin` IS NOT NULL;"
+      },
+      "id": "c0da7f8d-2374-49d9-baa9-1e0e011f1bbf",
+      "name": "MySQL5",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        700,
+        980
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "45",
+          "name": "node3: dataTransit"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "TRUNCATE `Final-MerchantFeed`;"
+      },
+      "id": "bdf0c8a9-6cc4-47d1-b18b-5e7af8dd267b",
+      "name": "MySQL6",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        480,
+        980
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "45",
+          "name": "node3: dataTransit"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "101"
+      },
+      "id": "976dc182-0432-4ddb-b1f2-31cb7cc453ae",
+      "name": "Google Feed Upload",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        920,
+        980
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 6
+            }
+          ]
+        }
+      },
+      "id": "a953000b-56ca-43d3-9a46-9da00be46aff",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        480,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "102"
+      },
+      "id": "b0da9d9e-516e-4d76-9c47-4e8d4a14a273",
+      "name": "Local Feed Upload",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        980
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "workflowId": "100"
+      },
+      "id": "5f02c821-8136-483d-8c22-052ee17f1855",
+      "name": "Retrieve Live Data",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        700,
+        680
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2023-02-16T12:27:16.145Z",
+      "updatedAt": "2023-02-16T12:27:16.145Z",
+      "id": "22",
+      "name": "facebook"
+    },
+    {
+      "createdAt": "2023-02-20T11:19:15.007Z",
+      "updatedAt": "2023-02-20T11:19:15.007Z",
+      "id": "27",
+      "name": "ssh"
+    },
+    {
+      "createdAt": "2023-02-21T08:39:38.678Z",
+      "updatedAt": "2023-02-21T08:39:38.678Z",
+      "id": "29",
+      "name": "google"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2023-02-21T08:54:51.000Z",
+  "versionId": "8dce80a4-68a9-494d-abf4-8a8b75588bc9"
+}
