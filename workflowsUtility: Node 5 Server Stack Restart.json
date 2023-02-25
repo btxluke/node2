@@ -1,0 +1,130 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH": {
+      "main": [
+        [
+          {
+            "node": "SSH1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH1": {
+      "main": [
+        [
+          {
+            "node": "SSH2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-02-24T19:38:54.055Z",
+  "id": "105",
+  "name": "Utility: Node 5 Server Stack Restart",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "486e3f12-7adb-4c4d-a265-06597624b547",
+        "options": {}
+      },
+      "id": "b403f757-53ef-45ad-a65c-2a934c125f1a",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        340,
+        380
+      ],
+      "webhookId": "486e3f12-7adb-4c4d-a265-06597624b547"
+    },
+    {
+      "parameters": {
+        "command": "systemctl restart postgresql"
+      },
+      "id": "1c60d987-c4fa-4cb8-9a33-b93377206423",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        480,
+        380
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "47",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "systemctl restart nginx"
+      },
+      "id": "3f8b4890-5660-4673-b743-5c8e18a4ee0a",
+      "name": "SSH1",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        620,
+        380
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "47",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "systemctl restart odoo"
+      },
+      "id": "9e3fcc3a-e944-4d9d-a3d9-0b3bae42a489",
+      "name": "SSH2",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        760,
+        380
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "47",
+          "name": "SSH Password account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2023-02-24T19:47:53.773Z",
+      "updatedAt": "2023-02-24T19:47:53.773Z",
+      "id": "32",
+      "name": "ubuntu"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2023-02-24T19:52:21.000Z",
+  "versionId": "232c2174-e057-4930-8ba6-6b4106b78d12"
+}
