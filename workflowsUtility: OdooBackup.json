@@ -1,0 +1,109 @@
+{
+  "active": true,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH": {
+      "main": [
+        [
+          {
+            "node": "SSH1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-02-25T08:34:52.260Z",
+  "id": "106",
+  "name": "Utility: OdooBackup",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 21
+            }
+          ]
+        }
+      },
+      "id": "b928e526-1a22-477f-ae5b-0e644c2947e9",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "command": "curl -X POST -F 'master_pwd=L0chr!nPl@ce' -F 'name=btx' -F 'backup_format=zip' -o /home/luke/odooBackup/odooBack.zip http://localhost:8069/web/database/backup"
+      },
+      "id": "e58954fd-7a8f-4e09-9abe-0ffb45ecaf4f",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        400
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "47",
+          "name": "Node 5 (root)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "download",
+        "path": "/home/luke/odooBackup/odooBackup.zip"
+      },
+      "id": "9f80d88b-7c8c-432c-8090-372dc9dac2aa",
+      "name": "SSH1",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        400
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "47",
+          "name": "Node 5 (root)"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2023-02-25T10:12:09.611Z",
+      "updatedAt": "2023-02-25T10:12:09.611Z",
+      "id": "33",
+      "name": "odoo: utility"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2023-02-25T10:12:15.000Z",
+  "versionId": "ea99f83b-375a-4d6c-ad2e-5390872da576"
+}
