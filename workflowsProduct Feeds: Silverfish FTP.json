@@ -1,0 +1,239 @@
+{
+  "active": true,
+  "connections": {
+    "When Called By Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FTP": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH": {
+      "main": [
+        [
+          {
+            "node": "MySQL1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL": {
+      "main": [
+        [
+          {
+            "node": "FTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL1": {
+      "main": [
+        [
+          {
+            "node": "SSH1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-06T09:56:48.143Z",
+  "id": "107",
+  "name": "Product Feeds: Silverfish FTP",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "d603eeba-505c-484b-90f5-bd93617ee1bd",
+      "name": "When Called By Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        800,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "path": "SFProductExportTrade.csv"
+      },
+      "id": "f397d54a-82d4-4c71-97a6-e2664484d93c",
+      "name": "FTP",
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        300
+      ],
+      "credentials": {
+        "ftp": {
+          "id": "48",
+          "name": "Silverfish FTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "path": "/home/luke/feeds/",
+        "options": {
+          "fileName": "Upload-Silverfish.csv"
+        }
+      },
+      "id": "86c71c23-aafc-424e-88f5-f54342187631",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        300
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "41",
+          "name": "node3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "mysqlimport --user='root' --password='L0chr!nPl@ce' \\\n--fields-terminated-by=',' --lines-terminated-by=0x0d0a \\\n--replace --low-priority --fields-enclosed-by='\"' \\\n --fields-escaped-by='#' --ignore-lines='1' --verbose --force --local \\\nodooData '/home/luke/feeds/Upload-Silverfish.csv'",
+        "cwd": "/home/luke/feeds/"
+      },
+      "id": "68aacb8a-5ed0-49a6-9186-c62ed51dc6e6",
+      "name": "SSH1",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        300
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "41",
+          "name": "node3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DROP TABLE `Upload-Silverfish`"
+      },
+      "id": "d0a5718d-b4e1-43e5-a4a8-b048fe711273",
+      "name": "MySQL",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        300
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "42",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "CREATE TABLE `Upload-Silverfish` AS SELECT * FROM `Template-Silverfish`;"
+      },
+      "id": "d5da6bc8-67bf-4326-b1ba-247d9f4c7ff1",
+      "name": "MySQL1",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        300
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "42",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "id": "42364493-7693-4e53-8d77-bb33b221d470",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        800,
+        500
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2023-02-20T11:11:19.530Z",
+      "updatedAt": "2023-02-20T11:11:19.530Z",
+      "id": "25",
+      "name": "Product Feed"
+    },
+    {
+      "createdAt": "2023-03-06T09:56:55.363Z",
+      "updatedAt": "2023-03-06T09:56:55.363Z",
+      "id": "34",
+      "name": "silverfish"
+    },
+    {
+      "createdAt": "2023-03-06T09:57:03.375Z",
+      "updatedAt": "2023-03-06T09:57:03.375Z",
+      "id": "35",
+      "name": "ftp"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2023-03-06T10:18:39.000Z",
+  "versionId": "d467e766-aab2-4415-9571-2d2223c7a4fe"
+}
