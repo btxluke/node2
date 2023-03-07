@@ -365,11 +365,11 @@
   "settings": {},
   "staticData": {
     "node:Email Trigger (IMAP)": {
-      "lastMessageUid": 365
+      "lastMessageUid": 369
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-03-06T14:41:12.000Z",
+  "updatedAt": "2023-03-07T10:01:50.000Z",
   "versionId": "f131c8fe-91df-40ef-944f-befdaf341485"
 }
