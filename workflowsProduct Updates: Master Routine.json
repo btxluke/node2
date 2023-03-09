@@ -102,6 +102,17 @@
           }
         ]
       ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Add weights",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-02-22T12:17:23.160Z",
@@ -276,6 +287,19 @@
         1520,
         640
       ]
+    },
+    {
+      "parameters": {
+        "workflowId": "108"
+      },
+      "id": "ed494459-ab05-47ae-baa9-944fe4def1f7",
+      "name": "Add weights",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        640
+      ]
     }
   ],
   "pinData": {},
@@ -287,6 +311,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-03-08T08:08:30.000Z",
-  "versionId": "690908f6-12c3-40be-ab3a-57025faf6ead"
+  "updatedAt": "2023-03-08T13:34:47.000Z",
+  "versionId": "88cf5127-180c-4765-a315-50a24f92e077"
 }
