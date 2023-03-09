@@ -1,0 +1,150 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-08T19:20:22.316Z",
+  "id": "109",
+  "name": "Utility: Populate Transit Prices For initial run",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "3683a0fb-8353-4f2e-bcc0-135053c01e9f",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.product",
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {
+          "fieldsList": [
+            "barcode",
+            "list_price",
+            "standard_price",
+            "allow_out_of_stock_order"
+          ]
+        },
+        "filterRequest": {
+          "filter": [
+            {
+              "fieldName": "product_tag_ids",
+              "operator": "in",
+              "value": "={{6}}"
+            }
+          ]
+        }
+      },
+      "id": "96333ea5-4575-4eda-b2c7-fb423313ec36",
+      "name": "Odoo",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        400
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "LeadTime",
+              "value": 3
+            },
+            {
+              "name": "StockCount",
+              "value": "={{ $json.allow_out_of_stock_order ? 1 : 0 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5affaca7-1b26-4509-9255-a815237cc458",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "table": {
+          "__rl": true,
+          "value": "`Prices-Sportline`",
+          "mode": "name"
+        },
+        "columns": "barcode,list_price,standard_price,LeadTime,StockCount",
+        "options": {}
+      },
+      "id": "12f9a83f-8054-49c2-a403-7a36b1b3e101",
+      "name": "MySQL",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        400
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "45",
+          "name": "node3: dataTransit"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-03-08T19:20:36.000Z",
+  "versionId": "c0725cbc-8dd8-48ec-b824-077912e3f274"
+}
