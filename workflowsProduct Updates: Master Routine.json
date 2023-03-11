@@ -249,7 +249,8 @@
       "position": [
         1160,
         640
-      ]
+      ],
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -311,6 +312,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-03-08T13:34:47.000Z",
-  "versionId": "88cf5127-180c-4765-a315-50a24f92e077"
+  "updatedAt": "2023-03-10T13:31:50.000Z",
+  "versionId": "d7c777d1-43c1-4e51-be52-bac80ec9c55e"
 }
