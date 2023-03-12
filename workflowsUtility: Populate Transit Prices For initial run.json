@@ -27,6 +27,18 @@
       "main": [
         [
           {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [],
+        [
+          {
             "node": "MySQL",
             "type": "main",
             "index": 0
@@ -69,7 +81,7 @@
             {
               "fieldName": "product_tag_ids",
               "operator": "in",
-              "value": "={{6}}"
+              "value": "={{8}}"
             }
           ]
         }
@@ -118,7 +130,7 @@
       "parameters": {
         "table": {
           "__rl": true,
-          "value": "`Prices-Sportline`",
+          "value": "`Prices-Madison`",
           "mode": "name"
         },
         "columns": "barcode,list_price,standard_price,LeadTime,StockCount",
@@ -129,7 +141,7 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 1,
       "position": [
-        1480,
+        1840,
         400
       ],
       "credentials": {
@@ -138,6 +150,39 @@
           "name": "node3: dataTransit"
         }
       }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.barcode }}",
+              "value2": "={{0}}"
+            },
+            {
+              "value1": "={{ $json.barcode }}",
+              "operation": "isEmpty"
+            },
+            {
+              "value1": "={{ $json.barcode }}"
+            }
+          ],
+          "boolean": [
+            {
+              "value1": "={{ $json.barcode }}"
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "a51f8297-f96c-4f00-b5e7-5466bd32c9de",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        400
+      ]
     }
   ],
   "pinData": {},
@@ -145,6 +190,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-03-08T19:20:36.000Z",
-  "versionId": "c0725cbc-8dd8-48ec-b824-077912e3f274"
+  "updatedAt": "2023-03-12T11:25:33.000Z",
+  "versionId": "602e6bde-eafc-4547-8f9f-683e12d0122f"
 }
