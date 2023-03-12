@@ -123,7 +123,9 @@
       "parameters": {
         "rule": {
           "interval": [
-            {}
+            {
+              "triggerAtHour": 22
+            }
           ]
         }
       },
@@ -312,6 +314,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-03-10T13:31:50.000Z",
-  "versionId": "d7c777d1-43c1-4e51-be52-bac80ec9c55e"
+  "updatedAt": "2023-03-12T10:16:55.000Z",
+  "versionId": "ef23dce6-1d11-4667-9cea-ed65879ddfb6"
 }
