@@ -1,0 +1,359 @@
+{
+  "active": false,
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH": {
+      "main": [
+        [
+          {
+            "node": "SSH1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "SSH3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH1": {
+      "main": [
+        [
+          {
+            "node": "SSH2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH2": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Spreadsheet File": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH3": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "SSH4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH4": {
+      "main": [
+        [
+          {
+            "node": "SSH6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-13T10:42:55.258Z",
+  "id": "110",
+  "name": "Product Feeds: Chicken cUrl Retrieve",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "8d696030-579f-4219-839a-5c16b8775d76",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        300,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "command": "curl -c login_cookie.txt 'https://www.chickenb2b.co.uk/' -X POST -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' -H 'Accept-Language: en-GB,en;q=0.5' -H 'Accept-Encoding: gzip, deflate, br' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: https://www.chickenb2b.co.uk' -H 'Alt-Used: www.chickenb2b.co.uk' -H 'Connection: keep-alive' -H 'Referer: https://www.chickenb2b.co.uk/' -H 'Upgrade-Insecure-Requests: 1' -H 'Sec-Fetch-Dest: document' -H 'Sec-Fetch-Mode: navigate' -H 'Sec-Fetch-Site: same-origin' -H 'Sec-Fetch-User: ?1' --data-raw 'submitted=1&loginlink=&user=biketrax&pass=S%40dd%21e272'"
+      },
+      "id": "8ca4bb25-5f03-49f7-9001-11e98d4501f1",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        520,
+        180
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "41",
+          "name": "node3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "curl -b login_cookie.txt -o /home/luke/feeds/Upload-Chicken.csv 'https://www.chickenb2b.co.uk/data_exportcsv_v2.php' -X POST -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' -H 'Accept-Language: en-GB,en;q=0.5' -H 'Accept-Encoding: gzip, deflate, br' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: https://www.chickenb2b.co.uk' -H 'Alt-Used: www.chickenb2b.co.uk' -H 'Connection: keep-alive' -H 'Referer: https://www.chickenb2b.co.uk/datafeed.php' -H 'Cookie: PHPSESSID=095b695e527060073dde9c9b8d386204; _ga=GA1.3.1491285839.1673636835; _gid=GA1.3.1445207145.1673636835; _fbp=fb.2.1673636882578.127093257; _hjSessionUser_125081=eyJpZCI6ImU0NTUwNTkyLTBlMWItNTI1Ny04NzRlLWNlZWUwYzNmYmU5YSIsImNyZWF0ZWQiOjE2NzM2MzY4ODI1MjEsImV4aXN0aW5nIjp0cnVlfQ==; _hjFirstSeen=1; _hjIncludedInSessionSample=0; _hjSession_125081=eyJpZCI6ImMzN2MzMTUzLWE1M2EtNGM1Mi1hZWNiLTRhNDUyMWRkMzA2MiIsImNyZWF0ZWQiOjE2NzM2MzY4ODI4MzAsImluU2FtcGxlIjpmYWxzZX0=; _hjIncludedInPageviewSample=1; _hjAbsoluteSessionInProgress=0; _gat_UA-51561702-3=1; _gat=1' -H 'Upgrade-Insecure-Requests: 1' -H 'Sec-Fetch-Dest: document' -H 'Sec-Fetch-Mode: navigate' -H 'Sec-Fetch-Site: same-origin' -H 'Sec-Fetch-User: ?1' -H 'TE: trailers' --data-raw 'feed%5B%5D=code&feed%5B%5D=name&feed%5B%5D=model&feed%5B%5D=desc&feed%5B%5D=image&feed%5B%5D=manu&feed%5B%5D=category&feed%5B%5D=barcode&feed%5B%5D=colour&feed%5B%5D=size1&feed%5B%5D=size2&feed%5B%5D=stock&feed%5B%5D=brandprod&feed%5B%5D=vat&feed%5B%5D=commodityCode&feed%5B%5D=countryOrigin&feed%5B%5D=rrp'"
+      },
+      "id": "9c1fa744-fa43-4372-a8a5-df667f87ba1a",
+      "name": "SSH1",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        700,
+        180
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "41",
+          "name": "node3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "download",
+        "path": "/home/luke/feeds/Upload-Chicken.csv"
+      },
+      "id": "2f265753-d4d1-404a-8669-0a0c1b0c02d1",
+      "name": "SSH2",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        860,
+        180
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "41",
+          "name": "node3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "headerRow": true,
+          "includeEmptyCells": true,
+          "rawData": true,
+          "readAsString": true
+        }
+      },
+      "id": "51c6af81-0e14-4903-8692-4f212647f8e3",
+      "name": "Spreadsheet File",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "command": "mysqlimport --user='root' --password='L0chr!nPl@ce' \\\n--fields-terminated-by=',' --lines-terminated-by=0x0d0a \\\n--replace --low-priority --fields-optionally-enclosed-by='\"' \\\n --fields-escaped-by='#' --ignore-lines='1' --verbose --force --local --delete \\\nodooData '/home/luke/feeds/Upload-ChickenPrices.csv'",
+        "cwd": "/home/luke/feeds/"
+      },
+      "id": "1a7243ca-4222-4622-be58-abc30fdb1658",
+      "name": "SSH6",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        360
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "41",
+          "name": "node3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "table": {
+          "__rl": true,
+          "value": "`Upload-Chicken`",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "55f7856b-c09c-4202-a3e2-c3f9dfed6a2b",
+      "name": "MySQL",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        180
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "2",
+          "name": "SuiteCRM"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "curl 'https://www.chickenb2b.co.uk/generateMyPriceFile1.php' -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' -H 'Accept-Language: en-GB,en;q=0.5' -H 'Accept-Encoding: gzip, deflate, br' -H 'Alt-Used: www.chickenb2b.co.uk' -H 'Connection: keep-alive' -H 'Referer: https://www.chickenb2b.co.uk/datafeed.php' -H 'Cookie: _ga=GA1.3.1491285839.1673636835; _gid=GA1.3.1445207145.1673636835; _fbp=fb.2.1673636882578.127093257; _hjSessionUser_125081=eyJpZCI6ImU0NTUwNTkyLTBlMWItNTI1Ny04NzRlLWNlZWUwYzNmYmU5YSIsImNyZWF0ZWQiOjE2NzM2MzY4ODI1MjEsImV4aXN0aW5nIjp0cnVlfQ==; PHPSESSID=a9c93bfd13099f485337c06e3fb72785; _gat=1; _gat_UA-51561702-3=1; _hjIncludedInSessionSample=0; _hjSession_125081=eyJpZCI6IjgwMjFkNDQwLWI1ZWYtNDU0Zi05YzI3LTVhZTIwM2RkMmRkZSIsImNyZWF0ZWQiOjE2NzM2ODczMTcxMTYsImluU2FtcGxlIjpmYWxzZX0=; _hjAbsoluteSessionInProgress=0' -H 'Upgrade-Insecure-Requests: 1' -H 'Sec-Fetch-Dest: iframe' -H 'Sec-Fetch-Mode: navigate' -H 'Sec-Fetch-Site: same-origin' -H 'Sec-Fetch-User: ?1' -H 'TE: trailers'"
+      },
+      "id": "a563a1ca-f187-471f-9bd5-11b317ee8b30",
+      "name": "SSH3",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        700,
+        360
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "41",
+          "name": "node3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://www.chickenb2b.co.uk/myPriceFiles/ChickenMyPrice-a0cd66bc5f3b23d3910b10554d45be8dC003157.csv",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "08061838-b9bc-4d5a-9df7-b832b8f5dee9",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1020,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 5,
+        "unit": "minutes"
+      },
+      "id": "1222fa5f-a764-4cb3-97db-d069d75cfa96",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        860,
+        360
+      ],
+      "webhookId": "86e3ce1a-d8b1-4755-b57a-78066349a6e1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "path": "/home/luke/feeds/Upload-ChickenPrices.csv",
+        "options": {}
+      },
+      "id": "9a49e417-4853-4f52-b117-dfdc18cc4c97",
+      "name": "SSH4",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        360
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "41",
+          "name": "node3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "id": "ab804a0f-21ae-4456-adc5-457784a8e32b",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        300,
+        380
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-03-13T11:57:17.000Z",
+  "versionId": "6b0eae98-b1c1-4c9f-920d-2009b9dd424a"
+}
