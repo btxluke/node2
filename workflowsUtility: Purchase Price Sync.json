@@ -16,7 +16,7 @@
       "main": [
         [
           {
-            "node": "Select Updates",
+            "node": "Globals",
             "type": "main",
             "index": 0
           }
@@ -121,7 +121,7 @@
       "main": [
         [
           {
-            "node": "IF2",
+            "node": "Odoo5",
             "type": "main",
             "index": 0
           }
@@ -161,6 +161,61 @@
           },
           {
             "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo5": {
+      "main": [
+        [
+          {
+            "node": "Odoo6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo6": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Odoo7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo7": {
+      "main": [
+        [
+          {
+            "node": "IF2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Globals": {
+      "main": [
+        [
+          {
+            "node": "Select Updates",
             "type": "main",
             "index": 0
           }
@@ -213,7 +268,7 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 1,
       "position": [
-        1240,
+        1440,
         400
       ],
       "alwaysOutputData": true,
@@ -330,7 +385,8 @@
           "id": "37",
           "name": "Odoo account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -365,7 +421,7 @@
             },
             {
               "fieldName": "partner_id",
-              "value": "={{ [$('Execute Workflow Trigger').first().json.Globals.PartnerId] }}"
+              "value": "={{ [$('Globals').first().json.Globals.PartnerId] }}"
             }
           ]
         }
@@ -482,8 +538,156 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        2560,
-        1180
+        2540,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.supplierinfo",
+        "fieldsToCreateOrUpdate": {
+          "fields": [
+            {
+              "fieldName": "price",
+              "fieldValue": "={{ $json.standard_price }}"
+            },
+            {
+              "fieldName": "delay",
+              "fieldValue": "={{ $json[\"StockCount\"] = 1 ? $('Globals').first().json.Globals.LeadTimeAddition : $json.LeadTime > 0 ? $json.LeadTime + $('Globals').first().json.Globals.LeadTimeAddition  : 365 + $('Globals').first().json.Globals.LeadTimeAddition }}"
+            },
+            {
+              "fieldName": "partner_id",
+              "fieldValue": "={{$('Globals').first().json.Globals.PartnerId}}"
+            },
+            {
+              "fieldName": "display_name",
+              "fieldValue": "={{[$('Execute Workflow Trigger').first().json.Name]}}"
+            },
+            {
+              "fieldName": "company_id",
+              "fieldValue": "={{1}}"
+            },
+            {
+              "fieldName": "currency_id",
+              "fieldValue": "={{142}}"
+            },
+            {
+              "fieldName": "product_tmpl_id",
+              "fieldValue": "={{ $json.tmpl_id }}"
+            }
+          ]
+        }
+      },
+      "id": "f4fb5807-e47a-4ca0-8290-8daab64a2c92",
+      "name": "Odoo5",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        1140
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.template",
+        "operation": "get",
+        "customResourceId": "={{ $node[\"Data Lookback\"].json.tmpl_id }}",
+        "options": {
+          "fieldsList": [
+            "product_tag_ids"
+          ]
+        }
+      },
+      "id": "7e338fb0-122c-4e40-9b6f-f871cee3c22a",
+      "name": "Odoo6",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        1140
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.template",
+        "operation": "update",
+        "customResourceId": "={{ $('Data Lookback').json.tmpl_id }}",
+        "fieldsToCreateOrUpdate": {
+          "fields": [
+            {
+              "fieldName": "product_tag_ids",
+              "fieldValue": "={{ $json.product_tag_ids }}"
+            }
+          ]
+        }
+      },
+      "id": "224e5151-b9f7-43d3-945b-f53f0f82d9dd",
+      "name": "Odoo7",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        2300,
+        1140
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field\n// called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.product_tag_ids.push($('Globals').first().json.Globals.ProductTagId);\n}\n\nreturn $input.all();"
+      },
+      "id": "b3513a5c-0de8-456f-90fc-d4bcf079a3e0",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2100,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Globals",
+              "value": "={{  JSON.parse($json[\"Globals\"])[0]  }}"
+            },
+            {
+              "name": "Name",
+              "value": "={{$json.Name}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ea6fd8db-dbb6-42b6-91b7-9a7bdd0eda92",
+      "name": "Globals",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        400
       ]
     }
   ],
@@ -500,6 +704,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-03-22T19:12:44.000Z",
-  "versionId": "866aafd2-c6da-49c3-8cdb-e46106859582"
+  "updatedAt": "2023-03-23T11:11:17.000Z",
+  "versionId": "729dd34c-a6e4-4413-a50a-39642b3f353a"
 }
