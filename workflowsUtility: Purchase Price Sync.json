@@ -1,0 +1,505 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL": {
+      "main": [
+        [
+          {
+            "node": "Select Updates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Odoo",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Odoo1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Odoo1": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Odoo3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Data Lookback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Lookback": {
+      "main": [
+        [
+          {
+            "node": "IF2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo3": {
+      "main": [
+        [
+          {
+            "node": "IF2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Updates": {
+      "main": [
+        [
+          {
+            "node": "MySQL1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-03-22T17:57:35.328Z",
+  "id": "111",
+  "name": "Utility: Purchase Price Sync",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "c0b0492b-cb28-431d-9071-6fc8ed1f2678",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        660,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=SELECT * FROM `Map-SupplierInfo` WHERE Name = \"{{ $json.Name }}\""
+      },
+      "id": "b68051b7-7450-4c57-a943-48bf23544d17",
+      "name": "MySQL",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        400
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "42",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=SELECT \n\t`Prices-{{$(\"Execute Workflow Trigger\").first().json.Name}}`.`barcode`,\n    `Prices-{{$(\"Execute Workflow Trigger\").first().json.Name}}`.`list_price`,\n\t`Prices-{{$(\"Execute Workflow Trigger\").first().json.Name}}`.`standard_price`,\n    `Prices-{{$(\"Execute Workflow Trigger\").first().json.Name}}`.`LeadTime`,\n    `Prices-{{$(\"Execute Workflow Trigger\").first().json.Name}}`.`StockCount`\nFROM `Prices-{{$(\"Execute Workflow Trigger\").first().json.Name}}`"
+      },
+      "id": "cba86a13-ed5b-4d30-a8e6-95af1fee1b8f",
+      "name": "Select Updates",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        400
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "42",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "Name",
+              "value": "={{ $json.Supplier }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "845a30e4-2b9b-4bd4-9273-28e0e4160227",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        880,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=SELECT id AS odoo_id, barcode, default_code, product_tmpl_id AS tmpl_id  FROM `Index-{{ $('Execute Workflow Trigger').first().json.Name }}` WHERE barcode = \"{{$json.barcode}}\""
+      },
+      "id": "8e71963e-ee55-4269-ba1a-1d038814a6dc",
+      "name": "MySQL1",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        660,
+        1200
+      ],
+      "alwaysOutputData": true,
+      "executeOnce": false,
+      "credentials": {
+        "mySql": {
+          "id": "45",
+          "name": "node3: dataTransit"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "barcode",
+              "field2": "barcode"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b2e003fa-47b0-42ff-8381-187305f46e9b",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        880,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.product",
+        "operation": "update",
+        "customResourceId": "={{ $json.odoo_id }}",
+        "fieldsToCreateOrUpdate": {
+          "fields": [
+            {
+              "fieldName": "standard_price",
+              "fieldValue": "={{Number($json.standard_price) }}"
+            },
+            {
+              "fieldName": "list_price",
+              "fieldValue": "={{Number($json.list_price)}}"
+            },
+            {
+              "fieldName": "allow_out_of_stock_order",
+              "fieldValue": "={{ $json.StockCount > 0}}"
+            },
+            {
+              "fieldName": "default_code",
+              "fieldValue": "={{ $json.default_code }}"
+            }
+          ]
+        }
+      },
+      "id": "fd00463d-942e-4f2e-8dfa-63622aeb2008",
+      "name": "Odoo",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        680
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "793e1c34-6d7e-4c9e-93f6-0490945375c9",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.supplierinfo",
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {
+          "fieldsList": [
+            "id"
+          ]
+        },
+        "filterRequest": {
+          "filter": [
+            {
+              "fieldName": "product_tmpl_id",
+              "value": "={{ $json.tmpl_id }}"
+            },
+            {
+              "fieldName": "partner_id",
+              "value": "={{ [$('Execute Workflow Trigger').first().json.Globals.PartnerId] }}"
+            }
+          ]
+        }
+      },
+      "id": "5e771d15-326c-42f4-9793-b9fffafeb452",
+      "name": "Odoo1",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        1040
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {
+          "clashHandling": {
+            "values": {
+              "resolveClash": "preferInput2"
+            }
+          }
+        }
+      },
+      "id": "296fb084-cc9a-4a4e-9959-86411a3e4494",
+      "name": "Merge3",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1340,
+        1180
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "expression",
+        "output": "={{ $json.id ? 0 : 1}}"
+      },
+      "id": "3815fe1f-6bf0-4e0d-9404-76c9d4cf003e",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        1000
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "8764d9dc-dfbf-458f-82ea-99d56d133859",
+      "name": "Data Lookback",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.supplierinfo",
+        "operation": "update",
+        "customResourceId": "={{ $json.id }}",
+        "fieldsToCreateOrUpdate": {
+          "fields": [
+            {
+              "fieldName": "price",
+              "fieldValue": "={{ $json.standard_price }}"
+            },
+            {
+              "fieldName": "delay",
+              "fieldValue": "={{ $json[\"StockCount\"] = 1 ? $('Execute Workflow Trigger').first().json.Globals.LeadTimeAddition : $json.LeadTime > 0 ? $json.LeadTime + $('Execute Workflow Trigger').first().json.Globals.LeadTimeAddition  : 365 + $('Execute Workflow Trigger').first().json.Globals.LeadTimeAddition }}"
+            }
+          ]
+        }
+      },
+      "id": "e6c9c4b8-f143-4e9b-974c-d88bba08595b",
+      "name": "Odoo3",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        2280,
+        900
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $('Split In Batches').context.noItemsLeft }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "a7d413a9-48e8-4585-9a7a-faa5bd990689",
+      "name": "IF2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2560,
+        1180
+      ]
+    }
+  ],
+  "pinData": {
+    "When clicking \"Execute Workflow\"": [
+      {
+        "json": {
+          "Supplier": "Madison"
+        }
+      }
+    ]
+  },
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-03-22T19:12:44.000Z",
+  "versionId": "866aafd2-c6da-49c3-8cdb-e46106859582"
+}
