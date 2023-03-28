@@ -28,7 +28,13 @@
             "index": 0
           }
         ],
-        [],
+        [
+          {
+            "node": "Extra",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "Switch1",
@@ -121,6 +127,68 @@
           }
         ]
       ]
+    },
+    "Extra": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set2": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Set2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Product Table Writer",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Zyro Supplementary Table Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zyro Supplementary Table Writer": {
+      "main": [
+        [
+          {
+            "node": "Zyro Supplementary Table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-02-20T11:11:22.084Z",
@@ -161,7 +229,7 @@
               "output": 1
             },
             {
-              "value2": "noreply@extrauk.co.uk",
+              "value2": "data@zyro.co.uk",
               "output": 2
             }
           ]
@@ -271,8 +339,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        2100,
-        380
+        2180,
+        400
       ]
     },
     {
@@ -334,13 +402,102 @@
         660,
         620
       ]
+    },
+    {
+      "parameters": {},
+      "id": "9916e6ce-e308-48a3-966a-fd8eaec7b405",
+      "name": "Extra",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Supplier",
+              "value": "Zyro"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "af46bd81-8f90-4e83-a40a-d89f639d9705",
+      "name": "Set2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "let results = [];\n\nfor (const item of $input.all()) {\n    for (key of Object.keys(item.binary)) {\n        results.push({\n            json: {\n                fileName: item.binary[key].fileName\n            },\n            binary: {\n                attachment_0 : item.binary[key],\n            }\n        });\n    }\n}\n\nreturn results;"
+      },
+      "id": "16ecd4ff-0694-4001-be9f-5ed4b47e4901",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.fileName }}",
+              "value2": "data.gbp.200.csv"
+            }
+          ]
+        }
+      },
+      "id": "14e1791e-acc4-416b-9f78-9349bc326b3f",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        400
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "11c88f6d-e4e0-45eb-afa0-e72f06f6c7fe",
+      "name": "Zyro Supplementary Table Writer",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1980,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "112"
+      },
+      "id": "c84f8225-0892-4d4f-bb2a-ad0118f6569d",
+      "name": "Zyro Supplementary Table",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        560
+      ]
     }
   ],
   "pinData": {},
   "settings": {},
   "staticData": {
     "node:Email Trigger (IMAP)": {
-      "lastMessageUid": 150
+      "lastMessageUid": 151
     }
   },
   "tags": [
@@ -358,6 +515,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-03-28T05:00:28.000Z",
-  "versionId": "fca83875-290e-41ec-a741-eb495558e503"
+  "updatedAt": "2023-03-28T21:50:40.000Z",
+  "versionId": "c14e724e-10ca-4899-8211-7ccd33d51108"
 }
