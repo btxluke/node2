@@ -212,8 +212,8 @@
     "Execute Workflow Trigger": [
       {
         "json": {
-          "Supplier": "Extra",
-          "code": 1
+          "fileName": "data.gbp.200.csv",
+          "Supplier": "Zyro"
         }
       }
     ]
@@ -253,6 +253,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-02-21T11:18:43.000Z",
-  "versionId": "90d9f4f8-e13d-4b8b-8e62-c5851bbbec8d"
+  "updatedAt": "2023-03-28T14:45:17.000Z",
+  "versionId": "d38dc223-716c-4536-bb62-565a6662344d"
 }
