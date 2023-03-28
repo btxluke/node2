@@ -124,7 +124,8 @@
         "rule": {
           "interval": [
             {
-              "triggerAtHour": 22
+              "field": "hours",
+              "hoursInterval": 6
             }
           ]
         }
@@ -310,11 +311,13 @@
   "settings": {},
   "staticData": {
     "node:Schedule Trigger": {
-      "recurrencyRules": []
+      "recurrencyRules": [
+        22
+      ]
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-03-13T10:10:39.000Z",
-  "versionId": "111050b7-6cf8-4f17-9df3-e77d93309566"
+  "updatedAt": "2023-03-28T21:00:00.000Z",
+  "versionId": "0d2ea68c-8ae7-41d5-b87b-05d6aac407e0"
 }
