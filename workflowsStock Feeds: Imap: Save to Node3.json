@@ -52,6 +52,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "Zyro",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -142,6 +149,28 @@
           }
         ]
       ]
+    },
+    "Zyro": {
+      "main": [
+        [
+          {
+            "node": "Set4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set4": {
+      "main": [
+        [
+          {
+            "node": "Stock Table Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-02-20T09:09:16.295Z",
@@ -205,7 +234,11 @@
         "rules": {
           "rules": [
             {
-              "value2": "sales@ison-distribution.com"
+              "value2": "data@zyro.co.uk",
+              "output": 1
+            },
+            {
+              "value2": "ison@ison"
             }
           ]
         }
@@ -356,8 +389,40 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        1760,
-        380
+        1740,
+        440
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "88d5ff86-4967-4cb9-8752-33669ff3ec3e",
+      "name": "Zyro",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Supplier",
+              "value": "Zyro"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "365e1abb-1943-4ac5-8dcf-bc926ab47c27",
+      "name": "Set4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        680
       ]
     }
   ],
@@ -365,11 +430,11 @@
   "settings": {},
   "staticData": {
     "node:Email Trigger (IMAP)": {
-      "lastMessageUid": 813
+      "lastMessageUid": 861
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-03-28T10:50:07.000Z",
-  "versionId": "f131c8fe-91df-40ef-944f-befdaf341485"
+  "updatedAt": "2023-03-28T22:50:01.000Z",
+  "versionId": "562b7946-fe51-490f-91ee-f83b13b68134"
 }
