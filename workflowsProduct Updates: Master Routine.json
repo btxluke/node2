@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "Get Globals": {
       "main": [
@@ -312,12 +312,12 @@
   "staticData": {
     "node:Schedule Trigger": {
       "recurrencyRules": [
-        22
+        4
       ]
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-03-28T21:00:00.000Z",
-  "versionId": "0d2ea68c-8ae7-41d5-b87b-05d6aac407e0"
+  "updatedAt": "2023-03-29T08:52:33.000Z",
+  "versionId": "ca5bf061-6872-49bf-bbd4-529f4054dec2"
 }
