@@ -191,7 +191,8 @@
   "settings": {
     "saveManualExecutions": false,
     "callerPolicy": "workflowsFromSameOwner",
-    "saveExecutionProgress": "DEFAULT"
+    "saveExecutionProgress": "DEFAULT",
+    "errorWorkflow": "114"
   },
   "staticData": {
     "node:Schedule Trigger": {
@@ -200,6 +201,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-04-05T18:28:24.000Z",
-  "versionId": "39d95e19-0bd3-4edf-829d-5a9e07f15591"
+  "updatedAt": "2023-04-10T06:18:50.000Z",
+  "versionId": "00ad3cd0-e18b-4bb9-8d9a-959283fc8834"
 }
