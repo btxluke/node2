@@ -430,11 +430,11 @@
   "settings": {},
   "staticData": {
     "node:Email Trigger (IMAP)": {
-      "lastMessageUid": 3553
+      "lastMessageUid": 3605
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-04-24T22:50:13.000Z",
+  "updatedAt": "2023-04-25T10:50:09.000Z",
   "versionId": "562b7946-fe51-490f-91ee-f83b13b68134"
 }
