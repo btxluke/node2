@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "Odoo",
+            "node": "MySQL",
             "type": "main",
             "index": 0
           }
@@ -73,6 +73,28 @@
           }
         ]
       ]
+    },
+    "MySQL": {
+      "main": [
+        [
+          {
+            "node": "Set1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set1": {
+      "main": [
+        [
+          {
+            "node": "Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-02-21T08:44:41.829Z",
@@ -86,7 +108,7 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1,
       "position": [
-        -800,
+        -940,
         440
       ]
     },
@@ -106,6 +128,15 @@
             "free_qty",
             "product_template_attribute_value_ids"
           ]
+        },
+        "filterRequest": {
+          "filter": [
+            {
+              "fieldName": "product_tag_ids",
+              "operator": "in",
+              "value": "={{ $json.Globals[0].ProductTagId }}"
+            }
+          ]
         }
       },
       "id": "bb468e4f-cf32-4266-832f-c3befd6f217d",
@@ -113,10 +144,10 @@
       "type": "n8n-nodes-base.odoo",
       "typeVersion": 1,
       "position": [
-        -540,
+        -300,
         440
       ],
-      "executeOnce": true,
+      "executeOnce": false,
       "credentials": {
         "odooApi": {
           "id": "37",
@@ -168,7 +199,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        -120,
+        120,
         440
       ]
     },
@@ -189,7 +220,7 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 1,
       "position": [
-        80,
+        320,
         440
       ],
       "credentials": {
@@ -209,7 +240,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 1,
       "position": [
-        -320,
+        -80,
         440
       ]
     },
@@ -229,7 +260,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        240,
+        480,
         440
       ]
     },
@@ -240,8 +271,49 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        480,
+        720,
         420
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM `Map-SupplierInfo`"
+      },
+      "id": "5c5f0b98-c8a4-4921-83e9-7ceebf3b08c6",
+      "name": "MySQL",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        440
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "42",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Globals",
+              "value": "={{JSON.parse( $json.Globals) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e3384399-bead-4b3c-80ca-a233965be217",
+      "name": "Set1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -500,
+        440
       ]
     }
   ],
@@ -257,6 +329,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-02-21T08:46:01.000Z",
-  "versionId": "e4b6006f-8106-4120-bbd5-171d84f1cf03"
+  "updatedAt": "2023-05-30T07:09:35.000Z",
+  "versionId": "ceb2f6a2-836c-47aa-b998-80608cc1d99a"
 }
