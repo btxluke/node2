@@ -16,7 +16,7 @@
       "main": [
         [
           {
-            "node": "SSH1",
+            "node": "duplicate backup to node3",
             "type": "main",
             "index": 0
           }
@@ -33,7 +33,7 @@
         "rule": {
           "interval": [
             {
-              "triggerAtHour": 21
+              "triggerAtHour": 20
             }
           ]
         }
@@ -49,7 +49,7 @@
     },
     {
       "parameters": {
-        "command": "curl -X POST -F 'master_pwd=L0chr!nPl@ce' -F 'name=btx' -F 'backup_format=zip' -o /home/luke/odooBackup/odooBack.zip http://localhost:8069/web/database/backup"
+        "command": "scp luke@node5.biketrax.co.uk:/home/luke/odooBackup/odooBack.zip \\home\\luke\\OdooBackup\\odooBack.zip"
       },
       "id": "e58954fd-7a8f-4e09-9abe-0ffb45ecaf4f",
       "name": "SSH",
@@ -61,19 +61,17 @@
       ],
       "credentials": {
         "sshPassword": {
-          "id": "47",
-          "name": "Node 5 (root)"
+          "id": "41",
+          "name": "node3"
         }
       }
     },
     {
       "parameters": {
-        "resource": "file",
-        "operation": "download",
-        "path": "/home/luke/odooBackup/odooBackup.zip"
+        "operation": "download"
       },
       "id": "9f80d88b-7c8c-432c-8090-372dc9dac2aa",
-      "name": "SSH1",
+      "name": "duplicate backup to node3",
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
@@ -82,8 +80,8 @@
       ],
       "credentials": {
         "sshPassword": {
-          "id": "47",
-          "name": "Node 5 (root)"
+          "id": "41",
+          "name": "node3"
         }
       }
     }
@@ -104,6 +102,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-02-25T10:12:15.000Z",
-  "versionId": "ea99f83b-375a-4d6c-ad2e-5390872da576"
+  "updatedAt": "2023-05-31T13:41:18.000Z",
+  "versionId": "b3387562-5821-4f78-bd0f-97f169d3a9ae"
 }
