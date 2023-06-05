@@ -1,0 +1,183 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "MySQL1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Spreadsheet File": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL1": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Spreadsheet File1": {
+      "main": [
+        [
+          {
+            "node": "SSH1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-06-05T10:14:04.911Z",
+  "id": "115",
+  "name": "Product Feeds: Saddleback: Parse and resave CSV",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "46db5645-64f9-4108-ac47-ea5be108810c",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        680,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "download",
+        "path": "/home/luke/feeds/Upload-Saddleback.csv"
+      },
+      "id": "6209ddf5-0071-43ea-8d0f-d1695c71f9cc",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        360
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "41",
+          "name": "node3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "dde510bb-6d5e-4b6c-a0b7-471580aacf49",
+      "name": "Spreadsheet File",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "table": {
+          "__rl": true,
+          "value": "Upload-Saddleback",
+          "mode": "list",
+          "cachedResultName": "Upload-Saddleback"
+        },
+        "options": {
+          "queryBatching": "single"
+        }
+      },
+      "id": "41c5ef35-d710-4104-90f3-a7daab26a6af",
+      "name": "MySQL1",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.1,
+      "position": [
+        860,
+        360
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "42",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toFile",
+        "fileFormat": "csv",
+        "options": {}
+      },
+      "id": "e03d24c0-3792-46d4-8ab3-893c09bafbc4",
+      "name": "Spreadsheet File1",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 1,
+      "position": [
+        1420,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "path": "/home/luke/feeds/",
+        "options": {
+          "fileName": "Upload-Saddleback.csv"
+        }
+      },
+      "id": "4d7e77de-2cfc-4c5c-992a-f7dbc03ee8c5",
+      "name": "SSH1",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        360
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "41",
+          "name": "node3"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-06-05T10:38:18.000Z",
+  "versionId": "96a31a06-2ebd-4a92-8195-ed19eab399c3"
+}
