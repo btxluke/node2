@@ -46,7 +46,7 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1,
       "position": [
-        820,
+        660,
         360
       ]
     },
@@ -64,7 +64,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1020,
+        880,
         360
       ],
       "credentials": {
@@ -84,7 +84,7 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 1,
       "position": [
-        1160,
+        1020,
         360
       ],
       "credentials": {
@@ -96,7 +96,7 @@
     },
     {
       "parameters": {
-        "command": "=mysqlimport --user='root' --password='L0chr!nPl@ce' \\\n--fields-terminated-by=',' --lines-terminated-by=0x0d0a \\\n--replace --low-priority --fields-enclosed-by='\"' \\\n --fields-escaped-by='#' --ignore-lines='1' --verbose --force --local \\\nodooData '/home/luke/feeds/Stock-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv'",
+        "command": "=mysqlimport --user='root' --password='L0chr!nPl@ce' \\\n--fields-terminated-by=',' --lines-terminated-by={{ $node[\"Execute Workflow Trigger\"].json.TerminatedBy ? $node[\"Execute Workflow Trigger\"].json.TerminatedBy : \"0x0d0a\" }} \\\n--replace --low-priority --fields-enclosed-by='\"' \\\n --fields-escaped-by='#' --ignore-lines='1' --verbose --force --local \\\nodooData '/home/luke/feeds/Stock-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv'",
         "cwd": "/home/luke/feeds/"
       },
       "id": "2aca14b4-34fb-4096-b4f5-25a2f93bb0e2",
@@ -104,7 +104,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1300,
+        1160,
         360
       ],
       "credentials": {
@@ -119,7 +119,8 @@
     "Execute Workflow Trigger": [
       {
         "json": {
-          "Supplier": "Extra"
+          "Supplier": "Saddleback",
+          "TerminatedBy": "'\n'"
         }
       }
     ]
@@ -153,6 +154,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-02-20T11:19:22.000Z",
-  "versionId": "0ebd6b5e-577d-48f3-884e-cda05478c85b"
+  "updatedAt": "2023-06-05T12:15:52.000Z",
+  "versionId": "2ee58774-99db-46fe-bfae-6f88192c9442"
 }
