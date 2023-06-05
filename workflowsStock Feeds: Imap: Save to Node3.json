@@ -336,6 +336,9 @@
             {
               "name": "Supplier",
               "value": "Madison"
+            },
+            {
+              "name": "Terminated"
             }
           ]
         },
@@ -465,6 +468,10 @@
             {
               "name": "Supplier",
               "value": "Saddleback"
+            },
+            {
+              "name": "TerminatedBy",
+              "value": "'\\n'"
             }
           ]
         },
@@ -495,11 +502,11 @@
   "settings": {},
   "staticData": {
     "node:Email Trigger (IMAP)": {
-      "lastMessageUid": 7712
+      "lastMessageUid": 7760
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-06-05T11:00:11.000Z",
-  "versionId": "ddbbf4b8-c8d3-4f3b-8f38-4c00b1f16113"
+  "updatedAt": "2023-06-05T22:50:07.000Z",
+  "versionId": "7a3d1680-f9fe-44fc-a9ad-9d46485fb8b1"
 }
