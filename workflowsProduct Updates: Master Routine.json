@@ -317,12 +317,12 @@
   "staticData": {
     "node:Schedule Trigger": {
       "recurrencyRules": [
-        4
+        16
       ]
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-06-19T03:00:00.000Z",
+  "updatedAt": "2023-06-19T15:00:00.000Z",
   "versionId": "f9b4075e-5dde-4585-89e4-d9b3aef6d889"
 }
