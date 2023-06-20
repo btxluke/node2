@@ -191,7 +191,6 @@
   "settings": {
     "saveManualExecutions": false,
     "callerPolicy": "workflowsFromSameOwner",
-    "saveExecutionProgress": "DEFAULT",
     "errorWorkflow": "114"
   },
   "staticData": {
@@ -201,6 +200,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-04-10T06:18:50.000Z",
-  "versionId": "00ad3cd0-e18b-4bb9-8d9a-959283fc8834"
+  "updatedAt": "2023-06-20T18:00:18.000Z",
+  "versionId": "b1875db4-af3b-43ef-9ad0-f35c00425c4c"
 }
