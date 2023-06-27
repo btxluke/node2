@@ -497,7 +497,7 @@
   "settings": {},
   "staticData": {
     "node:Email Trigger (IMAP)": {
-      "lastMessageUid": 332
+      "lastMessageUid": 333
     }
   },
   "tags": [
@@ -515,6 +515,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-06-27T05:04:54.000Z",
+  "updatedAt": "2023-06-27T22:06:12.000Z",
   "versionId": "c14e724e-10ca-4899-8211-7ccd33d51108"
 }
