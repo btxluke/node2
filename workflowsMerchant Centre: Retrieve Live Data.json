@@ -5,18 +5,7 @@
       "main": [
         [
           {
-            "node": "MySQL",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Odoo": {
-      "main": [
-        [
-          {
-            "node": "Split In Batches1",
+            "node": "MySQL1",
             "type": "main",
             "index": 0
           }
@@ -74,22 +63,71 @@
         ]
       ]
     },
-    "MySQL": {
+    "MySQL1": {
       "main": [
         [
           {
-            "node": "Set1",
+            "node": "Set2",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Set1": {
+    "Set2": {
+      "main": [
+        [
+          {
+            "node": "Odoo2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
       "main": [
         [
           {
             "node": "Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches1",
             "type": "main",
             "index": 0
           }
@@ -108,52 +146,9 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1,
       "position": [
-        -940,
-        440
+        -1540,
+        160
       ]
-    },
-    {
-      "parameters": {
-        "resource": "custom",
-        "customResource": "product.product",
-        "operation": "getAll",
-        "returnAll": true,
-        "options": {
-          "fieldsList": [
-            "id",
-            "default_code",
-            "barcode",
-            "product_tmpl_id",
-            "allow_out_of_stock_order",
-            "free_qty",
-            "product_template_attribute_value_ids"
-          ]
-        },
-        "filterRequest": {
-          "filter": [
-            {
-              "fieldName": "product_tag_ids",
-              "operator": "in",
-              "value": "={{ $json.Globals[0].ProductTagId }}"
-            }
-          ]
-        }
-      },
-      "id": "bb468e4f-cf32-4266-832f-c3befd6f217d",
-      "name": "Odoo",
-      "type": "n8n-nodes-base.odoo",
-      "typeVersion": 1,
-      "position": [
-        -300,
-        440
-      ],
-      "executeOnce": false,
-      "credentials": {
-        "odooApi": {
-          "id": "37",
-          "name": "Odoo account"
-        }
-      }
     },
     {
       "parameters": {
@@ -199,7 +194,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        120,
+        340,
         440
       ]
     },
@@ -220,7 +215,7 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 1,
       "position": [
-        320,
+        540,
         440
       ],
       "credentials": {
@@ -240,7 +235,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 1,
       "position": [
-        -80,
+        140,
         440
       ]
     },
@@ -260,7 +255,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        480,
+        700,
         440
       ]
     },
@@ -271,8 +266,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        720,
-        420
+        960,
+        520
       ]
     },
     {
@@ -280,13 +275,13 @@
         "operation": "executeQuery",
         "query": "SELECT * FROM `Map-SupplierInfo`"
       },
-      "id": "5c5f0b98-c8a4-4921-83e9-7ceebf3b08c6",
-      "name": "MySQL",
+      "id": "7346fa41-a4d8-4f65-90b8-6a7af114cf20",
+      "name": "MySQL1",
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 1,
       "position": [
-        -720,
-        440
+        -1320,
+        -200
       ],
       "credentials": {
         "mySql": {
@@ -307,13 +302,135 @@
         },
         "options": {}
       },
-      "id": "e3384399-bead-4b3c-80ca-a233965be217",
-      "name": "Set1",
+      "id": "699a34d8-ad78-48bd-82e2-25cafe84f991",
+      "name": "Set2",
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        -500,
-        440
+        -1080,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.product",
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {
+          "fieldsList": [
+            "id",
+            "default_code",
+            "barcode",
+            "product_tmpl_id",
+            "allow_out_of_stock_order",
+            "free_qty",
+            "product_template_attribute_value_ids"
+          ]
+        },
+        "filterRequest": {
+          "filter": [
+            {
+              "fieldName": "product_tag_ids",
+              "operator": "in",
+              "value": "={{ $json.Globals[0].ProductTagId }}"
+            },
+            {
+              "fieldName": "active",
+              "value": "={{true}}"
+            },
+            {
+              "fieldName": "categ_id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "fieldName": "default_code",
+              "operator": "notEqual",
+              "value": "={{false}}"
+            }
+          ]
+        }
+      },
+      "id": "dcac39ea-4378-4bc3-aa24-6c1730bd9f0c",
+      "name": "Odoo",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -100
+      ],
+      "executeOnce": false,
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.category",
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {
+          "fieldsList": [
+            "complete_name"
+          ]
+        }
+      },
+      "id": "35ca82dc-0fb4-4a80-b9b5-2ca4102483ca",
+      "name": "Odoo2",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        -680,
+        60
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "50fed82d-aff8-49fb-ac7f-34761d4b344b",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        -380,
+        -140
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "removeDuplicates",
+        "compare": "selectedFields",
+        "fieldsToCompare": {
+          "fields": [
+            {
+              "fieldName": "default_code"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "27045497-0095-4b6f-b0f3-39c80b3bb3aa",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2.1,
+      "position": [
+        180,
+        -100
       ]
     }
   ],
@@ -329,6 +446,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-05-30T07:09:35.000Z",
-  "versionId": "ceb2f6a2-836c-47aa-b998-80608cc1d99a"
+  "updatedAt": "2023-07-10T19:44:01.000Z",
+  "versionId": "92a79e22-bd89-44d6-8f01-67c66d14ccde"
 }
