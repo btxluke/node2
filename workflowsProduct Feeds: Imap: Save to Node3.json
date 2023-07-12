@@ -37,7 +37,7 @@
         ],
         [
           {
-            "node": "Switch1",
+            "node": "Secondary Suppliers",
             "type": "main",
             "index": 0
           }
@@ -189,6 +189,50 @@
           }
         ]
       ]
+    },
+    "ETCC": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Secondary Suppliers": {
+      "main": [
+        [
+          {
+            "node": "ETCC",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Spreadsheet File": {
+      "main": [
+        [
+          {
+            "node": "Rename Keys",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rename Keys": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-02-20T11:11:22.084Z",
@@ -243,27 +287,6 @@
       "position": [
         1040,
         400
-      ]
-    },
-    {
-      "parameters": {
-        "dataType": "string",
-        "value1": "={{ $json.from.value[0].address }}",
-        "rules": {
-          "rules": [
-            {
-              "value2": "sales@ison-distribution.com"
-            }
-          ]
-        }
-      },
-      "id": "d8882fe9-3f4b-4982-882a-f428d5ac995d",
-      "name": "Switch1",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 1,
-      "position": [
-        1040,
-        640
       ]
     },
     {
@@ -491,13 +514,120 @@
         2180,
         560
       ]
+    },
+    {
+      "parameters": {},
+      "id": "c5193634-75ff-4bec-9e4d-c04a89636aa0",
+      "name": "ETCC",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.from.value[0].address }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "info@etcc.co.uk"
+            }
+          ]
+        }
+      },
+      "id": "d8882fe9-3f4b-4982-882a-f428d5ac995d",
+      "name": "Secondary Suppliers",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "binaryPropertyName": "attachment_1",
+        "options": {
+          "headerRow": true,
+          "range": "2"
+        }
+      },
+      "id": "22c7d5e7-7c26-4be9-a3f3-f2bd1e4cf5f3",
+      "name": "Spreadsheet File",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "keys": {
+          "key": [
+            {
+              "currentKey": "Product Code",
+              "newKey": "default_code"
+            },
+            {
+              "currentKey": "Product Description",
+              "newKey": "description"
+            },
+            {
+              "currentKey": "Default Sell Price",
+              "newKey": "cost"
+            }
+          ]
+        },
+        "additionalOptions": {}
+      },
+      "id": "703c1359-0537-4ee2-951a-26ffbcb51de0",
+      "name": "Rename Keys",
+      "type": "n8n-nodes-base.renameKeys",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "table": {
+          "__rl": true,
+          "value": "Upload-ETCC",
+          "mode": "list",
+          "cachedResultName": "Upload-ETCC"
+        },
+        "columnToMatchOn": "default_code",
+        "options": {
+          "replaceEmptyStrings": true
+        }
+      },
+      "id": "05f9d5f0-fad4-4861-8b9c-0a7d90b6a290",
+      "name": "MySQL",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.1,
+      "position": [
+        1800,
+        1140
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "50",
+          "name": "Secondary Suppliers"
+        }
+      }
     }
   ],
   "pinData": {},
   "settings": {},
   "staticData": {
     "node:Email Trigger (IMAP)": {
-      "lastMessageUid": 363
+      "lastMessageUid": 364
     }
   },
   "tags": [
@@ -515,6 +645,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-07-11T21:49:02.000Z",
-  "versionId": "c14e724e-10ca-4899-8211-7ccd33d51108"
+  "updatedAt": "2023-07-12T08:18:25.000Z",
+  "versionId": "11c997a9-627c-4c6a-8c0b-70a00fe988a5"
 }
