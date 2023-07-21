@@ -214,24 +214,7 @@
     },
     "Spreadsheet File": {
       "main": [
-        [
-          {
-            "node": "Rename Keys",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Rename Keys": {
-      "main": [
-        [
-          {
-            "node": "MySQL",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     }
   },
@@ -563,71 +546,13 @@
         1480,
         1140
       ]
-    },
-    {
-      "parameters": {
-        "keys": {
-          "key": [
-            {
-              "currentKey": "Product Code",
-              "newKey": "default_code"
-            },
-            {
-              "currentKey": "Product Description",
-              "newKey": "description"
-            },
-            {
-              "currentKey": "Default Sell Price",
-              "newKey": "cost"
-            }
-          ]
-        },
-        "additionalOptions": {}
-      },
-      "id": "703c1359-0537-4ee2-951a-26ffbcb51de0",
-      "name": "Rename Keys",
-      "type": "n8n-nodes-base.renameKeys",
-      "typeVersion": 1,
-      "position": [
-        1640,
-        1140
-      ]
-    },
-    {
-      "parameters": {
-        "operation": "upsert",
-        "table": {
-          "__rl": true,
-          "value": "Upload-ETCC",
-          "mode": "list",
-          "cachedResultName": "Upload-ETCC"
-        },
-        "columnToMatchOn": "default_code",
-        "options": {
-          "replaceEmptyStrings": true
-        }
-      },
-      "id": "05f9d5f0-fad4-4861-8b9c-0a7d90b6a290",
-      "name": "MySQL",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 2.1,
-      "position": [
-        1800,
-        1140
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "50",
-          "name": "Secondary Suppliers"
-        }
-      }
     }
   ],
   "pinData": {},
   "settings": {},
   "staticData": {
     "node:Email Trigger (IMAP)": {
-      "lastMessageUid": 383
+      "lastMessageUid": 384
     }
   },
   "tags": [
@@ -645,6 +570,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-07-21T05:00:29.000Z",
-  "versionId": "11c997a9-627c-4c6a-8c0b-70a00fe988a5"
+  "updatedAt": "2023-07-21T21:24:19.000Z",
+  "versionId": "c9bd0203-4afb-4110-800f-b676a625b7bf"
 }
