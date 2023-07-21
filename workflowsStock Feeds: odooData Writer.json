@@ -5,18 +5,7 @@
       "main": [
         [
           {
-            "node": "MySQL",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "MySQL": {
-      "main": [
-        [
-          {
-            "node": "SSH",
+            "node": "Postgres",
             "type": "main",
             "index": 0
           }
@@ -28,6 +17,17 @@
         [
           {
             "node": "SSH1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "SSH2",
             "type": "main",
             "index": 0
           }
@@ -77,40 +77,41 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "=TRUNCATE `Stock-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}`; "
+        "query": "=TRUNCATE stock_{{ $node[\"Execute Workflow Trigger\"].json.Supplier.toLowerCase() }}; ",
+        "options": {}
       },
-      "id": "ac9caef4-9e37-497c-9b55-fc6100f5e2a2",
-      "name": "MySQL",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
+      "id": "e9378482-92fd-42f4-8b22-0054a084d5d1",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
       "position": [
         1020,
-        360
+        200
       ],
       "credentials": {
-        "mySql": {
-          "id": "42",
+        "postgres": {
+          "id": "52",
           "name": "odooData"
         }
       }
     },
     {
       "parameters": {
-        "command": "=mysqlimport --user='root' --password='L0chr!nPl@ce' \\\n--fields-terminated-by=',' --lines-terminated-by={{ $node[\"Execute Workflow Trigger\"].json.TerminatedBy ? $node[\"Execute Workflow Trigger\"].json.TerminatedBy : \"0x0d0a\" }} \\\n--replace --low-priority --fields-enclosed-by='\"' \\\n --fields-escaped-by='#' --ignore-lines='1' --verbose --force --local \\\nodooData '/home/luke/feeds/Stock-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv'",
+        "command": "=psql -d odooData -c \"\\\\COPY stock_{{ $node[\"Execute Workflow Trigger\"].json.Supplier.toLowerCase() }} FROM /home/luke/feeds/Stock-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv DELIMITER ',' CSV HEADER;\"",
         "cwd": "/home/luke/feeds/"
       },
-      "id": "2aca14b4-34fb-4096-b4f5-25a2f93bb0e2",
-      "name": "SSH",
+      "id": "750d89fb-16bf-439e-b88d-335283c491ad",
+      "name": "SSH2",
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
         1160,
-        360
+        200
       ],
       "credentials": {
         "sshPassword": {
-          "id": "41",
-          "name": "node3"
+          "id": "53",
+          "name": "postgres (node3)"
         }
       }
     }
@@ -151,9 +152,15 @@
       "updatedAt": "2023-02-20T11:19:20.976Z",
       "id": "28",
       "name": "stock"
+    },
+    {
+      "createdAt": "2023-07-21T15:01:55.576Z",
+      "updatedAt": "2023-07-21T15:01:55.576Z",
+      "id": "37",
+      "name": "Postgres Enabled"
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-06-05T12:15:52.000Z",
-  "versionId": "2ee58774-99db-46fe-bfae-6f88192c9442"
+  "updatedAt": "2023-07-21T16:04:34.000Z",
+  "versionId": "099fc475-2ff3-4ffb-b569-96c014f10831"
 }
