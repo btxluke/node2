@@ -1,22 +1,11 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
-    "Get Globals": {
-      "main": [
-        [
-          {
-            "node": "Globals",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Schedule Trigger": {
       "main": [
         [
           {
-            "node": "Get Globals",
+            "node": "Postgres",
             "type": "main",
             "index": 0
           }
@@ -113,6 +102,17 @@
           }
         ]
       ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Globals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-02-22T12:17:23.160Z",
@@ -135,37 +135,17 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
       "position": [
-        820,
+        500,
         400
       ]
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT Globals FROM `Map-SupplierInfo`;"
-      },
-      "id": "d2ab99c0-54de-486f-bb1c-d509527baf75",
-      "name": "Get Globals",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
-      "position": [
-        1000,
-        400
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "42",
-          "name": "odooData"
-        }
-      }
     },
     {
       "parameters": {
         "values": {
           "string": [
             {
-              "name": "Globals",
-              "value": "={{  JSON.parse($json[\"Globals\"])[0]  }}"
+              "name": "globals",
+              "value": "={{  JSON.parse($json[\"globals\"])[0]  }}"
             }
           ]
         },
@@ -185,7 +165,7 @@
         "conditions": {
           "string": [
             {
-              "value1": "={{ $json.Globals.Webhook }}",
+              "value1": "={{ $json.globals.Webhook }}",
               "operation": "isEmpty"
             }
           ]
@@ -305,24 +285,51 @@
         640
       ],
       "executeOnce": true
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \"globals\" FROM \"Map-SupplierInfo\";",
+        "options": {}
+      },
+      "id": "6776c052-11a0-4547-b69f-027a2c5efd1d",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        900,
+        400
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
     }
   ],
   "pinData": {},
   "settings": {
     "saveDataSuccessExecution": "all",
-    "saveExecutionProgress": "DEFAULT",
     "saveManualExecutions": false,
     "callerPolicy": "workflowsFromSameOwner"
   },
   "staticData": {
     "node:Schedule Trigger": {
       "recurrencyRules": [
-        4
+        16
       ]
     }
   },
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2023-07-21T15:01:55.576Z",
+      "updatedAt": "2023-07-21T15:01:55.576Z",
+      "id": "37",
+      "name": "Postgres Enabled"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2023-07-21T03:00:00.000Z",
-  "versionId": "f9b4075e-5dde-4585-89e4-d9b3aef6d889"
+  "updatedAt": "2023-07-21T15:01:56.000Z",
+  "versionId": "de9f7e56-4772-4fad-8607-7752a0b30839"
 }
