@@ -5,18 +5,7 @@
       "main": [
         [
           {
-            "node": "MySQL",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "MySQL": {
-      "main": [
-        [
-          {
-            "node": "MySQL1",
+            "node": "Postgres",
             "type": "main",
             "index": 0
           }
@@ -34,33 +23,44 @@
         ]
       ]
     },
-    "SSH2": {
+    "Postgres": {
       "main": [
         [
           {
-            "node": "SSH",
+            "node": "Postgres1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "MySQL1": {
+    "Postgres1": {
       "main": [
         [
           {
-            "node": "MySQL2",
+            "node": "Postgres2",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "MySQL2": {
+    "Postgres2": {
       "main": [
         [
           {
-            "node": "SSH2",
+            "node": "SSH3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH3": {
+      "main": [
+        [
+          {
+            "node": "SSH4",
             "type": "main",
             "index": 0
           }
@@ -110,40 +110,63 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "=TRUNCATE `Upload-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}`; "
+        "query": "=TRUNCATE upload_{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}; ",
+        "options": {}
       },
-      "id": "980f59e0-e6c0-4ba4-a7d5-7408e170d1d8",
-      "name": "MySQL",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
+      "id": "fe6e8dd1-4769-45ce-96fe-bd0eb6f7d237",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
       "position": [
         1160,
-        360
+        200
       ],
       "credentials": {
-        "mySql": {
-          "id": "42",
+        "postgres": {
+          "id": "52",
           "name": "odooData"
         }
       }
     },
     {
       "parameters": {
-        "command": "=mysqlimport --user='root' --password='L0chr!nPl@ce' \\\n--fields-terminated-by=',' --lines-terminated-by=0x0d0a \\\n--replace --low-priority --fields-enclosed-by='\"' \\\n --fields-escaped-by='#' --ignore-lines='1' --verbose --force --local \\\nodooData '/home/luke/feeds/Upload-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv'",
-        "cwd": "/home/luke/feeds/"
+        "operation": "executeQuery",
+        "query": "=DROP TABLE upload_{{ $node[\"Execute Workflow Trigger\"].json.Supplier }};",
+        "options": {}
       },
-      "id": "b48d2dc5-2575-4f30-bfaa-c8e4016e861a",
-      "name": "SSH",
-      "type": "n8n-nodes-base.ssh",
-      "typeVersion": 1,
+      "id": "8da323ab-f321-40a8-84a3-e08da4185d74",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
       "position": [
-        2040,
-        360
+        1320,
+        200
       ],
       "credentials": {
-        "sshPassword": {
-          "id": "41",
-          "name": "node3"
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=CREATE TABLE upload_{{ $node[\"Execute Workflow Trigger\"].json.Supplier.toLowerCase() }} AS\nSELECT *\nFROM template_{{ $node[\"Execute Workflow Trigger\"].json.Supplier.toLowerCase() }};",
+        "options": {}
+      },
+      "id": "c0adb8db-7563-445f-89bd-852ee0e5ba80",
+      "name": "Postgres2",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        1540,
+        200
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
         }
       }
     },
@@ -152,13 +175,13 @@
         "command": "=LANG=C sed -i 's/[\\d128-\\d255]//g' /home/luke/feeds/Upload-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv",
         "cwd": "/home/luke/feeds/"
       },
-      "id": "6decf54f-6ad4-4cd6-a129-5e1375300c7e",
-      "name": "SSH2",
+      "id": "8f4111fc-499f-4208-a7a5-cbcd108c5209",
+      "name": "SSH3",
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
         1880,
-        360
+        200
       ],
       "credentials": {
         "sshPassword": {
@@ -169,41 +192,21 @@
     },
     {
       "parameters": {
-        "operation": "executeQuery",
-        "query": "=DROP TABLE `Upload-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}`;"
+        "command": "=psql -d odooData -c \"\\\\COPY upload_{{ $node[\"Execute Workflow Trigger\"].json.Supplier.toLowerCase() }} FROM /home/luke/feeds/Upload-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv DELIMITER ',' CSV HEADER;\"",
+        "cwd": "/home/luke/feeds/"
       },
-      "id": "5923b056-6701-4365-b731-626e59e6aa71",
-      "name": "MySQL1",
-      "type": "n8n-nodes-base.mySql",
+      "id": "77a10054-3c4d-4a16-a491-e7c32b6f7ffd",
+      "name": "SSH4",
+      "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1320,
-        360
+        2040,
+        200
       ],
       "credentials": {
-        "mySql": {
-          "id": "42",
-          "name": "odooData"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "=CREATE TABLE `Upload-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}` AS\nSELECT *\nFROM `Template-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}`;"
-      },
-      "id": "6c5501c6-70c4-4db7-9ca5-9157ec75c0c3",
-      "name": "MySQL2",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
-      "position": [
-        1540,
-        360
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "42",
-          "name": "odooData"
+        "sshPassword": {
+          "id": "53",
+          "name": "postgres (node3)"
         }
       }
     }
@@ -253,6 +256,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-03-28T14:45:17.000Z",
-  "versionId": "d38dc223-716c-4536-bb62-565a6662344d"
+  "updatedAt": "2023-07-21T16:25:51.000Z",
+  "versionId": "4a85dd65-c818-490d-80b0-1df1a78452f4"
 }
