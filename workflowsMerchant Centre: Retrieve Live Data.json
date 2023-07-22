@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "MySQL1",
+            "node": "Postgres",
             "type": "main",
             "index": 0
           }
@@ -57,17 +57,6 @@
         [
           {
             "node": "Split In Batches1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "MySQL1": {
-      "main": [
-        [
-          {
-            "node": "Set2",
             "type": "main",
             "index": 0
           }
@@ -128,6 +117,17 @@
         [
           {
             "node": "Split In Batches1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Set2",
             "type": "main",
             "index": 0
           }
@@ -272,31 +272,11 @@
     },
     {
       "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT * FROM `Map-SupplierInfo`"
-      },
-      "id": "7346fa41-a4d8-4f65-90b8-6a7af114cf20",
-      "name": "MySQL1",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
-      "position": [
-        -1320,
-        -200
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "42",
-          "name": "odooData"
-        }
-      }
-    },
-    {
-      "parameters": {
         "values": {
           "string": [
             {
-              "name": "Globals",
-              "value": "={{JSON.parse( $json.Globals) }}"
+              "name": "globals",
+              "value": "={{JSON.parse( $json.globals) }}"
             }
           ]
         },
@@ -333,7 +313,7 @@
             {
               "fieldName": "product_tag_ids",
               "operator": "in",
-              "value": "={{ $json.Globals[0].ProductTagId }}"
+              "value": "={{ $json.globals[0].ProductTagId }}"
             },
             {
               "fieldName": "active",
@@ -432,6 +412,27 @@
         180,
         -100
       ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM map_supplierinfo;",
+        "options": {}
+      },
+      "id": "99c1afb4-421f-40e4-b5d1-f93bf4f045dd",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        -1320,
+        -200
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -446,6 +447,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-07-10T19:44:01.000Z",
-  "versionId": "92a79e22-bd89-44d6-8f01-67c66d14ccde"
+  "updatedAt": "2023-07-22T09:30:29.000Z",
+  "versionId": "b7170bc6-8539-4174-9e88-3e9c0d4584c9"
 }
