@@ -8,19 +8,18 @@
             "node": "MySQL",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
     },
     "MySQL": {
       "main": [
-        [
-          {
-            "node": "SSH2",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Execute Workflow Trigger": {
@@ -38,7 +37,18 @@
       "main": [
         [
           {
-            "node": "SSH",
+            "node": "SSH3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "SSH2",
             "type": "main",
             "index": 0
           }
@@ -107,16 +117,16 @@
     },
     {
       "parameters": {
-        "command": "=mysqlimport --user='root' --password='L0chr!nPl@ce' \\\n--fields-terminated-by=',' --lines-terminated-by=0x0d0a \\\n--replace --low-priority --fields-enclosed-by='\"' \\\n --fields-escaped-by='#' --ignore-lines='1' --verbose --force --local \\\nodooData '/home/luke/feeds/Csp-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv'",
+        "command": "=LANG=C sed -i 's/[\\d128-\\d255]//g' /home/luke/feeds/Csp-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv",
         "cwd": "/home/luke/feeds/"
       },
-      "id": "894418d4-996c-40d6-8ae0-88ecc0978624",
-      "name": "SSH",
+      "id": "dd202256-03d6-4aeb-bce4-53a00c5761d6",
+      "name": "SSH2",
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2040,
-        360
+        1360,
+        200
       ],
       "credentials": {
         "sshPassword": {
@@ -127,21 +137,42 @@
     },
     {
       "parameters": {
-        "command": "=LANG=C sed -i 's/[\\d128-\\d255]//g' /home/luke/feeds/Csp-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv",
+        "operation": "executeQuery",
+        "query": "=TRUNCATE csp_{{ $node[\"Execute Workflow Trigger\"].json.Supplier.toLowerCase() }}; ",
+        "options": {}
+      },
+      "id": "6cf78a85-78ae-4982-ae81-d5158f238bf1",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        1160,
+        200
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=psql -d odooData -c \"\\\\COPY csp_{{ $node[\"Execute Workflow Trigger\"].json.Supplier.toLowerCase() }} FROM /home/luke/feeds/Csp-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv DELIMITER ',' CSV HEADER;\"",
         "cwd": "/home/luke/feeds/"
       },
-      "id": "dd202256-03d6-4aeb-bce4-53a00c5761d6",
-      "name": "SSH2",
+      "id": "73e578e2-ca1e-4850-a848-4f042bd80bac",
+      "name": "SSH3",
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1880,
-        360
+        1520,
+        200
       ],
       "credentials": {
         "sshPassword": {
-          "id": "41",
-          "name": "node3"
+          "id": "53",
+          "name": "postgres (node3)"
         }
       }
     }
@@ -197,6 +228,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-03-28T15:11:17.000Z",
-  "versionId": "7c6d7713-48c5-47c7-a4d3-6ef92bb76f96"
+  "updatedAt": "2023-07-22T06:58:09.000Z",
+  "versionId": "b7b62ccd-def4-4451-bf78-dcb3e3b8d65a"
 }
