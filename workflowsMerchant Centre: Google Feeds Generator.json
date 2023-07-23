@@ -1,44 +1,11 @@
 {
   "active": true,
   "connections": {
-    "MySQL": {
-      "main": [
-        [
-          {
-            "node": "MySQL1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "MySQL1": {
-      "main": [
-        [
-          {
-            "node": "Split In Batches",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Split In Batches": {
       "main": [
         [
           {
-            "node": "MySQL2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "MySQL2": {
-      "main": [
-        [
-          {
-            "node": "IF",
+            "node": "Postgres2",
             "type": "main",
             "index": 0
           }
@@ -49,7 +16,7 @@
       "main": [
         [
           {
-            "node": "MySQL3",
+            "node": "Postgres3",
             "type": "main",
             "index": 0
           }
@@ -57,39 +24,6 @@
         [
           {
             "node": "Split In Batches",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "MySQL3": {
-      "main": [
-        [
-          {
-            "node": "Retrieve Live Data",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "MySQL5": {
-      "main": [
-        [
-          {
-            "node": "Google Feed Upload",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "MySQL6": {
-      "main": [
-        [
-          {
-            "node": "MySQL5",
             "type": "main",
             "index": 0
           }
@@ -111,7 +45,7 @@
       "main": [
         [
           {
-            "node": "MySQL",
+            "node": "Postgres",
             "type": "main",
             "index": 0
           }
@@ -122,7 +56,73 @@
       "main": [
         [
           {
-            "node": "MySQL6",
+            "node": "Postgres4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres2": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres3": {
+      "main": [
+        [
+          {
+            "node": "Retrieve Live Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres4": {
+      "main": [
+        [
+          {
+            "node": "Postgres5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres5": {
+      "main": [
+        [
+          {
+            "node": "Google Feed Upload",
             "type": "main",
             "index": 0
           }
@@ -136,46 +136,6 @@
   "nodes": [
     {
       "parameters": {
-        "operation": "executeQuery",
-        "query": "TRUNCATE `Google-MerchantFeed`;"
-      },
-      "id": "e8f67bcf-b0c1-433b-9232-09e5309255a9",
-      "name": "MySQL",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
-      "position": [
-        700,
-        380
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "45",
-          "name": "node3: dataTransit"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT * FROM `Map-SupplierInfo`"
-      },
-      "id": "b4210d0a-9194-4a1e-ad54-222b99724806",
-      "name": "MySQL1",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
-      "position": [
-        920,
-        380
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "42",
-          "name": "odooData"
-        }
-      }
-    },
-    {
-      "parameters": {
         "batchSize": 1,
         "options": {}
       },
@@ -184,30 +144,9 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 1,
       "position": [
-        1120,
+        940,
         380
       ]
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "=INSERT IGNORE INTO `dataTransit`.`Google-MerchantFeed` \n(title,\ndescription,\nprice,\nbrand,\ngtin,\nmpn,\ncolour,\nsize)\nSELECT \nProductName AS title, \nLongDescription AS description,\nCONCAT(CONVERT(ROUND(Rrp * (1+(Vat/100)),2),char),\" GBP\") AS price,\nBrand,\nEan AS gtin,\nProductCode AS mpn,\nColour AS colour,\nSize AS size\nFROM `odooData`.`Feed-{{ $json.Name }}`"
-      },
-      "id": "ba04a379-89e2-458d-9ce1-c38859829d41",
-      "name": "MySQL2",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
-      "position": [
-        1340,
-        380
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "45",
-          "name": "node3: dataTransit"
-        }
-      },
-      "continueOnFail": true
     },
     {
       "parameters": {
@@ -231,66 +170,6 @@
     },
     {
       "parameters": {
-        "operation": "executeQuery",
-        "query": "TRUNCATE `Odoo-MerchantFeed`;"
-      },
-      "id": "05fe689a-5a70-4a82-a1d6-80aa1489ab52",
-      "name": "MySQL3",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
-      "position": [
-        480,
-        680
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "45",
-          "name": "node3: dataTransit"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "INSERT INTO `Final-MerchantFeed`\n(link,id,title,description,image_link,quantity,availability,price,brand,gtin,mpn,`condition`,colour,gender,size,age_group,item_group_id) \nSELECT  \n`Odoo-MerchantFeed`.`link`,\n`Odoo-MerchantFeed`.`id`,\n`Google-MerchantFeed`.`title`,\n`Google-MerchantFeed`.`description`,\n`Odoo-MerchantFeed`.`image_link`,\n`Odoo-MerchantFeed`.`quantity`,\n`Odoo-MerchantFeed`.`availability`,\n`Google-MerchantFeed`.`price`,\n`Google-MerchantFeed`.`brand`,\n`Google-MerchantFeed`.`gtin`,\n`Google-MerchantFeed`.`mpn`,\n`Odoo-MerchantFeed`.`condition`,\n`Google-MerchantFeed`.`colour`,\n`Odoo-MerchantFeed`.`gender`,\n`Google-MerchantFeed`.`size`,\n`Odoo-MerchantFeed`.`age_group`,\n`Odoo-MerchantFeed`.`item_group_id`\nFROM `Google-MerchantFeed` INNER JOIN `Odoo-MerchantFeed`  ON `Google-MerchantFeed`.`gtin` = `Odoo-MerchantFeed`.`gtin` \nWHERE `Google-MerchantFeed`.`gtin` IS NOT NULL;"
-      },
-      "id": "c0da7f8d-2374-49d9-baa9-1e0e011f1bbf",
-      "name": "MySQL5",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
-      "position": [
-        700,
-        980
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "45",
-          "name": "node3: dataTransit"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "TRUNCATE `Final-MerchantFeed`;"
-      },
-      "id": "bdf0c8a9-6cc4-47d1-b18b-5e7af8dd267b",
-      "name": "MySQL6",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
-      "position": [
-        480,
-        980
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "45",
-          "name": "node3: dataTransit"
-        }
-      }
-    },
-    {
-      "parameters": {
         "workflowId": "101"
       },
       "id": "976dc182-0432-4ddb-b1f2-31cb7cc453ae",
@@ -298,7 +177,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        920,
+        1180,
         980
       ]
     },
@@ -317,7 +196,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
       "position": [
-        480,
+        120,
         380
       ]
     },
@@ -330,7 +209,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        1120,
+        1380,
         980
       ],
       "executeOnce": true
@@ -344,9 +223,157 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        700,
+        760,
         680
       ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "TRUNCATE google_merchantfeed;",
+        "options": {}
+      },
+      "id": "532a3f8f-a272-4db6-b000-914f175b1ec8",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        480,
+        380
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "51",
+          "name": "btxPIM"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM map_supplierInfo;",
+        "options": {}
+      },
+      "id": "c85d9932-de93-4fb3-8990-a1db52abe390",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        760,
+        380
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=INSERT INTO datatransit.google_merchantfeed\n(title,\ndescription,\nprice,\nbrand,\ngtin,\nmpn,\ncolour,\nsize)\nSELECT \nProductName AS title, \nLongDescription AS description,\nCONCAT(CAST(ROUND(rrp * (1+(vat/100)),2) AS CHAR),' GBP') AS price,\nBrand,\nEan AS gtin,\nProductCode AS mpn,\nColour AS colour,\nSize AS size\nFROM odoodata.feed_{{ $json.name.toLowerCase() }}\nON CONFLICT DO NOTHING;",
+        "options": {}
+      },
+      "id": "69e2cec4-7e11-46b5-8ac2-81d3d0206677",
+      "name": "Postgres2",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        1280,
+        380
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "51",
+          "name": "btxPIM"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "TRUNCATE odoo_merchantfeed;",
+        "options": {}
+      },
+      "id": "95cf5431-9487-4617-aae0-89b153bdd326",
+      "name": "Postgres3",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        480,
+        680
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "51",
+          "name": "btxPIM"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "TRUNCATE final_merchantfeed;",
+        "options": {}
+      },
+      "id": "fbfe4d2f-a014-484d-9fce-7e4df4e679e6",
+      "name": "Postgres4",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        480,
+        980
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "51",
+          "name": "btxPIM"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO final_merchantfeed\n(\"link\",\"id\",title,description,image_link,quantity,availability,price,brand,gtin,mpn,\"condition\",colour,gender,\"size\",age_group,item_group_id) \nSELECT  \nodoo_merchantfeed.\"link\",\nodoo_merchantfeed.\"id\",\ngoogle_merchantfeed.title,\ngoogle_merchantfeed.description,\nodoo_merchantfeed.image_link,\nodoo_merchantfeed.quantity,\nodoo_merchantfeed.availability,\ngoogle_merchantfeed.price,\ngoogle_merchantfeed.brand,\ngoogle_merchantfeed.gtin,\ngoogle_merchantfeed.mpn,\nodoo_merchantfeed.\"condition\",\ngoogle_merchantfeed.colour,\nodoo_merchantfeed.gender,\ngoogle_merchantfeed.\"size\",\nodoo_merchantfeed.age_group,\nodoo_merchantfeed.item_group_id\nFROM google_merchantfeed INNER JOIN odoo_merchantfeed  ON google_merchantfeed.gtin = odoo_merchantfeed.gtin \nWHERE google_merchantFeed.gtin IS NOT NULL;",
+        "options": {}
+      },
+      "id": "00482221-5f6f-45b7-9c4a-8e815960ac82",
+      "name": "Postgres5",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        760,
+        980
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "51",
+          "name": "btxPIM"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO final_merchantfeed\n(\"link\",\"id\",title,description,image_link,quantity,availability,price,brand,gtin,mpn,\"condition\",colour,gender,\"size\",age_group,item_group_id) \nSELECT  \nodoo_merchantfeed.\"link\",\nodoo_merchantfeed.\"id\",\ngoogle_merchantfeed.title,\ngoogle_merchantfeed.description,\nodoo_merchantfeed.image_link,\nodoo_merchantfeed.quantity,\nodoo_merchantfeed.availability,\ngoogle_merchantfeed.price,\ngoogle_merchantfeed.brand,\ngoogle_merchantfeed.gtin,\ngoogle_merchantfeed.mpn,\nodoo_merchantfeed.\"condition\",\ngoogle_merchantfeed.colour,\nodoo_merchantfeed.gender,\ngoogle_merchantfeed.\"size\",\nodoo_merchantfeed.age_group,\nodoo_merchantfeed.item_group_id\nFROM google_merchantfeed INNER JOIN odoo_merchantfeed  ON google_merchantfeed.gtin = odoo_merchantfeed.gtin \nWHERE google_merchantFeed.gtin IS NOT NULL;",
+        "options": {}
+      },
+      "id": "baeaa16d-47c7-4b06-94e4-128c5e3ea1d7",
+      "name": "Postgres6",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        840
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "51",
+          "name": "btxPIM"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -374,9 +401,15 @@
       "updatedAt": "2023-02-21T08:39:38.678Z",
       "id": "29",
       "name": "google"
+    },
+    {
+      "createdAt": "2023-07-21T15:01:55.576Z",
+      "updatedAt": "2023-07-21T15:01:55.576Z",
+      "id": "37",
+      "name": "Postgres Enabled"
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-02-21T08:54:51.000Z",
-  "versionId": "8dce80a4-68a9-494d-abf4-8a8b75588bc9"
+  "updatedAt": "2023-07-23T16:37:24.000Z",
+  "versionId": "13798e3c-ad27-40a9-b3b6-c42d2e4ed462"
 }
