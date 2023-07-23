@@ -38,7 +38,7 @@
       "main": [
         [
           {
-            "node": "FTP",
+            "node": "Postgres",
             "type": "main",
             "index": 0
           }
@@ -49,7 +49,7 @@
       "main": [
         [
           {
-            "node": "SSH1",
+            "node": "Postgres1",
             "type": "main",
             "index": 0
           }
@@ -61,6 +61,39 @@
         [
           {
             "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "FTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "SSH3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH3": {
+      "main": [
+        [
+          {
+            "node": "SSH4",
             "type": "main",
             "index": 0
           }
@@ -92,7 +125,7 @@
       "type": "n8n-nodes-base.ftp",
       "typeVersion": 1,
       "position": [
-        1180,
+        1420,
         300
       ],
       "credentials": {
@@ -115,27 +148,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1360,
-        300
-      ],
-      "credentials": {
-        "sshPassword": {
-          "id": "41",
-          "name": "node3"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "command": "mysqlimport --user='root' --password='L0chr!nPl@ce' \\\n--fields-terminated-by=',' --lines-terminated-by=0x0d0a \\\n--replace --low-priority --fields-enclosed-by='\"' \\\n --fields-escaped-by='#' --ignore-lines='1' --verbose --force --local \\\nodooData '/home/luke/feeds/Upload-Silverfish.csv'",
-        "cwd": "/home/luke/feeds/"
-      },
-      "id": "68aacb8a-5ed0-49a6-9186-c62ed51dc6e6",
-      "name": "SSH1",
-      "type": "n8n-nodes-base.ssh",
-      "typeVersion": 1,
-      "position": [
-        1800,
+        1600,
         300
       ],
       "credentials": {
@@ -163,7 +176,8 @@
           "id": "42",
           "name": "odooData"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -175,7 +189,7 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 1,
       "position": [
-        1540,
+        1780,
         300
       ],
       "credentials": {
@@ -183,7 +197,8 @@
           "id": "42",
           "name": "odooData"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -204,6 +219,88 @@
         800,
         500
       ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DROP TABLE upload_silverfish",
+        "options": {}
+      },
+      "id": "e2701b6c-08e3-455d-9e3c-87681dfb5edd",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        1220,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "CREATE TABLE upload_silverfish AS SELECT * FROM template_silverfish;",
+        "options": {}
+      },
+      "id": "74b4d61a-a7dc-49d2-9c5b-0e2ab4af4ad2",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        2000,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=LANG=C sed -i 's/[\\d128-\\d255]//g' /home/luke/feeds/Upload-Silverfish.csv",
+        "cwd": "/home/luke/feeds/"
+      },
+      "id": "beb49beb-2083-4fe3-b775-3c4d3d974c9f",
+      "name": "SSH3",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        520
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "41",
+          "name": "node3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=psql -d odooData -c \"\\\\COPY upload_silverfish FROM /home/luke/feeds/Upload-Silverfish.csv DELIMITER ',' CSV HEADER;\"",
+        "cwd": "/home/luke/feeds/"
+      },
+      "id": "db99a010-cc98-4b20-9742-45d3a5dd1ca9",
+      "name": "SSH4",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        520
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "53",
+          "name": "postgres (node3)"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -231,9 +328,15 @@
       "updatedAt": "2023-03-06T09:57:03.375Z",
       "id": "35",
       "name": "ftp"
+    },
+    {
+      "createdAt": "2023-07-21T15:01:55.576Z",
+      "updatedAt": "2023-07-21T15:01:55.576Z",
+      "id": "37",
+      "name": "Postgres Enabled"
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-03-09T15:47:59.000Z",
-  "versionId": "51e0d3cc-3a88-4a87-94d1-78427e77a04c"
+  "updatedAt": "2023-07-23T13:05:43.000Z",
+  "versionId": "31ca2554-4785-4746-81a6-e8dc3aae629d"
 }
