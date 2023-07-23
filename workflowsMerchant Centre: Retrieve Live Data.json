@@ -27,7 +27,7 @@
       "main": [
         [
           {
-            "node": "IF1",
+            "node": "Postgres1",
             "type": "main",
             "index": 0
           }
@@ -133,6 +133,17 @@
           }
         ]
       ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-02-21T08:44:41.829Z",
@@ -223,7 +234,8 @@
           "id": "45",
           "name": "node3: dataTransit"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -255,7 +267,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        700,
+        960,
         440
       ]
     },
@@ -266,7 +278,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        960,
+        1220,
         520
       ]
     },
@@ -433,6 +445,39 @@
           "name": "odooData"
         }
       }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "datatransit",
+          "mode": "list",
+          "cachedResultName": "datatransit"
+        },
+        "table": {
+          "__rl": true,
+          "value": "odoo_merchantfeed",
+          "mode": "list",
+          "cachedResultName": "odoo_merchantfeed"
+        },
+        "options": {
+          "skipOnConflict": true
+        }
+      },
+      "id": "3842cf19-db27-41a0-9589-33180bd9a0e8",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        760,
+        440
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "51",
+          "name": "btxPIM"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -444,9 +489,15 @@
       "updatedAt": "2022-10-01T11:41:35.325Z",
       "id": "20",
       "name": "odoo:product"
+    },
+    {
+      "createdAt": "2023-07-21T15:01:55.576Z",
+      "updatedAt": "2023-07-21T15:01:55.576Z",
+      "id": "37",
+      "name": "Postgres Enabled"
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-07-22T09:30:29.000Z",
-  "versionId": "b7170bc6-8539-4174-9e88-3e9c0d4584c9"
+  "updatedAt": "2023-07-23T16:10:32.000Z",
+  "versionId": "3ede0714-aeaf-4d19-942d-ec35ad3c69d6"
 }
