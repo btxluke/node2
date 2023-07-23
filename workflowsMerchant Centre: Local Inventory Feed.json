@@ -5,18 +5,7 @@
       "main": [
         [
           {
-            "node": "MySQL",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "MySQL": {
-      "main": [
-        [
-          {
-            "node": "Set",
+            "node": "Postgres",
             "type": "main",
             "index": 0
           }
@@ -44,6 +33,17 @@
           }
         ]
       ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-02-21T08:50:24.250Z",
@@ -63,26 +63,6 @@
     },
     {
       "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT id, price, quantity, availability FROM `Final-MerchantFeed`"
-      },
-      "id": "8ffb7ec4-b5d2-4b4d-8115-6088df0f3f82",
-      "name": "MySQL",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
-      "position": [
-        1220,
-        340
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "45",
-          "name": "node3: dataTransit"
-        }
-      }
-    },
-    {
-      "parameters": {
         "operation": "toFile",
         "fileFormat": "csv",
         "options": {
@@ -94,7 +74,7 @@
       "type": "n8n-nodes-base.spreadsheetFile",
       "typeVersion": 1,
       "position": [
-        1800,
+        2020,
         340
       ]
     },
@@ -115,7 +95,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        1440,
+        1840,
         340
       ]
     },
@@ -132,13 +112,34 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1980,
+        2200,
         340
       ],
       "credentials": {
         "sshPassword": {
           "id": "44",
           "name": "node3 (root)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \"id\", price, quantity, availability FROM final_merchantfeed;",
+        "options": {}
+      },
+      "id": "fe1cc499-4c42-49d7-b3e4-310f853c27ab",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        1440,
+        340
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "51",
+          "name": "btxPIM"
         }
       }
     }
@@ -158,9 +159,15 @@
       "updatedAt": "2023-02-21T08:39:38.678Z",
       "id": "29",
       "name": "google"
+    },
+    {
+      "createdAt": "2023-07-21T15:01:55.576Z",
+      "updatedAt": "2023-07-21T15:01:55.576Z",
+      "id": "37",
+      "name": "Postgres Enabled"
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-02-21T08:52:15.000Z",
-  "versionId": "01450755-15f4-479c-9ac3-04cdf0810a6a"
+  "updatedAt": "2023-07-23T16:40:48.000Z",
+  "versionId": "7be9c773-efc2-418f-87aa-09771354e179"
 }
