@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "MySQL1",
+            "node": "Postgres",
             "type": "main",
             "index": 0
           }
@@ -34,22 +34,22 @@
         ]
       ]
     },
-    "MySQL1": {
+    "Spreadsheet File1": {
       "main": [
         [
           {
-            "node": "SSH",
+            "node": "SSH1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Spreadsheet File1": {
+    "Postgres": {
       "main": [
         [
           {
-            "node": "SSH1",
+            "node": "SSH",
             "type": "main",
             "index": 0
           }
@@ -108,34 +108,6 @@
     },
     {
       "parameters": {
-        "operation": "deleteTable",
-        "table": {
-          "__rl": true,
-          "value": "Upload-Saddleback",
-          "mode": "list",
-          "cachedResultName": "Upload-Saddleback"
-        },
-        "options": {
-          "queryBatching": "single"
-        }
-      },
-      "id": "41c5ef35-d710-4104-90f3-a7daab26a6af",
-      "name": "MySQL1",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 2.1,
-      "position": [
-        860,
-        360
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "42",
-          "name": "odooData"
-        }
-      }
-    },
-    {
-      "parameters": {
         "operation": "toFile",
         "fileFormat": "csv",
         "options": {}
@@ -171,13 +143,52 @@
           "name": "node3"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "schema": {
+          "__rl": true,
+          "value": "odoodata",
+          "mode": "list",
+          "cachedResultName": "odoodata"
+        },
+        "table": {
+          "__rl": true,
+          "value": "upload_saddleback",
+          "mode": "list",
+          "cachedResultName": "upload_saddleback"
+        },
+        "options": {}
+      },
+      "id": "5af75119-4bf7-47cf-836c-ce7beaa163b6",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        860,
+        360
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
     }
   ],
   "pinData": {},
   "settings": {},
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2023-07-21T15:01:55.576Z",
+      "updatedAt": "2023-07-21T15:01:55.576Z",
+      "id": "37",
+      "name": "Postgres Enabled"
+    }
+  ],
   "triggerCount": 0,
-  "updatedAt": "2023-06-05T10:38:18.000Z",
-  "versionId": "96a31a06-2ebd-4a92-8195-ed19eab399c3"
+  "updatedAt": "2023-07-23T12:52:56.000Z",
+  "versionId": "5b919fe1-7af6-4428-b01a-36a8808a4574"
 }
