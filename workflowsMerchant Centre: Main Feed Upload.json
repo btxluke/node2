@@ -1,17 +1,6 @@
 {
   "active": false,
   "connections": {
-    "MySQL": {
-      "main": [
-        [
-          {
-            "node": "Spreadsheet File",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Spreadsheet File": {
       "main": [
         [
@@ -27,7 +16,18 @@
       "main": [
         [
           {
-            "node": "MySQL",
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File",
             "type": "main",
             "index": 0
           }
@@ -41,26 +41,6 @@
   "nodes": [
     {
       "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT * FROM `Final-MerchantFeed`"
-      },
-      "id": "e8ca8224-b598-4114-9c31-a22e486b3c6f",
-      "name": "MySQL",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
-      "position": [
-        1340,
-        440
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "45",
-          "name": "node3: dataTransit"
-        }
-      }
-    },
-    {
-      "parameters": {
         "operation": "toFile",
         "fileFormat": "csv",
         "options": {
@@ -72,7 +52,7 @@
       "type": "n8n-nodes-base.spreadsheetFile",
       "typeVersion": 1,
       "position": [
-        1620,
+        1880,
         440
       ]
     },
@@ -100,13 +80,34 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1840,
+        2100,
         440
       ],
       "credentials": {
         "sshPassword": {
           "id": "44",
           "name": "node3 (root)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM final_merchantfeed;",
+        "options": {}
+      },
+      "id": "6b2bc2c2-78f2-4caa-b6ea-0fb438762ebb",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        1560,
+        440
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "51",
+          "name": "btxPIM"
         }
       }
     }
@@ -126,9 +127,15 @@
       "updatedAt": "2023-02-21T08:39:38.678Z",
       "id": "29",
       "name": "google"
+    },
+    {
+      "createdAt": "2023-07-21T15:01:55.576Z",
+      "updatedAt": "2023-07-21T15:01:55.576Z",
+      "id": "37",
+      "name": "Postgres Enabled"
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-02-21T08:47:27.000Z",
-  "versionId": "9f0a4b77-e90c-45e8-b5be-484fc4712f05"
+  "updatedAt": "2023-07-23T16:41:01.000Z",
+  "versionId": "a1f3429b-1725-4dc5-9c76-457cc369717d"
 }
