@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "MySQL",
+            "node": "Postgres",
             "type": "main",
             "index": 0
           }
@@ -27,28 +27,6 @@
       "main": [
         [
           {
-            "node": "MySQL1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "MySQL": {
-      "main": [
-        [
-          {
-            "node": "Postgres",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "MySQL1": {
-      "main": [
-        [
-          {
             "node": "Postgres1",
             "type": "main",
             "index": 0
@@ -60,7 +38,7 @@
       "main": [
         [
           {
-            "node": "MySQL",
+            "node": "Postgres",
             "type": "main",
             "index": 0
           }
@@ -160,48 +138,6 @@
     },
     {
       "parameters": {
-        "operation": "executeQuery",
-        "query": "DROP TABLE `Upload-Silverfish`"
-      },
-      "id": "d0a5718d-b4e1-43e5-a4a8-b048fe711273",
-      "name": "MySQL",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
-      "position": [
-        1000,
-        300
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "42",
-          "name": "odooData"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "CREATE TABLE `Upload-Silverfish` AS SELECT * FROM `Template-Silverfish`;"
-      },
-      "id": "d5da6bc8-67bf-4326-b1ba-247d9f4c7ff1",
-      "name": "MySQL1",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
-      "position": [
-        1780,
-        300
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "42",
-          "name": "odooData"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
         "rule": {
           "interval": [
             {
@@ -217,7 +153,7 @@
       "typeVersion": 1,
       "position": [
         800,
-        500
+        120
       ]
     },
     {
@@ -312,31 +248,31 @@
   },
   "tags": [
     {
+      "id": "25",
       "createdAt": "2023-02-20T11:11:19.530Z",
       "updatedAt": "2023-02-20T11:11:19.530Z",
-      "id": "25",
       "name": "Product Feed"
     },
     {
+      "id": "34",
       "createdAt": "2023-03-06T09:56:55.363Z",
       "updatedAt": "2023-03-06T09:56:55.363Z",
-      "id": "34",
       "name": "silverfish"
     },
     {
+      "id": "35",
       "createdAt": "2023-03-06T09:57:03.375Z",
       "updatedAt": "2023-03-06T09:57:03.375Z",
-      "id": "35",
       "name": "ftp"
     },
     {
+      "id": "37",
       "createdAt": "2023-07-21T15:01:55.576Z",
       "updatedAt": "2023-07-21T15:01:55.576Z",
-      "id": "37",
       "name": "Postgres Enabled"
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-07-23T13:05:43.000Z",
-  "versionId": "31ca2554-4785-4746-81a6-e8dc3aae629d"
+  "updatedAt": "2023-07-24T10:50:12.000Z",
+  "versionId": "5b132bf8-037b-4cc7-be75-ea7d086ddb7d"
 }
