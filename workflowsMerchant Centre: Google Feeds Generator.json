@@ -272,7 +272,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "=INSERT INTO datatransit.google_merchantfeed\n(title,\ndescription,\nprice,\nbrand,\ngtin,\nmpn,\ncolour,\nsize)\nSELECT \nProductName AS title, \nLongDescription AS description,\nCONCAT(CAST(ROUND(rrp * (1+(vat/100)),2) AS CHAR),' GBP') AS price,\nBrand,\nEan AS gtin,\nProductCode AS mpn,\nColour AS colour,\nSize AS size\nFROM odoodata.feed_{{ $json.name.toLowerCase() }}\nON CONFLICT DO NOTHING;",
+        "query": "=INSERT INTO datatransit.google_merchantfeed\n(title,\ndescription,\nprice,\nbrand,\ngtin,\nmpn,\ncolour,\nsize)\nSELECT \nProductName AS title, \nLongDescription AS description,\nCONCAT(CAST(ROUND(rrp::numeric * (1+(vat::numeric/100)),2) AS CHAR),' GBP') AS price,\nBrand,\nEan AS gtin,\nProductCode AS mpn,\nColour AS colour,\nSize AS size\nFROM odoodata.feed_{{ $json.name.toLowerCase() }}\nON CONFLICT DO NOTHING;",
         "options": {}
       },
       "id": "69e2cec4-7e11-46b5-8ac2-81d3d0206677",
@@ -288,8 +288,7 @@
           "id": "51",
           "name": "btxPIM"
         }
-      },
-      "continueOnFail": true
+      }
     },
     {
       "parameters": {
@@ -385,31 +384,31 @@
   },
   "tags": [
     {
+      "id": "22",
       "createdAt": "2023-02-16T12:27:16.145Z",
       "updatedAt": "2023-02-16T12:27:16.145Z",
-      "id": "22",
       "name": "facebook"
     },
     {
+      "id": "27",
       "createdAt": "2023-02-20T11:19:15.007Z",
       "updatedAt": "2023-02-20T11:19:15.007Z",
-      "id": "27",
       "name": "ssh"
     },
     {
+      "id": "29",
       "createdAt": "2023-02-21T08:39:38.678Z",
       "updatedAt": "2023-02-21T08:39:38.678Z",
-      "id": "29",
       "name": "google"
     },
     {
+      "id": "37",
       "createdAt": "2023-07-21T15:01:55.576Z",
       "updatedAt": "2023-07-21T15:01:55.576Z",
-      "id": "37",
       "name": "Postgres Enabled"
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-07-23T16:37:24.000Z",
-  "versionId": "13798e3c-ad27-40a9-b3b6-c42d2e4ed462"
+  "updatedAt": "2023-07-24T08:59:31.000Z",
+  "versionId": "9a90fd1f-4a32-407b-bdae-47b8301eb1b1"
 }
