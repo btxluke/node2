@@ -16,17 +16,6 @@
       "main": [
         [
           {
-            "node": "MySQL4",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "MySQL4": {
-      "main": [
-        [
-          {
             "node": "Postgres1",
             "type": "main",
             "index": 0
@@ -102,17 +91,6 @@
       ]
     },
     "Odoo": {
-      "main": [
-        [
-          {
-            "node": "Item Lists",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Item Lists": {
       "main": [
         [
           {
@@ -211,35 +189,7 @@
     },
     {
       "parameters": {
-        "table": {
-          "__rl": true,
-          "value": "`Odoo-MerchantFeed`",
-          "mode": "name"
-        },
-        "columns": "gtin,id,link,image_link,quantity,availability,item_group_id",
-        "options": {
-          "ignore": true
-        }
-      },
-      "id": "5685bbe3-d13f-4a32-9f09-e6cf813727ca",
-      "name": "MySQL4",
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 1,
-      "position": [
-        540,
-        440
-      ],
-      "credentials": {
-        "mySql": {
-          "id": "45",
-          "name": "node3: dataTransit"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "batchSize": 5000,
+        "batchSize": 3000,
         "options": {}
       },
       "id": "7bee6cc8-a145-4db9-9cfb-812392dd3abe",
@@ -339,6 +289,11 @@
               "fieldName": "default_code",
               "operator": "notEqual",
               "value": "={{false}}"
+            },
+            {
+              "fieldName": "barcode",
+              "operator": "notEqual",
+              "value": "={{false}}"
             }
           ]
         }
@@ -405,28 +360,6 @@
     },
     {
       "parameters": {
-        "operation": "removeDuplicates",
-        "compare": "selectedFields",
-        "fieldsToCompare": {
-          "fields": [
-            {
-              "fieldName": "default_code"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "27045497-0095-4b6f-b0f3-39c80b3bb3aa",
-      "name": "Item Lists",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 2.1,
-      "position": [
-        180,
-        -100
-      ]
-    },
-    {
-      "parameters": {
         "operation": "executeQuery",
         "query": "SELECT * FROM map_supplierinfo;",
         "options": {}
@@ -448,6 +381,7 @@
     },
     {
       "parameters": {
+        "operation": "upsert",
         "schema": {
           "__rl": true,
           "value": "datatransit",
@@ -460,16 +394,15 @@
           "mode": "list",
           "cachedResultName": "odoo_merchantfeed"
         },
-        "options": {
-          "skipOnConflict": true
-        }
+        "columnToMatchOn": "id",
+        "options": {}
       },
       "id": "3842cf19-db27-41a0-9589-33180bd9a0e8",
       "name": "Postgres1",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.1,
       "position": [
-        760,
+        520,
         440
       ],
       "credentials": {
@@ -485,19 +418,19 @@
   "staticData": null,
   "tags": [
     {
+      "id": "20",
       "createdAt": "2022-10-01T11:41:35.325Z",
       "updatedAt": "2022-10-01T11:41:35.325Z",
-      "id": "20",
       "name": "odoo:product"
     },
     {
+      "id": "37",
       "createdAt": "2023-07-21T15:01:55.576Z",
       "updatedAt": "2023-07-21T15:01:55.576Z",
-      "id": "37",
       "name": "Postgres Enabled"
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-07-23T16:10:32.000Z",
-  "versionId": "3ede0714-aeaf-4d19-942d-ec35ad3c69d6"
+  "updatedAt": "2023-07-24T10:12:23.000Z",
+  "versionId": "f0b35d8c-d835-4000-b05f-204dcdc8db5f"
 }
