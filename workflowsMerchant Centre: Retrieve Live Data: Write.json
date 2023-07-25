@@ -1,0 +1,172 @@
+{
+  "active": false,
+  "connections": {
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "Set1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-07-25T09:37:05.986Z",
+  "id": "PtzFkiJX3ggmtsV0",
+  "name": "Merchant Centre: Retrieve Live Data: Write",
+  "nodes": [
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "link",
+              "value": "=https://wwww.biketrax.co.uk/shop/{{ $json.product_tmpl_id[0] }}#{{ $json.product_template_attribute_value_ids.join() }}"
+            },
+            {
+              "name": "image_link",
+              "value": "=https://www.biketrax.co.uk/web/image/product.product/{{ $json.id }}/image_1024/"
+            },
+            {
+              "name": "availability",
+              "value": "={{ $json.free_qty > 0 ? \"in_stock\" : \"out_of_stock\" }}"
+            },
+            {
+              "name": "item_group_id",
+              "value": "={{ $json.product_tmpl_id[0] }}"
+            },
+            {
+              "name": "gtin",
+              "value": "={{ $json.barcode }}"
+            }
+          ],
+          "number": [
+            {
+              "name": "quantity",
+              "value": "={{ $json.free_qty }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9cfbcd84-3c97-4ba5-b7f9-6925b01649c3",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "value": "datatransit",
+          "mode": "list",
+          "cachedResultName": "datatransit"
+        },
+        "table": {
+          "__rl": true,
+          "value": "odoo_merchantfeed",
+          "mode": "list",
+          "cachedResultName": "odoo_merchantfeed"
+        },
+        "columnToMatchOn": "id",
+        "options": {}
+      },
+      "id": "ff5be1b7-1e67-4f46-a29f-38aa4ab48cff",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        1180,
+        400
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "51",
+          "name": "btxPIM"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "32b3681a-af6f-400f-bc50-8070502b47fa",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "boolean": [
+            {
+              "name": "reset",
+              "value": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7e19040b-1e85-490d-bb60-7896bee6cc0f",
+      "name": "Set1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        400
+      ],
+      "executeOnce": true
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [
+    {
+      "id": "37",
+      "createdAt": "2023-07-21T15:01:55.576Z",
+      "updatedAt": "2023-07-21T15:01:55.576Z",
+      "name": "Postgres Enabled"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2023-07-25T09:43:57.000Z",
+  "versionId": "e99e655c-2974-4854-8ad9-dce22e4147fe"
+}
