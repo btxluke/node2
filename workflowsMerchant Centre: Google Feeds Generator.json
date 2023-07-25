@@ -179,7 +179,8 @@
       "position": [
         1180,
         980
-      ]
+      ],
+      "executeOnce": true
     },
     {
       "parameters": {
@@ -325,6 +326,7 @@
         480,
         980
       ],
+      "executeOnce": true,
       "credentials": {
         "postgres": {
           "id": "51",
@@ -346,6 +348,7 @@
         760,
         980
       ],
+      "executeOnce": true,
       "credentials": {
         "postgres": {
           "id": "51",
@@ -409,6 +412,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-07-24T08:59:31.000Z",
-  "versionId": "9a90fd1f-4a32-407b-bdae-47b8301eb1b1"
+  "updatedAt": "2023-07-25T10:42:38.000Z",
+  "versionId": "f3dfb970-d25f-481c-915d-042530ff6519"
 }
