@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "Postgres1",
+            "node": "IF",
             "type": "main",
             "index": 0
           }
@@ -32,6 +32,18 @@
             "index": 0
           }
         ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
       ]
     }
   },
@@ -110,9 +122,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.1,
       "position": [
-        1180,
+        1420,
         400
       ],
+      "retryOnFail": true,
       "credentials": {
         "postgres": {
           "id": "51",
@@ -149,10 +162,30 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        1360,
+        1600,
         400
       ],
       "executeOnce": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.id}}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "dd4fa463-1f21-47b2-a482-1ca9659376ae",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1220,
+        400
+      ]
     }
   ],
   "pinData": {},
@@ -167,6 +200,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-07-25T09:43:57.000Z",
-  "versionId": "e99e655c-2974-4854-8ad9-dce22e4147fe"
+  "updatedAt": "2023-07-26T08:46:06.000Z",
+  "versionId": "d238e04a-e1bd-4d7c-acdd-4252f4584992"
 }
