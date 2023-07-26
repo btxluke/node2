@@ -1,0 +1,143 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Odoo1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-07-26T11:53:26.234Z",
+  "id": "mReT488VpnOB4hRe",
+  "name": "Utility: Special Character Stripper",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "bba800cc-43ce-4332-b47e-03fa789565a7",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.template",
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {
+          "fieldsList": [
+            "display_name",
+            "name"
+          ]
+        }
+      },
+      "id": "ea3fafe2-024f-4b95-8591-eb00bba7c0a2",
+      "name": "Odoo",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        380
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.template",
+        "operation": "update",
+        "customResourceId": "={{ $json.id }}",
+        "fieldsToCreateOrUpdate": {
+          "fields": [
+            {
+              "fieldName": "display_name",
+              "fieldValue": "={{ $json.display_name.replace(/^a-z0-9áéíóúñü \\.,_-/gim,\"\").replace(/['\"]+/g, '') }}"
+            },
+            {
+              "fieldName": "name",
+              "fieldValue": "={{ $json.name.replace(/^a-z0-9áéíóúñü \\.,_-/gim,\"\").replace(/['\"]+/g, '') }}"
+            }
+          ]
+        }
+      },
+      "id": "8b707702-c24d-4026-af94-04e4f061ba0e",
+      "name": "Odoo1",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        380
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.id }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "695c13c1-1c48-4ec7-9435-5515b0b11234",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        380
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-07-26T14:17:58.000Z",
+  "versionId": "4bfac809-1f8e-4c1d-8963-b39f72ec6c2b"
+}
