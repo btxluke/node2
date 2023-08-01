@@ -126,7 +126,8 @@
           "id": "52",
           "name": "odooData"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -147,7 +148,8 @@
           "id": "52",
           "name": "odooData"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -168,7 +170,8 @@
           "id": "52",
           "name": "odooData"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -208,7 +211,8 @@
           "id": "53",
           "name": "postgres (node3)"
         }
-      }
+      },
+      "disabled": true
     }
   ],
   "pinData": {
@@ -256,6 +260,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-07-21T16:25:51.000Z",
-  "versionId": "4a85dd65-c818-490d-80b0-1df1a78452f4"
+  "updatedAt": "2023-08-01T08:37:30.000Z",
+  "versionId": "9d68a22b-befd-4583-85bc-f113fa672f41"
 }
