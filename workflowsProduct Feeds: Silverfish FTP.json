@@ -159,7 +159,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "DROP TABLE upload_silverfish",
+        "query": "DROP TABLE IF EXISTS odoodata.upload_silverfish",
         "options": {}
       },
       "id": "e2701b6c-08e3-455d-9e3c-87681dfb5edd",
@@ -180,7 +180,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "CREATE TABLE upload_silverfish AS SELECT * FROM template_silverfish;",
+        "query": "CREATE TABLE odoodata.upload_silverfish AS SELECT * FROM template_silverfish;",
         "options": {}
       },
       "id": "74b4d61a-a7dc-49d2-9c5b-0e2ab4af4ad2",
@@ -220,7 +220,7 @@
     },
     {
       "parameters": {
-        "command": "=psql -d odooData -c \"\\\\COPY upload_silverfish FROM /home/luke/feeds/Upload-Silverfish.csv DELIMITER ',' CSV HEADER;\"",
+        "command": "=psql -d odooData -c \"\\\\COPY odoodata.upload_silverfish FROM /home/luke/feeds/Upload-Silverfish.csv DELIMITER ',' CSV HEADER;\"",
         "cwd": "/home/luke/feeds/"
       },
       "id": "db99a010-cc98-4b20-9742-45d3a5dd1ca9",
@@ -273,6 +273,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-07-24T10:50:12.000Z",
-  "versionId": "5b132bf8-037b-4cc7-be75-ea7d086ddb7d"
+  "updatedAt": "2023-08-06T15:27:00.000Z",
+  "versionId": "73dfd362-7143-4946-b863-34bd9399efdb"
 }
