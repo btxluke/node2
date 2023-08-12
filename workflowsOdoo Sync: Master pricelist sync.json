@@ -1,0 +1,196 @@
+{
+  "active": true,
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-08-12T11:38:54.654Z",
+  "id": "okYFPoa8AAUwllb9",
+  "name": "Odoo Sync: Master pricelist sync",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "a7f47a64-f841-49e5-82b8-0c57129084af",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        700,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM odoodata.map_supplierinfo;",
+        "options": {}
+      },
+      "id": "1a424056-f666-41f9-aad8-96eb6ea49eae",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.2,
+      "position": [
+        1140,
+        380
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "f1210a58-022f-47cf-abea-686f2f355e4a",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1340,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "TRUNCATE odoodata.map_supplierpricelist",
+        "options": {}
+      },
+      "id": "544739d3-d25a-4c05-95d4-1b363d51053f",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.2,
+      "position": [
+        920,
+        380
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "ErnzZk7ur37b9J9X"
+      },
+      "id": "f3bc14bf-7d20-4f9c-9762-b14686014830",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        380
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "68d16826-68fb-48cf-9595-e1d342f1da92",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "path": "master-pricelist-sync",
+        "options": {}
+      },
+      "id": "3293eba0-5dbe-4e1c-b840-94799287bb52",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        700,
+        600
+      ],
+      "webhookId": "feff5751-c294-4588-af38-cb380c20d021"
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-08-12T14:08:42.000Z",
+  "versionId": "70ea5e3c-b1e1-470a-9a4e-126811475bd2"
+}
