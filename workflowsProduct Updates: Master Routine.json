@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "Postgres",
+            "node": "Odoo Sync: Master pricelist sync",
             "type": "main",
             "index": 0
           }
@@ -113,6 +113,17 @@
           }
         ]
       ]
+    },
+    "Odoo Sync: Master pricelist sync": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-02-22T12:17:23.160Z",
@@ -156,7 +167,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        1160,
+        1380,
         400
       ]
     },
@@ -176,7 +187,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1320,
+        1540,
         400
       ]
     },
@@ -187,7 +198,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1320,
+        1540,
         240
       ]
     },
@@ -198,7 +209,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        820,
+        1040,
         640
       ]
     },
@@ -212,7 +223,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 1,
       "position": [
-        1000,
+        1220,
         640
       ]
     },
@@ -230,7 +241,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        1160,
+        1380,
         640
       ],
       "continueOnFail": true
@@ -250,7 +261,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1340,
+        1560,
         640
       ]
     },
@@ -268,7 +279,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        1520,
+        1740,
         640
       ]
     },
@@ -281,7 +292,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        1700,
+        1920,
         640
       ],
       "executeOnce": true
@@ -297,7 +308,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.1,
       "position": [
-        900,
+        1120,
         400
       ],
       "credentials": {
@@ -306,6 +317,20 @@
           "name": "odooData"
         }
       }
+    },
+    {
+      "parameters": {
+        "url": "https://node2.biketrax.co.uk/webhook/master-pricelist-sync",
+        "options": {}
+      },
+      "id": "8e1fa3fc-e083-410d-9f49-1de360db7274",
+      "name": "Odoo Sync: Master pricelist sync",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        720,
+        400
+      ]
     }
   ],
   "pinData": {},
@@ -330,6 +355,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-07-21T15:01:56.000Z",
-  "versionId": "de9f7e56-4772-4fad-8607-7752a0b30839"
+  "updatedAt": "2023-08-12T14:09:58.000Z",
+  "versionId": "b7fd4d8f-c6c5-486d-a92b-4dc03c7c9c34"
 }
