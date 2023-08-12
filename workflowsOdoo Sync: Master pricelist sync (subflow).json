@@ -1,0 +1,327 @@
+{
+  "active": false,
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Globals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Globals": {
+      "main": [
+        [
+          {
+            "node": "Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-08-12T12:15:36.883Z",
+  "id": "ErnzZk7ur37b9J9X",
+  "name": "Odoo Sync: Master pricelist sync (subflow)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "0e10eae9-4cc5-4b7f-a119-4e19f3b951d1",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        340,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.supplierinfo",
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {
+          "fieldsList": [
+            "product_id",
+            "price",
+            "product_tmpl_id",
+            "partner_id",
+            "delay"
+          ]
+        },
+        "filterRequest": {
+          "filter": [
+            {
+              "fieldName": "partner_id",
+              "value": "={{[ $json.globals[0].PartnerId] }}"
+            },
+            {
+              "fieldName": "price",
+              "operator": "greaterThen",
+              "value": "0"
+            }
+          ]
+        }
+      },
+      "id": "fd487c43-cd83-4f98-b433-290c25851e87",
+      "name": "Odoo",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        780,
+        380
+      ],
+      "retryOnFail": true,
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "globals",
+              "value": "={{ JSON.parse($json.globals) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5f5dc440-c587-410d-83c6-32e56bc9d0e2",
+      "name": "Globals",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        560,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 3000,
+        "options": {}
+      },
+      "id": "e3af4ef0-62f2-4581-9070-0095706a360a",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1260,
+        380
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "a78718c9-b0da-4a74-ab71-fcb92b8f7b74",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "odoodata",
+          "mode": "list",
+          "cachedResultName": "odoodata"
+        },
+        "table": {
+          "__rl": true,
+          "value": "map_supplierpricelist",
+          "mode": "list",
+          "cachedResultName": "map_supplierpricelist"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "product_id": "={{ $json.product_id[0] ? $json.product_id[0] : null }}",
+            "price": "={{ $json.price }}",
+            "product_tmpl_id": "={{ $json.product_tmpl_id[0] ? $json.product_tmpl_id[0] : null }}",
+            "partner_id": "={{ $json.partner_id[0] }}",
+            "delay": "={{ $json.delay ? $json.delay : 365 }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": true,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "product_id",
+              "displayName": "product_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "product_tmpl_id",
+              "displayName": "product_tmpl_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "partner_id",
+              "displayName": "partner_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "delay",
+              "displayName": "delay",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8c115e9d-f5ba-4c96-97a2-a3194643bcfa",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.2,
+      "position": [
+        1440,
+        380
+      ],
+      "retryOnFail": true,
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "boolean": [
+            {
+              "name": "reset",
+              "value": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d334ab4e-995e-49ac-8ffa-bc65a9c1b4c6",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1460,
+        640
+      ],
+      "executeOnce": true
+    }
+  ],
+  "pinData": {
+    "Execute Workflow Trigger": [
+      {
+        "json": {
+          "name": "Brompton",
+          "globals": "[{\"SupplierName\": \"Brompton Bicycle Ltd\",\"PartnerId\": 93,\"ProductTagId\": 15,\"LeadTimeAddition\":10}]"
+        }
+      }
+    ]
+  },
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-08-12T13:19:29.000Z",
+  "versionId": "9f52d049-7a2d-4fc5-bfe7-b38f3e69ff30"
+}
