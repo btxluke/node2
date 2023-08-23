@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Schedule Trigger": {
       "main": [
@@ -56,18 +56,7 @@
       "main": [
         [
           {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "IF1",
+            "node": "Supplier Update Webhook",
             "type": "main",
             "index": 0
           }
@@ -119,6 +108,17 @@
         [
           {
             "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supplier Update Webhook": {
+      "main": [
+        [
+          {
+            "node": "IF1",
             "type": "main",
             "index": 0
           }
@@ -229,25 +229,6 @@
     },
     {
       "parameters": {
-        "url": "={{ $json.Globals.Webhook }}",
-        "options": {
-          "response": {
-            "response": {}
-          }
-        }
-      },
-      "id": "68ca27a9-f009-4ea8-8f56-58d22699cb82",
-      "name": "HTTP Request",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 3,
-      "position": [
-        1380,
-        640
-      ],
-      "continueOnFail": true
-    },
-    {
-      "parameters": {
         "conditions": {
           "boolean": [
             {
@@ -281,7 +262,8 @@
       "position": [
         1740,
         640
-      ]
+      ],
+      "disabled": true
     },
     {
       "parameters": {
@@ -295,12 +277,13 @@
         1920,
         640
       ],
-      "executeOnce": true
+      "executeOnce": true,
+      "disabled": true
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \"globals\" FROM \"Map-SupplierInfo\";",
+        "query": "SELECT \"globals\" FROM \"map_supplierinfo\";",
         "options": {}
       },
       "id": "6776c052-11a0-4547-b69f-027a2c5efd1d",
@@ -331,6 +314,25 @@
         720,
         400
       ]
+    },
+    {
+      "parameters": {
+        "url": "=https://node4.biketrax.co.uk/webhook/{{ $json.globals.Webhook }}",
+        "options": {
+          "response": {
+            "response": {}
+          }
+        }
+      },
+      "id": "68ca27a9-f009-4ea8-8f56-58d22699cb82",
+      "name": "Supplier Update Webhook",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1380,
+        640
+      ],
+      "continueOnFail": true
     }
   ],
   "pinData": {},
@@ -355,6 +357,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-08-12T14:09:58.000Z",
-  "versionId": "b7fd4d8f-c6c5-486d-a92b-4dc03c7c9c34"
+  "updatedAt": "2023-08-23T14:47:19.000Z",
+  "versionId": "c126ae1a-6934-4864-8fc4-1e9a864e5b86"
 }
