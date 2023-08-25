@@ -187,6 +187,7 @@
         1260,
         420
       ],
+      "retryOnFail": true,
       "credentials": {
         "odooApi": {
           "id": "37",
@@ -200,15 +201,15 @@
           "string": [
             {
               "name": "program_id",
-              "value": "Canyon ASP Program"
+              "value": "Cycle To Work Wallet"
             },
             {
               "name": "customer_name",
-              "value": "Marc Davidson"
+              "value": "Lucy Walmsley"
             },
             {
               "name": "voucher_amount",
-              "value": "20"
+              "value": "2000"
             }
           ]
         },
@@ -3614,6 +3615,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-21T17:17:55.869Z",
-  "versionId": "429dbc34-fb20-404b-9501-0c9513606e15"
+  "updatedAt": "2023-08-25T10:48:36.000Z",
+  "versionId": "03ead363-b80e-4116-ab06-e94ad269deb7"
 }
