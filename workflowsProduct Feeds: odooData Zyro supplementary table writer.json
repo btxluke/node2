@@ -27,7 +27,7 @@
       "main": [
         [
           {
-            "node": "SSH3",
+            "node": "Postgres1",
             "type": "main",
             "index": 0
           }
@@ -39,6 +39,50 @@
         [
           {
             "node": "SSH2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "SSH3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH3": {
+      "main": [
+        [
+          {
+            "node": "Postgres2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres2": {
+      "main": [
+        [
+          {
+            "node": "Postgres3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres3": {
+      "main": [
+        [
+          {
+            "node": "Postgres4",
             "type": "main",
             "index": 0
           }
@@ -95,7 +139,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1360,
+        1320,
         200
       ],
       "credentials": {
@@ -128,7 +172,7 @@
     },
     {
       "parameters": {
-        "command": "=psql -d odooData -c \"\\\\COPY csp_{{ $node[\"Execute Workflow Trigger\"].json.Supplier.toLowerCase() }} FROM /home/luke/feeds/Csp-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv DELIMITER ',' CSV HEADER;\"",
+        "command": "=psql -d odooData -c \"\\\\COPY public.tmp FROM /home/luke/feeds/Csp-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv DELIMITER ',' CSV HEADER;\"",
         "cwd": "/home/luke/feeds/"
       },
       "id": "73e578e2-ca1e-4850-a848-4f042bd80bac",
@@ -136,13 +180,117 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1520,
+        1760,
         200
       ],
       "credentials": {
         "sshPassword": {
           "id": "53",
           "name": "postgres (node3)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "CREATE TABLE public.tmp AS SELECT * FROM odoodata.csp_zyro;",
+        "options": {}
+      },
+      "id": "e28941c9-b8b6-49be-8a0a-c493e66d29fb",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.2,
+      "position": [
+        1540,
+        200
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=psql -d odooData -c \"\\\\COPY public.csp_{{ $node[\"Execute Workflow Trigger\"].json.Supplier.toLowerCase() }} FROM /home/luke/feeds/Csp-{{ $node[\"Execute Workflow Trigger\"].json.Supplier }}.csv DELIMITER ',' CSV HEADER;\"",
+        "cwd": "/home/luke/feeds/"
+      },
+      "id": "7a9879f3-8751-4996-84c9-6257a7dd7563",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        580,
+        100
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "53",
+          "name": "postgres (node3)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO odoodata.csp_zyro \n(SELECT * FROM public.tmp) ON CONFLICT DO NOTHING;",
+        "options": {}
+      },
+      "id": "cbdf562c-722d-41a4-ab98-7eab9586a55f",
+      "name": "Postgres2",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.2,
+      "position": [
+        1540,
+        400
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO odoodata.csp_zyro \n(SELECT * FROM public.tmp WHERE barcode != NULL AND barcode != '') ON CONFLICT DO NOTHING;",
+        "options": {}
+      },
+      "id": "8e876cc6-290c-4f9f-840b-9f0bc3f2f71b",
+      "name": "Postgres3",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.2,
+      "position": [
+        1760,
+        400
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DROP TABLE public.tmp",
+        "options": {}
+      },
+      "id": "de84aa23-d98a-4573-ad61-2f2667cf823c",
+      "name": "Postgres4",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.2,
+      "position": [
+        1540,
+        620
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
         }
       }
     }
@@ -204,6 +352,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-07-24T10:42:35.000Z",
-  "versionId": "6db06f2d-40f5-426f-a640-ac718feeeebf"
+  "updatedAt": "2023-08-26T10:26:37.000Z",
+  "versionId": "70718116-f58a-4d4f-98de-187d062d2f4f"
 }
