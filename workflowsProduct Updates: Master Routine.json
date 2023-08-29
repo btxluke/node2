@@ -136,7 +136,7 @@
           "interval": [
             {
               "field": "hours",
-              "hoursInterval": 12
+              "hoursInterval": 24
             }
           ]
         }
@@ -344,7 +344,7 @@
   "staticData": {
     "node:Schedule Trigger": {
       "recurrencyRules": [
-        16
+        4
       ]
     }
   },
@@ -357,6 +357,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-08-28T15:00:00.000Z",
-  "versionId": "c126ae1a-6934-4864-8fc4-1e9a864e5b86"
+  "updatedAt": "2023-08-29T10:10:52.000Z",
+  "versionId": "8af133ec-1e1d-484f-a11a-7316b7260aa8"
 }
