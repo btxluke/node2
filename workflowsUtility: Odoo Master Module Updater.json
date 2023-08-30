@@ -1,0 +1,317 @@
+{
+  "active": false,
+  "connections": {
+    "n8n": {
+      "main": [
+        [
+          {
+            "node": "SSH1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SSH3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH1": {
+      "main": [
+        [
+          {
+            "node": "Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH2": {
+      "main": [
+        [
+          {
+            "node": "n8n1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH3": {
+      "main": [
+        [
+          {
+            "node": "SSH2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "n8n",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-08-30T18:22:48.658Z",
+  "id": "o0EqmGjGvEre5vWT",
+  "name": "Utility: Odoo Master Module Updater",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "ir.module.module",
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {
+          "fieldsList": [
+            "display_name",
+            "name"
+          ]
+        },
+        "filterRequest": {
+          "filter": [
+            {
+              "fieldName": "name",
+              "operator": "notEqual",
+              "value": "base"
+            }
+          ]
+        }
+      },
+      "id": "4cdd08a7-b967-44e3-9647-2811c49ca7c0",
+      "name": "Odoo",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        920,
+        440
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deactivate",
+        "workflowId": {
+          "__rl": true,
+          "value": "113",
+          "mode": "list",
+          "cachedResultName": "Utility: Server Down Routine (#113)"
+        }
+      },
+      "id": "902c77a6-ef0c-496b-af27-5c7bb3f4309d",
+      "name": "n8n",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        480,
+        440
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "40",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "activate",
+        "workflowId": {
+          "__rl": true,
+          "value": "113",
+          "mode": "list",
+          "cachedResultName": "Utility: Server Down Routine (#113)"
+        }
+      },
+      "id": "8466ee28-b7d6-4490-8331-a1f16dab5c38",
+      "name": "n8n1",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        700,
+        720
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "40",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "2e45b347-2a3a-4ded-a102-705328d7ba21",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=./odoo-bin -c /etc/odoo-server.conf -d btx -u {{ $json.name }}",
+        "cwd": "/opt/odoo/odoo-server/"
+      },
+      "id": "6c9ddfa7-0fd8-46ca-b421-23a3f3945859",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        440
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "PQHJSgsXQ8xsrCfq",
+          "name": "node5 (odoo)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "systemctl stop odoo"
+      },
+      "id": "62e478eb-7114-4432-8ceb-567b67a57bfc",
+      "name": "SSH1",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        700,
+        440
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "47",
+          "name": "Node 5 (root)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "systemctl start odoo"
+      },
+      "id": "e565fac3-85d3-4930-84c4-d59cdf229597",
+      "name": "SSH2",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        480,
+        720
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "47",
+          "name": "Node 5 (root)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=./odoo-bin -c /etc/odoo-server.conf -d btx -u base",
+        "cwd": "/opt/odoo/odoo-server/"
+      },
+      "id": "e670e852-4da9-47c2-9708-7548f14861ff",
+      "name": "SSH3",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        260,
+        720
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "PQHJSgsXQ8xsrCfq",
+          "name": "node5 (odoo)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                3
+              ]
+            }
+          ]
+        }
+      },
+      "id": "18896951-4479-4816-ae77-f81d43680567",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        260,
+        440
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-08-30T18:42:54.000Z",
+  "versionId": "ca9498e8-83c2-4591-a322-5eb9e29f6444"
+}
