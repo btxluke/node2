@@ -205,11 +205,11 @@
             },
             {
               "name": "customer_name",
-              "value": "Anette Stimmer"
+              "value": "Pawel Milto"
             },
             {
               "name": "voucher_amount",
-              "value": "2499.19"
+              "value": "1915"
             }
           ]
         },
@@ -3615,6 +3615,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-09-04T11:24:03.000Z",
-  "versionId": "ca9e8b8a-c417-4395-8b11-908cf2681a63"
+  "updatedAt": "2023-09-05T12:43:18.000Z",
+  "versionId": "5dcd2671-8572-4252-a74e-bb20f7f2c496"
 }
