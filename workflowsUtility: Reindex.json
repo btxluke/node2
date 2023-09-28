@@ -1,0 +1,179 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-09-28T06:46:54.755Z",
+  "id": "jLNXhBrEcs012xQJ",
+  "name": "Utility: Reindex",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "335ba89f-6e26-4708-9d40-9aae829bcc1a",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM map_supplierinfo",
+        "options": {}
+      },
+      "id": "e63a142a-24cf-4a3b-87ae-1cad2963e509",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        440
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "name",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "name": "globals",
+              "value": "={{ JSON.parse($json.globals)[0] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cd0e8bb4-d1c5-4887-b83c-ca5790dc1e51",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1260,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "ceb7a964-0141-413a-870c-5811e6c6029f",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1480,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://node4.biketrax.co.uk/webhook/supplier-index-sync",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{$json}}",
+        "options": {}
+      },
+      "id": "e8a3a05f-5f63-4fe1-b6cb-b24f96fd061a",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1740,
+        440
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "9db0031c-494c-4f4c-892b-8878c98900a6",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        680
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-09-28T06:53:35.000Z",
+  "versionId": "c35a71ac-b088-4be5-bbc2-802cae7c7fbe"
+}
