@@ -1,0 +1,249 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches1": {
+      "main": [
+        [
+          {
+            "node": "Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-09-28T06:34:36.834Z",
+  "id": "Ij39bEPJZlAicxq6",
+  "name": "Utility: Retag",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "5a0e2d1c-6029-461a-a4dd-666b3b9efe38",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        620,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM map_supplierinfo",
+        "options": {}
+      },
+      "id": "2fe72f41-03d2-483f-9822-bddfd3aeb4f7",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.2,
+      "position": [
+        840,
+        440
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "0a6ab998-4fb1-44c0-812e-6b8721bedfa0",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1260,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT productcode,{{ $json.globals.ProductTagId }} AS product_tag_id FROM {{ \"feed_\"+$json.name.toLowerCase() }}",
+        "options": {}
+      },
+      "id": "906a6514-c6c6-44f3-9a5d-7985cbb85443",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.2,
+      "position": [
+        1580,
+        440
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "name",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "name": "globals",
+              "value": "={{ JSON.parse($json.globals)[0] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e0dafbc3-e375-42ef-bb3a-c9624be20072",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1060,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "926e6445-637a-4301-b417-c2c7bba9ac8e",
+      "name": "Split In Batches1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1800,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.product",
+        "operation": "getAll",
+        "options": {
+          "fieldsList": [
+            "product_tag_ids",
+            "product_tmpl_id"
+          ]
+        },
+        "filterRequest": {
+          "filter": [
+            {
+              "fieldName": "default_code",
+              "value": "={{ $json.productcode }}"
+            }
+          ]
+        }
+      },
+      "id": "0f2bc629-02e0-4f4b-81b5-909258281884",
+      "name": "Odoo",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        2060,
+        440
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "4b9b6b93-b060-4a89-9164-c4bddee203c9",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        840
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-09-28T06:46:21.000Z",
+  "versionId": "86c156cc-2bb4-4d53-ba85-328a52fd02fa"
+}
