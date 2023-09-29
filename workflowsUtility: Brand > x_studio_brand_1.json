@@ -1,0 +1,138 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-09-29T08:48:57.914Z",
+  "id": "UwXSitcXomSbG8Ot",
+  "name": "Utility: Brand > x_studio_brand_1",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "a2756d31-04ec-4ba7-bebb-275ef56400c8",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM map_supplierinfo",
+        "options": {}
+      },
+      "id": "53c33cae-0292-4bd7-8644-1d8759eb5f04",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        460
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "52",
+          "name": "odooData"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "06b10d08-2a35-42d6-bbd7-321697e729b5",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        820,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "l2XwBXgNxWRIskvp"
+      },
+      "id": "7a762442-f7fc-45e4-bfba-c7138fe2e5ab",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        460
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "8ee9a0bb-162f-4d4f-9a56-1ecffdb5b92d",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        680
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-09-29T10:32:44.000Z",
+  "versionId": "ad970276-6167-4bd4-af14-fe1776e13971"
+}
