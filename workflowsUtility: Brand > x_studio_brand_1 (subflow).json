@@ -71,6 +71,7 @@
         "resource": "custom",
         "customResource": "product.product",
         "operation": "getAll",
+        "returnAll": true,
         "options": {
           "fieldsList": [
             "product_tmpl_id",
@@ -202,11 +203,20 @@
       ]
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Execute Workflow Trigger": [
+      {
+        "json": {
+          "name": "Sportline",
+          "globals": "[{\"SupplierName\": \"Sportline\",\"PartnerId\": 42,\"ProductTagId\": 6,\"LeadTimeAddition\":3}]"
+        }
+      }
+    ]
+  },
   "settings": {},
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-09-29T09:12:14.000Z",
-  "versionId": "b329324b-7247-4631-8c4d-c0d85ef2bcf3"
+  "updatedAt": "2023-09-30T08:52:38.000Z",
+  "versionId": "d6b03cef-cccd-403c-9ba3-8706efc7035b"
 }
