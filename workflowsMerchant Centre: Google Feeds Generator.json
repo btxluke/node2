@@ -45,7 +45,7 @@
       "main": [
         [
           {
-            "node": "Postgres",
+            "node": "SSH",
             "type": "main",
             "index": 0
           }
@@ -128,6 +128,17 @@
           }
         ]
       ]
+    },
+    "SSH": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-02-21T08:39:14.707Z",
@@ -197,7 +208,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
       "position": [
-        120,
+        -20,
         380
       ]
     },
@@ -376,6 +387,25 @@
           "name": "btxPIM"
         }
       }
+    },
+    {
+      "parameters": {
+        "command": "systemctl restart odoo"
+      },
+      "id": "03e42517-787c-44ea-a0f9-a2525dbf9362",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        200,
+        380
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "47",
+          "name": "Node 5 (root)"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -412,6 +442,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-07-25T10:42:38.000Z",
-  "versionId": "f3dfb970-d25f-481c-915d-042530ff6519"
+  "updatedAt": "2023-09-30T08:26:54.000Z",
+  "versionId": "ecdb28f8-8b14-4059-915a-97510d681868"
 }
