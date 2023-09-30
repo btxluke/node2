@@ -128,11 +128,20 @@
       ]
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Postgres": [
+      {
+        "json": {
+          "name": "Sportline",
+          "globals": "[{\"SupplierName\":\"Sportline\",\"PartnerId\":42,\"ProductTagId\":6,\"LeadTimeAddition\":3,\"Webhook\":\"update-sportline\",\"LastCount\":\"609\",\"CreateSequence\":\"create-categ-sync,create-size-sync,create-version-write,create-brand-sync,create-brand-write,create-colour-sync,create-colour-write,create-attribute-write,create-sportline-htmlspec\"}]"
+        }
+      }
+    ]
+  },
   "settings": {},
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-09-29T10:32:44.000Z",
-  "versionId": "ad970276-6167-4bd4-af14-fe1776e13971"
+  "updatedAt": "2023-09-30T14:12:42.000Z",
+  "versionId": "10ae645d-9690-47d7-8e3a-fb34433a4d17"
 }
