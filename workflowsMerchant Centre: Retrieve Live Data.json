@@ -190,6 +190,10 @@
               "fieldName": "barcode",
               "operator": "notEqual",
               "value": "={{false}}"
+            },
+            {
+              "fieldName": "active",
+              "value": "={{ true }}"
             }
           ]
         }
@@ -321,6 +325,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-07-25T10:07:45.000Z",
-  "versionId": "c4603b29-cd24-4238-b901-3aeaf56c9cbc"
+  "updatedAt": "2023-09-30T08:26:09.000Z",
+  "versionId": "efbf2a2d-728d-4d8e-8737-c93be58cb072"
 }
