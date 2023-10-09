@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "SSH1",
+            "node": "Odoo",
             "type": "main",
             "index": 0
           }
@@ -16,9 +16,14 @@
       "main": [
         [
           {
-            "node": "Split In Batches",
+            "node": "SSH1",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
           }
         ]
       ]
@@ -45,7 +50,7 @@
       "main": [
         [
           {
-            "node": "Odoo",
+            "node": "Merge",
             "type": "main",
             "index": 0
           }
@@ -95,6 +100,17 @@
           }
         ]
       ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-08-30T18:22:48.658Z",
@@ -128,7 +144,7 @@
       "type": "n8n-nodes-base.odoo",
       "typeVersion": 1,
       "position": [
-        920,
+        560,
         440
       ],
       "credentials": {
@@ -153,7 +169,7 @@
       "type": "n8n-nodes-base.n8n",
       "typeVersion": 1,
       "position": [
-        480,
+        340,
         440
       ],
       "credentials": {
@@ -232,8 +248,9 @@
       "typeVersion": 1,
       "position": [
         700,
-        440
+        300
       ],
+      "executeOnce": true,
       "credentials": {
         "sshPassword": {
           "id": "47",
@@ -298,7 +315,21 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.1,
       "position": [
-        260,
+        120,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch",
+        "output": "input2"
+      },
+      "id": "7e6f94cc-00e1-4f16-bcce-b9cd430ff471",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        920,
         440
       ]
     }
@@ -312,6 +343,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-30T18:42:54.000Z",
-  "versionId": "ca9498e8-83c2-4591-a322-5eb9e29f6444"
+  "updatedAt": "2023-10-09T18:20:24.000Z",
+  "versionId": "f032ae1d-1f2d-4ff6-b772-32e07d649f57"
 }
