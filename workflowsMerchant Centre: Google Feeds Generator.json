@@ -284,7 +284,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "=INSERT INTO datatransit.google_merchantfeed\n(title,\ndescription,\nprice,\nbrand,\ngtin,\nmpn,\ncolour,\nsize)\nSELECT \nProductName AS title, \nLongDescription AS description,\nCONCAT(CAST(ROUND(rrp::numeric * (1+(vat::numeric/100)),2) AS CHAR),' GBP') AS price,\nBrand,\nEan AS gtin,\nProductCode AS mpn,\nColour AS colour,\nSize AS size\nFROM odoodata.feed_{{ $json.name.toLowerCase() }}\nON CONFLICT DO NOTHING;",
+        "query": "=INSERT INTO datatransit.google_merchantfeed\n(title,\ndescription,\nprice,\nbrand,\ngtin,\nmpn,\ncolour,\nsize)\nSELECT \nProductName AS title, \nLongDescription AS description,\nCONCAT(ROUND(rrp::numeric * (1+(vat::numeric/100)),2),' GBP') AS price,\nBrand,\nEan AS gtin,\nProductCode AS mpn,\nColour AS colour,\nSize AS size\nFROM odoodata.feed_{{ $json.name.toLowerCase() }}\nON CONFLICT DO NOTHING;",
         "options": {}
       },
       "id": "69e2cec4-7e11-46b5-8ac2-81d3d0206677",
@@ -442,6 +442,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-09-30T08:26:54.000Z",
-  "versionId": "ecdb28f8-8b14-4059-915a-97510d681868"
+  "updatedAt": "2023-10-17T13:51:49.000Z",
+  "versionId": "b85b7e53-b21f-4ef4-a54b-14016a2026e8"
 }
