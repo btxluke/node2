@@ -23,7 +23,18 @@
         ]
       ]
     },
-    "Postgres1": {
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
       "main": [
         [
           {
@@ -32,18 +43,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "IF": {
-      "main": [
-        [
-          {
-            "node": "Postgres1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        []
       ]
     }
   },
@@ -62,7 +61,7 @@
             },
             {
               "name": "link",
-              "value": "=https://wwww.biketrax.co.uk/shop/{{ $json.product_tmpl_id[0] }}#{{ $json.product_template_attribute_value_ids.join() }}"
+              "value": "=https://www.biketrax.co.uk/shop/{{ $json.product_tmpl_id[0] }}#{{ $json.product_template_attribute_value_ids.join() }}"
             },
             {
               "name": "image_link",
@@ -122,8 +121,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.1,
       "position": [
-        1420,
-        400
+        1400,
+        200
       ],
       "retryOnFail": true,
       "credentials": {
@@ -186,6 +185,28 @@
         1220,
         400
       ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO datatransit.odoo_merchantfeed(\n\"quantity\",\n\"id\",\n\"link\",\n\"image_link\",\n\"availability\",\n\"item_group_id\",\n\"gtin\"\n)\nVALUES (\n{{ $json.quantity }},\n{{ $json.id }},\n{{ \"'\"+$json.link+\"'\"}},\n{{ \"'\"+$json.image_link+\"'\"}},\n{{ \"'\"+$json.availability+\"'\"}},\n{{$json.item_group_id}},\n{{ \"'\"+$json.gtin+\"'\"}})\nON CONFLICT DO NOTHING;\n",
+        "options": {}
+      },
+      "id": "893fa2a6-afcf-4f4a-bc9f-743d0605530a",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [
+        1420,
+        400
+      ],
+      "retryOnFail": true,
+      "credentials": {
+        "postgres": {
+          "id": "51",
+          "name": "btxPIM"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -200,6 +221,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-07-26T08:46:06.000Z",
-  "versionId": "d238e04a-e1bd-4d7c-acdd-4252f4584992"
+  "updatedAt": "2023-10-17T13:53:02.000Z",
+  "versionId": "614d0ab8-c86a-461f-a526-bbd6804b47bc"
 }
