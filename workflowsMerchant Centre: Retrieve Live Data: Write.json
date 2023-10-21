@@ -206,7 +206,8 @@
           "id": "51",
           "name": "btxPIM"
         }
-      }
+      },
+      "continueOnFail": true
     }
   ],
   "pinData": {},
@@ -221,6 +222,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-10-17T13:53:02.000Z",
-  "versionId": "614d0ab8-c86a-461f-a526-bbd6804b47bc"
+  "updatedAt": "2023-10-21T18:36:14.000Z",
+  "versionId": "5007cc47-3763-470c-93bb-eb195f16b704"
 }
