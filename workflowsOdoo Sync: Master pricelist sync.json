@@ -168,11 +168,13 @@
       "position": [
         1340,
         620
-      ]
+      ],
+      "executeOnce": true
     },
     {
       "parameters": {
         "path": "master-pricelist-sync",
+        "responseMode": "lastNode",
         "options": {}
       },
       "id": "3293eba0-5dbe-4e1c-b840-94799287bb52",
@@ -191,6 +193,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-08-12T14:08:42.000Z",
-  "versionId": "70ea5e3c-b1e1-470a-9a4e-126811475bd2"
+  "updatedAt": "2023-11-03T10:15:39.000Z",
+  "versionId": "520dfa31-a291-4128-ac51-aa4aac6cf31e"
 }
