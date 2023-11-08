@@ -146,8 +146,7 @@
         "rule": {
           "interval": [
             {
-              "field": "hours",
-              "hoursInterval": 24
+              "triggerAtHour": 1
             }
           ]
         }
@@ -324,7 +323,8 @@
       "position": [
         940,
         400
-      ]
+      ],
+      "executeOnce": true
     },
     {
       "parameters": {
@@ -387,6 +387,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-11-07T04:00:00.000Z",
-  "versionId": "8cf533ad-dbfc-41b5-bb7d-29537fc1253d"
+  "updatedAt": "2023-11-08T09:33:33.000Z",
+  "versionId": "6e984ec9-b159-4be6-ad0d-96cff8754080"
 }
