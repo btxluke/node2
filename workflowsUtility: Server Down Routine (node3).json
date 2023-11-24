@@ -1,0 +1,208 @@
+{
+  "active": true,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Restart Stack",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "As you are",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Restart Stack": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-11-23T12:35:11.411Z",
+  "id": "xEkjnXpFu3Bqc9oT",
+  "name": "Utility: Server Down Routine (node3)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "id": "a89a743a-dfe6-4766-a078-7ea34b36371b",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://node3.biketrax.co.uk",
+        "options": {}
+      },
+      "id": "e8117be7-a709-4a2b-8177-70b1b40f9eaf",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1000,
+        400
+      ],
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.data}}",
+              "operation": "isEmpty"
+            }
+          ]
+        }
+      },
+      "id": "6b568208-a1b6-4937-adc6-43b015550d6e",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        400
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "98deb964-59fe-4f71-97f4-d466b580c3fb",
+      "name": "Restart Stack",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "command": "systemctl restart apache2"
+      },
+      "id": "a2aafbe1-373c-4edb-8469-99e2aa28427f",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        300
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "44",
+          "name": "node3 (root)"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "0ed12e7f-7493-404d-8589-38c61af415f2",
+      "name": "As you are",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "info@biketrax.co.uk",
+        "toEmail": "luke@biketrax.co.uk",
+        "subject": "Server Stack Restart",
+        "text": "=Server Stack Restart @ {{ $now }}",
+        "options": {}
+      },
+      "id": "be8b27d4-1cc9-4c4d-939f-adfd3645c249",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        1660,
+        300
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "49",
+          "name": "info@biketrax.co.uk"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "iYPwiWg01vuJDJ8a"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-11-23T12:39:26.000Z",
+  "versionId": "07166351-a8cd-4f26-8d92-a9a79892bbe5"
+}
