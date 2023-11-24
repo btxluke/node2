@@ -1,0 +1,114 @@
+{
+  "active": false,
+  "connections": {
+    "Restart Stack": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Restart Stack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-04-10T06:17:43.007Z",
+  "id": "114",
+  "name": "Utility: Server Down - Restart (node5)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "972fb4f2-eaae-4b93-b383-e66cb44d7ff8",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        400
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "dabb373e-3eba-4a44-88cb-ff96a409e4b4",
+      "name": "Restart Stack",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        960,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "command": "systemctl restart postgresql ; systemctl restart nginx ; systemctl restart odoo"
+      },
+      "id": "55d6e608-f3ac-407b-afa0-84fcd67a4166",
+      "name": "SSH",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        400
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "47",
+          "name": "Node 5 (root)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "info@biketrax.co.uk",
+        "toEmail": "luke@biketrax.co.uk",
+        "subject": "Server Stack Restart",
+        "text": "=Server Stack Restart @ {{ $now }}",
+        "options": {}
+      },
+      "id": "2e6de730-33da-41a9-ba89-8a6d80699a69",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        400
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "49",
+          "name": "info@biketrax.co.uk"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-11-23T12:37:28.000Z",
+  "versionId": "3cb12fc4-f326-422e-a4ff-8ef1fcd38462"
+}
