@@ -1,0 +1,79 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-12-05T09:12:10.821Z",
+  "id": "5ntGonfGiEQTcf1f",
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "d10424fd-67f3-4185-85ec-da169f8aa802",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        780,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.product",
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {
+          "fieldsList": [
+            "display_name"
+          ]
+        },
+        "filterRequest": {
+          "filter": [
+            {
+              "fieldName": "qty_available",
+              "operator": "greaterThen",
+              "value": "={{ 0 }}"
+            },
+            {
+              "fieldName": "product_tag_ids",
+              "value": "={{ false }}"
+            }
+          ]
+        }
+      },
+      "id": "aa7384f4-0faa-4acc-87fc-e9b9a927a77e",
+      "name": "Odoo",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        420
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-12-05T09:12:10.821Z",
+  "versionId": "996256d6-fab2-4115-b0db-e949d55465a7"
+}
