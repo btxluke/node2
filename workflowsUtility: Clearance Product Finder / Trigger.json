@@ -1,0 +1,243 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Odoo1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo1": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-12-05T09:12:10.831Z",
+  "id": "kssVxdrjP9oQbVtp",
+  "name": "Utility: Clearance Product Finder / Trigger",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "d10424fd-67f3-4185-85ec-da169f8aa802",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        780,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.product",
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {
+          "fieldsList": [
+            "display_name",
+            "standard_price",
+            "list_price",
+            "taxes_id"
+          ]
+        },
+        "filterRequest": {
+          "filter": [
+            {
+              "fieldName": "qty_available",
+              "operator": "greaterThen",
+              "value": "={{ 0 }}"
+            },
+            {
+              "fieldName": "product_tag_ids",
+              "value": "={{ false }}"
+            }
+          ]
+        }
+      },
+      "id": "aa7384f4-0faa-4acc-87fc-e9b9a927a77e",
+      "name": "Odoo",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        420
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toFile",
+        "options": {}
+      },
+      "id": "6107c554-695d-49ea-969e-56082d0100a4",
+      "name": "Spreadsheet File",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.product",
+        "operation": "update",
+        "customResourceId": "={{ $json.id }}",
+        "fieldsToCreateOrUpdate": {
+          "fields": [
+            {
+              "fieldName": "lst_price",
+              "fieldValue": "={{ $json.standard_price * 1.2}}"
+            }
+          ]
+        }
+      },
+      "id": "5e742a91-33d2-4028-93dc-9f893ff9ce92",
+      "name": "Odoo1",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        640
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "77e7afc3-a231-41c3-911a-c24dcdc18aa2",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1220,
+        640
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "bcc3abeb-09d3-4c06-ba5c-ca18fd37da16",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "number": [
+            {
+              "name": "sale price",
+              "value": "={{ $json.taxes_id == 10 ? $json.standard_price * 1.2 : $json.standard_price}}"
+            },
+            {
+              "name": "rrp",
+              "value": "={{ $json.taxes_id == 10 ? $json.list_price * 1.2 : $json.list_price}}"
+            }
+          ],
+          "string": [
+            {
+              "name": "btx ID",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "name",
+              "value": "={{ $json.display_name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ca9e0d2d-10d2-43f6-9ec4-94ed14913b69",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1220,
+        420
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-12-05T09:50:11.000Z",
+  "versionId": "b16d5f37-d43f-428b-9af3-a3e986f555cd"
+}
