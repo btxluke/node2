@@ -169,11 +169,26 @@
       ]
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Set": [
+      {
+        "json": {
+          "name": "Silverfish",
+          "globals": {
+            "SupplierName": "Silverfish",
+            "PartnerId": 61,
+            "ProductTagId": 10,
+            "LeadTimeAddition": 5,
+            "LastCount": "11670"
+          }
+        }
+      }
+    ]
+  },
   "settings": {},
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-09-28T12:58:16.000Z",
-  "versionId": "557f6b5f-ebac-40b0-ac06-b35ac2e39548"
+  "updatedAt": "2023-12-04T18:25:31.000Z",
+  "versionId": "a92443a0-1bbd-4314-bfcd-32df87fb1298"
 }
