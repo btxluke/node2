@@ -1,17 +1,6 @@
 {
   "active": false,
   "connections": {
-    "When clicking \"Execute Workflow\"": {
-      "main": [
-        [
-          {
-            "node": "Odoo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Odoo": {
       "main": [
         [
@@ -67,23 +56,23 @@
           }
         ]
       ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-12-05T09:12:10.831Z",
   "id": "kssVxdrjP9oQbVtp",
   "name": "Utility: Clearance Product Finder / Trigger",
   "nodes": [
-    {
-      "parameters": {},
-      "id": "d10424fd-67f3-4185-85ec-da169f8aa802",
-      "name": "When clicking \"Execute Workflow\"",
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        780,
-        420
-      ]
-    },
     {
       "parameters": {
         "resource": "custom",
@@ -137,7 +126,7 @@
       "type": "n8n-nodes-base.spreadsheetFile",
       "typeVersion": 1,
       "position": [
-        1520,
+        1540,
         180
       ]
     },
@@ -152,6 +141,14 @@
             {
               "fieldName": "lst_price",
               "fieldValue": "={{ $json.standard_price * 1.2}}"
+            },
+            {
+              "fieldName": "product_tag_ids",
+              "fieldValue": "={{[65,64]}}"
+            },
+            {
+              "fieldName": "website_ribbon_id",
+              "fieldValue": "={{1}}"
             }
           ]
         }
@@ -231,6 +228,25 @@
         1220,
         420
       ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 6
+            }
+          ]
+        }
+      },
+      "id": "5e11580b-69fe-4755-8266-974336d9af0c",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        780,
+        420
+      ]
     }
   ],
   "pinData": {},
@@ -238,6 +254,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-12-05T09:50:11.000Z",
-  "versionId": "b16d5f37-d43f-428b-9af3-a3e986f555cd"
+  "updatedAt": "2023-12-05T17:46:09.000Z",
+  "versionId": "2922caed-3f7a-418b-8224-40a9acd5e3f2"
 }
