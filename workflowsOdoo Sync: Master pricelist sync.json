@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "Execute Workflow Trigger": {
       "main": [
@@ -185,7 +185,8 @@
         700,
         600
       ],
-      "webhookId": "feff5751-c294-4588-af38-cb380c20d021"
+      "webhookId": "feff5751-c294-4588-af38-cb380c20d021",
+      "disabled": true
     }
   ],
   "pinData": {},
@@ -193,6 +194,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-11-08T09:32:43.000Z",
-  "versionId": "4102f79e-45dc-468b-b9df-9558a587c9c5"
+  "updatedAt": "2023-12-21T12:10:58.000Z",
+  "versionId": "c9e68e49-921c-47ab-8ab0-51c9091a9e30"
 }
