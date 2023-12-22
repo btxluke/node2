@@ -107,7 +107,7 @@
       "main": [
         [
           {
-            "node": "Postgres",
+            "node": "Execute Workflow",
             "type": "main",
             "index": 0
           }
@@ -130,6 +130,57 @@
         [
           {
             "node": "Odoo Sync: Master pricelist sync",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Not Integrated": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches1",
             "type": "main",
             "index": 0
           }
@@ -321,10 +372,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        940,
+        840,
         400
       ],
-      "executeOnce": true
+      "executeOnce": true,
+      "disabled": true
     },
     {
       "parameters": {
@@ -363,6 +415,61 @@
           "name": "Node 5 (root)"
         }
       }
+    },
+    {
+      "parameters": {
+        "workflowId": "okYFPoa8AAUwllb9"
+      },
+      "id": "acd2ae49-0771-4daf-8547-b2727f70c5f6",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://node4.biketrax.co.uk/webhook/unintegrated-supplier-routine",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "a2f24b7d-a4a1-46eb-80fc-47021b767a08",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2220,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "1399ed21-473d-4a94-887b-1798384b974a",
+      "name": "Split In Batches1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1980,
+        240
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "bfa58c7c-3c4d-4910-b94e-b7dbd01c36c4",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        460
+      ]
     }
   ],
   "pinData": {},
@@ -387,6 +494,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-11-08T09:33:33.000Z",
-  "versionId": "6e984ec9-b159-4be6-ad0d-96cff8754080"
+  "updatedAt": "2023-12-21T12:37:40.000Z",
+  "versionId": "973ea893-36aa-4740-98ab-56cc5156e35a"
 }
