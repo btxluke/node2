@@ -502,11 +502,11 @@
   "settings": {},
   "staticData": {
     "node:Email Trigger (IMAP)": {
-      "lastMessageUid": 25758
+      "lastMessageUid": 25806
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-12-25T11:50:06.000Z",
+  "updatedAt": "2023-12-25T23:50:10.000Z",
   "versionId": "7a3d1680-f9fe-44fc-a9ad-9d46485fb8b1"
 }
