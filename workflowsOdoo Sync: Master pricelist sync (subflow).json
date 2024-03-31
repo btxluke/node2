@@ -308,20 +308,11 @@
       "executeOnce": true
     }
   ],
-  "pinData": {
-    "Execute Workflow Trigger": [
-      {
-        "json": {
-          "name": "Brompton",
-          "globals": "[{\"SupplierName\": \"Brompton Bicycle Ltd\",\"PartnerId\": 93,\"ProductTagId\": 15,\"LeadTimeAddition\":10}]"
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "settings": {},
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-08-12T13:19:29.000Z",
-  "versionId": "9f52d049-7a2d-4fc5-bfe7-b38f3e69ff30"
+  "updatedAt": "2024-03-30T14:47:21.000Z",
+  "versionId": "d0736330-5726-41bf-903f-1acb52d42000"
 }
