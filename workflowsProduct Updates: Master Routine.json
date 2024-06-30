@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "SSH",
+            "node": "HTTP Request2",
             "type": "main",
             "index": 0
           }
@@ -186,6 +186,17 @@
           }
         ]
       ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-02-22T12:17:23.160Z",
@@ -228,7 +239,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        1600,
+        1820,
         400
       ]
     },
@@ -248,7 +259,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1760,
+        1980,
         400
       ]
     },
@@ -259,7 +270,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1760,
+        1980,
         240
       ]
     },
@@ -270,7 +281,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1260,
+        1480,
         640
       ]
     },
@@ -284,7 +295,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 1,
       "position": [
-        1440,
+        1660,
         640
       ]
     },
@@ -303,7 +314,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1780,
+        2000,
         640
       ]
     },
@@ -321,7 +332,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        1960,
+        2180,
         640
       ],
       "disabled": true
@@ -335,7 +346,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        2140,
+        2360,
         640
       ],
       "executeOnce": true,
@@ -352,7 +363,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.1,
       "position": [
-        1340,
+        1560,
         400
       ],
       "credentials": {
@@ -372,7 +383,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        840,
+        1060,
         400
       ],
       "executeOnce": true,
@@ -392,7 +403,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        1600,
+        1820,
         640
       ],
       "continueOnFail": true
@@ -406,7 +417,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        560,
+        900,
         400
       ],
       "credentials": {
@@ -425,7 +436,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        1060,
+        1280,
         400
       ],
       "alwaysOutputData": true
@@ -443,7 +454,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        2220,
+        2440,
         240
       ]
     },
@@ -457,7 +468,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 2,
       "position": [
-        1980,
+        2200,
         240
       ]
     },
@@ -468,8 +479,22 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2240,
+        2460,
         460
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://node4.biketrax.co.uk/webhook/master-fdw-resync",
+        "options": {}
+      },
+      "id": "04de9020-e1e8-4df1-b3b2-1d238fc0743b",
+      "name": "HTTP Request2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        560,
+        400
       ]
     }
   ],
@@ -495,6 +520,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2024-03-30T15:05:18.000Z",
-  "versionId": "80e4dc74-20a0-45a4-a32e-1329756346cf"
+  "updatedAt": "2024-06-30T16:25:17.000Z",
+  "versionId": "cf43c23c-46c5-4e5f-9b85-dd935e83b565"
 }
