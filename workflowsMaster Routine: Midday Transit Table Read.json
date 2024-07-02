@@ -1,17 +1,6 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
-    "Schedule Trigger": {
-      "main": [
-        [
-          {
-            "node": "Postgres",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Postgres": {
       "main": [
         [
@@ -66,6 +55,11 @@
             "node": "No Operation, do nothing",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Set1",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -103,7 +97,145 @@
       "main": [
         [
           {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing": {
+      "main": [
+        [
+          {
+            "node": "n8n",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "n8n1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "n8n": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Init",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "IF2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "n8n1": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compare Datasets": {
+      "main": [
+        [
+          {
+            "node": "n8n2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set1": {
+      "main": [
+        [
+          {
+            "node": "Item Lists1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
             "node": "Loop through premade transit tables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Init": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
             "type": "main",
             "index": 0
           }
@@ -117,25 +249,6 @@
   "nodes": [
     {
       "parameters": {
-        "rule": {
-          "interval": [
-            {
-              "triggerAtHour": 12
-            }
-          ]
-        }
-      },
-      "id": "254d1b7a-893f-4850-bd65-8a5c4bcf9d35",
-      "name": "Schedule Trigger",
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.1,
-      "position": [
-        820,
-        440
-      ]
-    },
-    {
-      "parameters": {
         "operation": "executeQuery",
         "query": "SELECT * FROM map_supplierinfo",
         "options": {}
@@ -145,7 +258,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.2,
       "position": [
-        1040,
+        1260,
         440
       ],
       "credentials": {
@@ -176,7 +289,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        1220,
+        1440,
         440
       ]
     },
@@ -187,16 +300,21 @@
             {
               "value1": "={{ $json.globals.Webhook }}",
               "operation": "isEmpty"
+            },
+            {
+              "value1": "={{ $json.name }}",
+              "value2": "Clearance"
             }
           ]
-        }
+        },
+        "combineOperation": "any"
       },
       "id": "2e0cc79b-6ac5-4207-81da-b7bac7025129",
       "name": "IF",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1380,
+        1600,
         440
       ]
     },
@@ -207,7 +325,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1520,
+        1740,
         220
       ]
     },
@@ -221,7 +339,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 2,
       "position": [
-        800,
+        500,
         1040
       ]
     },
@@ -236,7 +354,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.2,
       "position": [
-        1000,
+        1260,
         660
       ],
       "credentials": {
@@ -244,7 +362,8 @@
           "id": "51",
           "name": "btxPIM"
         }
-      }
+      },
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -262,7 +381,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1220,
+        1440,
         660
       ]
     },
@@ -279,7 +398,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1380,
+        1600,
         660
       ],
       "executeOnce": true
@@ -291,16 +410,366 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        980,
+        1200,
         1040
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "resource": "execution",
+        "limit": 10,
+        "filters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "8GmjDMMRAxHBIT3W",
+            "mode": "list",
+            "cachedResultName": "Master Routine: Midday Transit Table Read (#8GmjDMMRAxHBIT3W)"
+          }
+        },
+        "options": {
+          "activeWorkflows": false
+        }
+      },
+      "id": "0f848603-c1cb-4214-b3c4-c888c13e2cff",
+      "name": "n8n",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        1040
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "40",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "summarize",
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "max",
+              "field": "duration"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d26c150e-3b8a-4a47-8d3f-642fda3f8acd",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3,
+      "position": [
+        1760,
+        1180
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "id",
+              "value": "={{ $json.id }}"
+            }
+          ],
+          "number": [
+            {
+              "name": "duration",
+              "value": "={{ DateTime.fromISO($json.stoppedAt).diff(DateTime.fromISO($json.startedAt),'minutes').toObject().minutes}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bcfb4d7b-a1b4-4bf5-a597-f4ee18be02e0",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1580,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "path": "master-transit-repeater",
+        "options": {}
+      },
+      "id": "f6263020-6c41-4c9f-8bf2-5a4a8c3eb873",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        480,
+        260
+      ],
+      "webhookId": "e20c673c-a88a-4fbd-aafa-0a12ef1c4873"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.max_duration }}",
+              "value2": "={{ DateTime.fromISO($('Init').item.json[\"webhookTime\"]).toFormat('mm')  }}"
+            },
+            {
+              "value1": "={{ $('Item Lists1').first().json.sum_count }}",
+              "operation": "larger",
+              "value2": 60
+            },
+            {
+              "value1": "={{ DateTime.fromISO($('Init').item.json[\"webhookTime\"]).toFormat('HH')  }}",
+              "operation": "equal",
+              "value2": "={{ $now.toFormat('HH') }}"
+            }
+          ]
+        }
+      },
+      "id": "28dfc3f5-7c41-43f8-ab3f-3c9bf835b3fd",
+      "name": "IF2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1960,
+        1040
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "24f5b5f9-97e8-4330-b77a-3f3f93a26283",
+      "name": "No Operation, do nothing1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://node2.biketrax.co.uk/webhook/master-transit-repeater",
+        "options": {}
+      },
+      "id": "794bee9b-cee7-4ac9-8a2f-0a283211cb94",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2180,
+        940
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "execution",
+        "returnAll": true,
+        "filters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "8GmjDMMRAxHBIT3W",
+            "mode": "list",
+            "cachedResultName": "Master Routine: Midday Transit Table Read (#8GmjDMMRAxHBIT3W)"
+          }
+        },
+        "options": {
+          "activeWorkflows": false
+        }
+      },
+      "id": "79ed7eb9-5bba-45e4-a5d4-96eb27789951",
+      "name": "n8n1",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        880
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "40",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "id",
+              "field2": "id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1b02f2f-f405-4c21-b4a9-fa6a9c9a00d5",
+      "name": "Compare Datasets",
+      "type": "n8n-nodes-base.compareDatasets",
+      "typeVersion": 2.2,
+      "position": [
+        1620,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "execution",
+        "operation": "delete",
+        "executionId": "={{$json.id}}"
+      },
+      "id": "847db8c7-358e-44d8-8ec8-e82d9ab8d1e7",
+      "name": "n8n2",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        1960,
+        880
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "40",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "summarize",
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "sum",
+              "field": "count"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d68c2acc-caf0-4e2a-b984-d2b5a3553617",
+      "name": "Item Lists1",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3,
+      "position": [
+        1200,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "number": [
+            {
+              "name": "count",
+              "value": "={{ $json.count }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "da62978b-205f-4b23-95b7-37de1bab9739",
+      "name": "Set1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1060,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return $('Postgres1').all();"
+      },
+      "id": "05dad012-ae3c-4497-a054-72a66f64130b",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "webhookTime",
+              "value": "={{ $now }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "336bdd9c-431a-48d9-a2f2-b439257e8ad6",
+      "name": "Init",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        640,
+        260
       ]
     }
   ],
-  "pinData": {},
-  "settings": {},
-  "staticData": null,
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "node2.biketrax.co.uk",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
+            "cache-control": "max-age=0",
+            "cookie": "rl_page_init_referrer=RudderEncrypt%3AU2FsdGVkX19uzB%2F2RwI3pb3oig7i%2BGYjUaXUvBafSXo%3D; rl_page_init_referring_domain=RudderEncrypt%3AU2FsdGVkX1%2BoZ2i4ru9I4nIZdoAOC8oawp2SlBFiGbs%3D; _ga=GA1.1.2058591778.1707467094; _ga_K6TCRB7M66=GS1.1.1709984231.8.1.1709984380.20.0.0; n8n-auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNhNTJkZGIzLTI0OWEtNDA4My1hMTE1LTFiODA5MDk5MjU4ZCIsImVtYWlsIjoibHVrZUBiaWtldHJheC5jby51ayIsInBhc3N3b3JkIjoiODczNWMwNjk3Nzc2MTA4MDk1ZmVmYWIyNWQyYzAzN2ZiYTBhMDQwZGM1MWJiY2U3MDBhYzMxNmZiZGMzZTc0MiIsImlhdCI6MTcxOTkxNTcyNCwiZXhwIjoxNzIwNTIwNTI0fQ.fPl_i7q7ECahEZwzevJhmDSr1apZ2sHcJbWbcG9z598; ph_phc_4URIAm1uYfJO7j8kWSe0J8lc8IqnstRLS7Jx8NcakHo_posthog=%7B%22distinct_id%22%3A%226bbc4c74f1a02fc452f7a8e4243bd2440e4ea6d8d57b4685172512bccdfc870c%233a52ddb3-249a-4083-a115-1b809099258d%22%2C%22%24sesid%22%3A%5B1719941934064%2C%2201907482-d643-7da9-9366-295d4e681ef8%22%2C1719941649987%5D%2C%22%24epp%22%3Atrue%7D; rl_anonymous_id=RudderEncrypt%3AU2FsdGVkX19aOHsQZVxE2swxte8PJPKvCQs15WJ18YqWSD80eyqNQNdcVOmylxoP1DOChmT0o9YLeLa9Nsxd%2Bg%3D%3D; rl_group_id=RudderEncrypt%3AU2FsdGVkX19obQZIyrEfZYIa3jG2MImSI5mN2sPVc2Q%3D; rl_group_trait=RudderEncrypt%3AU2FsdGVkX19iFydfl3TpCPV%2FPFPvrz7Cba51CjwZeAs%3D; rl_user_id=RudderEncrypt%3AU2FsdGVkX1%2BgIw9US6EIs1ji3GH%2B7RLsf10vuikk%2BgltnVl6dMshCTNyXi6SnRGzuZqxyRNV1x6SwFgZgqDA%2FgzBb7sk243wC3Ps0Gs590kp2HU4nlhYqix3nBmNhXTIsbgXEOf0AcUjbFzYG%2Bgx369o6poCr8%2F5eClwuAiSm1s%3D; rl_trait=RudderEncrypt%3AU2FsdGVkX19s%2BUf3V%2BpasrJDG%2FvcH3pfBL9v%2BMeZ0o2YjNhEMBxZ%2FdiiXQZCilt2p%2FaQlAPwgyg5jWD%2F1NXSYLRQpzDk5tYZR8eqP2WWq4BuWqq63u2A7FIn9fpgfcp87L2kDUMfeOclmIzi5wFMnbKxJlM8YFUYTwYLT7gwhqM%3D; rl_session=RudderEncrypt%3AU2FsdGVkX1%2B1WdwlW%2BkCxqWAKXd3pNdhqB4gNFkfqHKQGamSbPt248z3EZiNGvHufLT9gK1vEtxaT4DTrRQRfyJhaawqMInBiF2KzkIIgMfqvh6l30LZlBxh85At8ckP9NNeFCZ%2Fx%2BYydHSRaA5lIA%3D%3D",
+            "if-none-match": "W/\"22-6OS7cK0FzqnV2NeDHdOSGS1bVUs\"",
+            "priority": "u=0, i",
+            "sec-ch-ua": "\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Google Chrome\";v=\"126\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "sec-fetch-dest": "document",
+            "sec-fetch-mode": "navigate",
+            "sec-fetch-site": "none",
+            "sec-fetch-user": "?1",
+            "upgrade-insecure-requests": "1",
+            "x-forwarded-for": "51.155.215.158",
+            "x-forwarded-host": "node2.biketrax.co.uk",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "764cf6f64b15",
+            "x-real-ip": "51.155.215.158"
+          },
+          "params": {},
+          "query": {},
+          "body": {}
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2024-07-02T10:45:00.000Z",
-  "versionId": "56392d49-27b6-417f-ab1f-5ec072414266"
+  "triggerCount": 1,
+  "updatedAt": "2024-07-02T19:15:25.000Z",
+  "versionId": "67a2e21e-289a-4942-afdc-20e6029bd4cd"
 }
