@@ -1,0 +1,66 @@
+{
+  "active": true,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-07-02T16:50:58.939Z",
+  "id": "dWBbIRI0NlGLPp9j",
+  "name": "Master Transit loop initiate",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 11-19 * * *"
+            }
+          ]
+        }
+      },
+      "id": "879ad3d3-5d9a-40f3-85ee-4647efb52f16",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        460,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://node2.biketrax.co.uk/webhook/master-transit-repeater",
+        "options": {}
+      },
+      "id": "7d753792-dae9-43eb-9806-9abd0d7759ad",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        620,
+        460
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-07-02T18:01:23.000Z",
+  "versionId": "388d4eba-f180-4859-bbb7-845205cda21f"
+}
