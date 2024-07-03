@@ -1,0 +1,42 @@
+{
+  "active": false,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2024-07-02T16:50:53.658Z",
+  "id": "kDH3ZFyb5eI2b3hq",
+  "name": "Variable: Node 4 Lock",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 11,13,15,17,19 * * *"
+            }
+          ]
+        }
+      },
+      "id": "879ad3d3-5d9a-40f3-85ee-4647efb52f16",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        460,
+        460
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-07-03T09:25:32.000Z",
+  "versionId": "5d2edc5a-43b8-4fc8-b07f-4448afcd5537"
+}
