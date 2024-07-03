@@ -151,7 +151,7 @@
       "main": [
         [
           {
-            "node": "Init",
+            "node": "n8n3",
             "type": "main",
             "index": 0
           }
@@ -236,6 +236,35 @@
         [
           {
             "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "n8n3": {
+      "main": [
+        [
+          {
+            "node": "IF3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF3": {
+      "main": [
+        [
+          {
+            "node": "Init",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Lock Active: Run Blocked",
             "type": "main",
             "index": 0
           }
@@ -714,8 +743,63 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        640,
+        1080,
         260
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "workflowId": {
+          "__rl": true,
+          "value": "kDH3ZFyb5eI2b3hq",
+          "mode": "list",
+          "cachedResultName": "Variable: Node 4 Lock (#kDH3ZFyb5eI2b3hq)"
+        }
+      },
+      "id": "760e5e83-7164-4f7a-b6aa-f1aced8394a5",
+      "name": "n8n3",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        620,
+        260
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "40",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.active }}"
+            }
+          ]
+        }
+      },
+      "id": "2a0c2700-b2d8-41b4-a04e-97e9f8ff04d4",
+      "name": "IF3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        840,
+        260
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "f58764ab-1792-4b39-bf46-b92d88290444",
+      "name": "Lock Active: Run Blocked",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        840,
+        460
       ]
     }
   ],
@@ -770,6 +854,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-07-02T19:15:25.000Z",
-  "versionId": "67a2e21e-289a-4942-afdc-20e6029bd4cd"
+  "updatedAt": "2024-07-03T10:33:24.000Z",
+  "versionId": "32faa9bf-7eac-4d87-bb09-f0a0e7d8a206"
 }
