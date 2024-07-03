@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "HTTP Request2",
+            "node": "n8n",
             "type": "main",
             "index": 0
           }
@@ -197,6 +197,28 @@
           }
         ]
       ]
+    },
+    "n8n": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add weights": {
+      "main": [
+        [
+          {
+            "node": "n8n1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-02-22T12:17:23.160Z",
@@ -218,7 +240,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
       "position": [
-        340,
+        200,
         400
       ]
     },
@@ -239,7 +261,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        1820,
+        2040,
         400
       ]
     },
@@ -259,7 +281,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1980,
+        2200,
         400
       ]
     },
@@ -270,7 +292,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1980,
+        2200,
         240
       ]
     },
@@ -281,7 +303,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1480,
+        1700,
         640
       ]
     },
@@ -295,7 +317,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 1,
       "position": [
-        1660,
+        1880,
         640
       ]
     },
@@ -314,7 +336,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        2000,
+        2220,
         640
       ]
     },
@@ -332,7 +354,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        2180,
+        2400,
         640
       ],
       "disabled": true
@@ -346,7 +368,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        2360,
+        2580,
         640
       ],
       "executeOnce": true,
@@ -363,7 +385,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.1,
       "position": [
-        1560,
+        1780,
         400
       ],
       "credentials": {
@@ -383,7 +405,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1060,
+        1280,
         400
       ],
       "executeOnce": true,
@@ -403,7 +425,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        1820,
+        2040,
         640
       ],
       "continueOnFail": true
@@ -417,7 +439,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        900,
+        1120,
         400
       ],
       "credentials": {
@@ -436,7 +458,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        1280,
+        1500,
         400
       ],
       "alwaysOutputData": true
@@ -454,7 +476,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        2440,
+        2660,
         240
       ]
     },
@@ -468,7 +490,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 2,
       "position": [
-        2200,
+        2420,
         240
       ]
     },
@@ -479,7 +501,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2460,
+        2680,
         460
       ]
     },
@@ -493,9 +515,59 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        560,
+        780,
         400
       ]
+    },
+    {
+      "parameters": {
+        "operation": "activate",
+        "workflowId": {
+          "__rl": true,
+          "value": "kDH3ZFyb5eI2b3hq",
+          "mode": "list",
+          "cachedResultName": "Variable: Node 4 Lock (#kDH3ZFyb5eI2b3hq)"
+        }
+      },
+      "id": "7b02daf4-a95f-4c03-b150-f8bb8533a1e0",
+      "name": "n8n",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        420,
+        400
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "40",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deactivate",
+        "workflowId": {
+          "__rl": true,
+          "value": "kDH3ZFyb5eI2b3hq",
+          "mode": "list",
+          "cachedResultName": "Variable: Node 4 Lock (#kDH3ZFyb5eI2b3hq)"
+        }
+      },
+      "id": "90a0c39e-362f-4dba-8f69-44f856d0a65e",
+      "name": "n8n1",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        2780,
+        640
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "40",
+          "name": "n8n account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -520,6 +592,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2024-06-30T16:25:17.000Z",
-  "versionId": "cf43c23c-46c5-4e5f-9b85-dd935e83b565"
+  "updatedAt": "2024-07-03T09:29:04.000Z",
+  "versionId": "dc065a26-6be5-4502-a1c0-6207f7d1cf39"
 }
