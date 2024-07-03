@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "Globals",
+            "node": "IF4",
             "type": "main",
             "index": 0
           }
@@ -14,24 +14,6 @@
     },
     "Globals": {
       "main": [
-        [
-          {
-            "node": "IF",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF": {
-      "main": [
-        [
-          {
-            "node": "Supplier not integrated",
-            "type": "main",
-            "index": 0
-          }
-        ],
         [
           {
             "node": "Loop through premade transit tables",
@@ -45,7 +27,7 @@
       "main": [
         [
           {
-            "node": "Postgres1",
+            "node": "HTTP Request1",
             "type": "main",
             "index": 0
           }
@@ -64,40 +46,11 @@
         ]
       ]
     },
-    "Postgres1": {
-      "main": [
-        [
-          {
-            "node": "IF1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF1": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Loop through premade transit tables",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "HTTP Request1": {
       "main": [
         [
           {
-            "node": "Code",
+            "node": "Postgres1",
             "type": "main",
             "index": 0
           }
@@ -220,17 +173,6 @@
         ]
       ]
     },
-    "Code": {
-      "main": [
-        [
-          {
-            "node": "Loop through premade transit tables",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Init": {
       "main": [
         [
@@ -270,6 +212,35 @@
           }
         ]
       ]
+    },
+    "IF4": {
+      "main": [
+        [
+          {
+            "node": "nothing to read",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Globals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "Loop through premade transit tables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2024-07-02T10:24:49.098Z",
@@ -279,7 +250,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT * FROM map_supplierinfo",
+        "query": "SELECT * FROM map_supplierinfo WHERE transit_queue > 0;",
         "options": {}
       },
       "id": "dfa271c9-2d3a-4540-ab1b-1b10dad634c3",
@@ -290,6 +261,7 @@
         1260,
         440
       ],
+      "alwaysOutputData": true,
       "credentials": {
         "postgres": {
           "id": "52",
@@ -309,6 +281,12 @@
               "name": "name",
               "value": "={{ $json.name }}"
             }
+          ],
+          "number": [
+            {
+              "name": "transit_queue",
+              "value": "={{ $json.transit_queue }}"
+            }
           ]
         },
         "options": {}
@@ -318,44 +296,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        1440,
+        1820,
         440
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{ $json.globals.Webhook }}",
-              "operation": "isEmpty"
-            },
-            {
-              "value1": "={{ $json.name }}",
-              "value2": "Clearance"
-            }
-          ]
-        },
-        "combineOperation": "any"
-      },
-      "id": "2e0cc79b-6ac5-4207-81da-b7bac7025129",
-      "name": "IF",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        1600,
-        440
-      ]
-    },
-    {
-      "parameters": {},
-      "id": "02fc63f4-f729-4c7b-a8dc-becca53f1806",
-      "name": "Supplier not integrated",
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        1740,
-        220
       ]
     },
     {
@@ -374,48 +316,6 @@
     },
     {
       "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT COUNT(*) FROM {{ \"datatransit.transit_\"+$json.name.toLowerCase() }};",
-        "options": {}
-      },
-      "id": "a4f0e1f4-39b4-4e7d-8f2c-5c0c45daf489",
-      "name": "Postgres1",
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.2,
-      "position": [
-        1260,
-        660
-      ],
-      "credentials": {
-        "postgres": {
-          "id": "51",
-          "name": "btxPIM"
-        }
-      },
-      "continueOnFail": true
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "number": [
-            {
-              "value1": "={{ Number($json.count) }}",
-              "operation": "larger"
-            }
-          ]
-        }
-      },
-      "id": "eee20f49-81bc-4fd3-b818-7fe1f90004d6",
-      "name": "IF1",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        1440,
-        660
-      ]
-    },
-    {
-      "parameters": {
         "url": "=https://node4.biketrax.co.uk/webhook/create-template",
         "sendBody": true,
         "specifyBody": "json",
@@ -427,8 +327,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1600,
-        660
+        1060,
+        680
       ],
       "executeOnce": true
     },
@@ -465,7 +365,7 @@
       "type": "n8n-nodes-base.n8n",
       "typeVersion": 1,
       "position": [
-        1400,
+        1620,
         1040
       ],
       "credentials": {
@@ -493,7 +393,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 3,
       "position": [
-        1760,
+        1980,
         1180
       ]
     },
@@ -521,7 +421,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        1580,
+        1800,
         1040
       ]
     },
@@ -546,7 +446,7 @@
           "number": [
             {
               "value1": "={{ $json.max_duration }}",
-              "value2": "={{ DateTime.fromISO($('Init').item.json[\"webhookTime\"]).toFormat('mm')  }}"
+              "value2": "={{ 60 - $now.toFormat('mm')  }}"
             },
             {
               "value1": "={{ $('Item Lists1').first().json.sum_count }}",
@@ -566,7 +466,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1960,
+        2180,
         1040
       ]
     },
@@ -577,7 +477,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2180,
+        2400,
         1140
       ]
     },
@@ -591,7 +491,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        2180,
+        2400,
         940
       ]
     },
@@ -616,7 +516,7 @@
       "type": "n8n-nodes-base.n8n",
       "typeVersion": 1,
       "position": [
-        1400,
+        1620,
         880
       ],
       "credentials": {
@@ -643,7 +543,7 @@
       "type": "n8n-nodes-base.compareDatasets",
       "typeVersion": 2.2,
       "position": [
-        1620,
+        1840,
         880
       ]
     },
@@ -658,7 +558,7 @@
       "type": "n8n-nodes-base.n8n",
       "typeVersion": 1,
       "position": [
-        1960,
+        2180,
         880
       ],
       "credentials": {
@@ -710,19 +610,6 @@
       "position": [
         1060,
         880
-      ]
-    },
-    {
-      "parameters": {
-        "jsCode": "return $('Postgres1').all();"
-      },
-      "id": "05dad012-ae3c-4497-a054-72a66f64130b",
-      "name": "Code",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 1,
-      "position": [
-        1740,
-        660
       ]
     },
     {
@@ -801,6 +688,58 @@
         840,
         460
       ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.transit_queue }}",
+              "operation": "isEmpty"
+            }
+          ]
+        }
+      },
+      "id": "74ac3f58-241b-4f63-bbe7-8cf69c2e3283",
+      "name": "IF4",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        440
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "02fc63f4-f729-4c7b-a8dc-becca53f1806",
+      "name": "nothing to read",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT COUNT (DISTINCT(variantgrouping)) FROM {{\"transit_\"+$('Loop through premade transit tables').item.json[\"name\"].toLowerCase() }} AS \"count\" ;",
+        "options": {}
+      },
+      "id": "1ac84bce-b9fe-4510-a5ac-9eeed143e4b3",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.2,
+      "position": [
+        1200,
+        680
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "51",
+          "name": "btxPIM"
+        }
+      }
     }
   ],
   "pinData": {
@@ -854,6 +793,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-07-03T10:33:24.000Z",
-  "versionId": "32faa9bf-7eac-4d87-bb09-f0a0e7d8a206"
+  "updatedAt": "2024-07-03T19:09:51.000Z",
+  "versionId": "91316457-180a-44a7-b218-ec8df1e9eaf1"
 }
