@@ -23,7 +23,7 @@
           "interval": [
             {
               "field": "cronExpression",
-              "expression": "0 11-19 * * *"
+              "expression": "0 3-22 * * *"
             }
           ]
         }
@@ -61,6 +61,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-07-02T18:01:23.000Z",
-  "versionId": "388d4eba-f180-4859-bbb7-845205cda21f"
+  "updatedAt": "2024-07-03T13:03:02.000Z",
+  "versionId": "139585b1-3cec-45a7-a591-706c1e57b7d1"
 }
