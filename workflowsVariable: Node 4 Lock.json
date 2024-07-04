@@ -34,9 +34,13 @@
   ],
   "pinData": {},
   "settings": {},
-  "staticData": null,
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2024-07-03T09:25:32.000Z",
+  "triggerCount": 1,
+  "updatedAt": "2024-07-04T02:05:21.892Z",
   "versionId": "5d2edc5a-43b8-4fc8-b07f-4448afcd5537"
 }
