@@ -50,7 +50,7 @@
       "main": [
         [
           {
-            "node": "Postgres1",
+            "node": "Loop through premade transit tables",
             "type": "main",
             "index": 0
           }
@@ -225,17 +225,6 @@
         [
           {
             "node": "Globals",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Postgres1": {
-      "main": [
-        [
-          {
-            "node": "Loop through premade transit tables",
             "type": "main",
             "index": 0
           }
@@ -450,8 +439,7 @@
             },
             {
               "value1": "={{ $('Item Lists1').first().json.sum_count }}",
-              "operation": "larger",
-              "value2": 60
+              "operation": "larger"
             },
             {
               "value1": "={{ DateTime.fromISO($('Init').item.json[\"webhookTime\"]).toFormat('HH')  }}",
@@ -719,27 +707,6 @@
         1820,
         240
       ]
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT COUNT (DISTINCT(variantgrouping)) FROM {{\"transit_\"+$('Loop through premade transit tables').item.json[\"name\"].toLowerCase() }} AS \"count\" ;",
-        "options": {}
-      },
-      "id": "1ac84bce-b9fe-4510-a5ac-9eeed143e4b3",
-      "name": "Postgres1",
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.2,
-      "position": [
-        1200,
-        680
-      ],
-      "credentials": {
-        "postgres": {
-          "id": "51",
-          "name": "btxPIM"
-        }
-      }
     }
   ],
   "pinData": {
@@ -793,6 +760,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-07-03T19:09:51.000Z",
-  "versionId": "91316457-180a-44a7-b218-ec8df1e9eaf1"
+  "updatedAt": "2024-07-05T08:51:28.000Z",
+  "versionId": "5b859aa8-8ea4-45f2-a832-9f8af4eff800"
 }
