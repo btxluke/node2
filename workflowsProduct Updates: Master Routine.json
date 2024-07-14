@@ -74,18 +74,7 @@
         ],
         [
           {
-            "node": "HTTP Request1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request1": {
-      "main": [
-        [
-          {
-            "node": "Add weights",
+            "node": "node4-warehouse-order-point",
             "type": "main",
             "index": 0
           }
@@ -209,7 +198,7 @@
         ]
       ]
     },
-    "Add weights": {
+    "node4-warehouse-order-point": {
       "main": [
         [
           {
@@ -339,40 +328,6 @@
         2220,
         640
       ]
-    },
-    {
-      "parameters": {
-        "url": "=https://node4.biketrax.co.uk/webhook/6f7d6ee7-8488-4f8a-baab-7bbb6961289c",
-        "options": {
-          "response": {
-            "response": {}
-          }
-        }
-      },
-      "id": "08bf3375-25dc-496e-8505-08bb42e7ad0e",
-      "name": "HTTP Request1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 3,
-      "position": [
-        2400,
-        640
-      ],
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "workflowId": "108"
-      },
-      "id": "ed494459-ab05-47ae-baa9-944fe4def1f7",
-      "name": "Add weights",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1,
-      "position": [
-        2580,
-        640
-      ],
-      "executeOnce": true,
-      "disabled": true
     },
     {
       "parameters": {
@@ -559,7 +514,7 @@
       "type": "n8n-nodes-base.n8n",
       "typeVersion": 1,
       "position": [
-        2780,
+        2680,
         640
       ],
       "credentials": {
@@ -568,6 +523,25 @@
           "name": "n8n account"
         }
       }
+    },
+    {
+      "parameters": {
+        "url": "=https://node4.biketrax.co.uk/webhook/warehouse-order-point",
+        "options": {
+          "response": {
+            "response": {}
+          }
+        }
+      },
+      "id": "08bf3375-25dc-496e-8505-08bb42e7ad0e",
+      "name": "node4-warehouse-order-point",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2400,
+        640
+      ],
+      "executeOnce": true
     }
   ],
   "pinData": {},
@@ -592,6 +566,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2024-07-03T09:29:04.000Z",
-  "versionId": "dc065a26-6be5-4502-a1c0-6207f7d1cf39"
+  "updatedAt": "2024-07-14T13:20:31.000Z",
+  "versionId": "948869c2-2ba4-4a12-8397-b36e68e1947f"
 }
