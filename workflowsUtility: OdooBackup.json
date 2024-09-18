@@ -5,18 +5,29 @@
       "main": [
         [
           {
-            "node": "SSH",
+            "node": "cleanup backups",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "SSH": {
+    "make backup": {
       "main": [
         [
           {
-            "node": "duplicate backup to node3",
+            "node": "make base backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cleanup backups": {
+      "main": [
+        [
+          {
+            "node": "make backup",
             "type": "main",
             "index": 0
           }
@@ -43,45 +54,64 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
       "position": [
-        820,
+        320,
         400
       ]
     },
     {
       "parameters": {
-        "command": "scp luke@node5.biketrax.co.uk:/home/luke/odooBackup/odooBack.zip \\home\\luke\\OdooBackup\\odooBack.zip"
+        "command": "cd; cd db_backups; pg_dump -U odoo -d btx -f btx_db_backup.sql"
       },
-      "id": "e58954fd-7a8f-4e09-9abe-0ffb45ecaf4f",
-      "name": "SSH",
+      "id": "49fc337b-4424-434d-85cf-f071dc224cc3",
+      "name": "make backup",
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1040,
+        880,
         400
       ],
       "credentials": {
         "sshPassword": {
-          "id": "41",
-          "name": "node3"
+          "id": "PQHJSgsXQ8xsrCfq",
+          "name": "node5 (odoo)"
         }
       }
     },
     {
       "parameters": {
-        "operation": "download"
+        "command": "cd; cd db_backups;pg_basebackup -F tar -D basebackup"
       },
-      "id": "9f80d88b-7c8c-432c-8090-372dc9dac2aa",
-      "name": "duplicate backup to node3",
+      "id": "4b9074e4-0e7e-45a6-a1af-3c390dd62ef4",
+      "name": "make base backup",
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        1260,
+        1120,
         400
       ],
       "credentials": {
         "sshPassword": {
-          "id": "41",
-          "name": "node3"
+          "id": "PQHJSgsXQ8xsrCfq",
+          "name": "node5 (odoo)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "cd; cd db_backups/basebackup; rm backup_manifest  base.tar  pg_wal.tar"
+      },
+      "id": "729b7bbb-3193-4bdd-80ee-489678c86355",
+      "name": "cleanup backups",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        580,
+        400
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "PQHJSgsXQ8xsrCfq",
+          "name": "node5 (odoo)"
         }
       }
     }
@@ -102,6 +132,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-05-31T13:41:18.000Z",
-  "versionId": "b3387562-5821-4f78-bd0f-97f169d3a9ae"
+  "updatedAt": "2024-09-18T09:45:17.000Z",
+  "versionId": "d078b25c-29b5-4c6d-85d8-73e81ce7a590"
 }
