@@ -77,7 +77,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "=TRUNCATE stock_{{ $node[\"Execute Workflow Trigger\"].json.Supplier.toLowerCase() }}; ",
+        "query": "=TRUNCATE odoodata.stock_{{ $node[\"Execute Workflow Trigger\"].json.Supplier.toLowerCase() }}; ",
         "options": {}
       },
       "id": "e9378482-92fd-42f4-8b22-0054a084d5d1",
@@ -161,6 +161,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-07-21T16:04:34.000Z",
-  "versionId": "099fc475-2ff3-4ffb-b569-96c014f10831"
+  "updatedAt": "2024-10-09T14:38:22.000Z",
+  "versionId": "20b5ab31-8171-4a66-8610-52f1411fa731"
 }
