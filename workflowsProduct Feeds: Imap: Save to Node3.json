@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "Email Trigger (IMAP)": {
       "main": [
@@ -552,7 +552,7 @@
   "settings": {},
   "staticData": {
     "node:Email Trigger (IMAP)": {
-      "lastMessageUid": 1110
+      "lastMessageUid": 1111
     }
   },
   "tags": [
@@ -570,6 +570,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2024-10-08T21:26:58.000Z",
-  "versionId": "c9bd0203-4afb-4110-800f-b676a625b7bf"
+  "updatedAt": "2024-10-09T10:52:51.000Z",
+  "versionId": "52c91f1b-8779-4906-9f49-a6f55518b05d"
 }
