@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Schedule Trigger": {
       "main": [
@@ -92,17 +92,6 @@
         ]
       ]
     },
-    "Odoo Sync: Master pricelist sync": {
-      "main": [
-        [
-          {
-            "node": "Execute Workflow",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Supplier Update Webhook": {
       "main": [
         [
@@ -118,7 +107,7 @@
       "main": [
         [
           {
-            "node": "Odoo Sync: Master pricelist sync",
+            "node": "Execute Workflow",
             "type": "main",
             "index": 0
           }
@@ -176,22 +165,11 @@
         ]
       ]
     },
-    "HTTP Request2": {
-      "main": [
-        [
-          {
-            "node": "SSH",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "n8n": {
       "main": [
         [
           {
-            "node": "HTTP Request2",
+            "node": "SSH",
             "type": "main",
             "index": 0
           }
@@ -343,7 +321,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \"globals\" FROM \"map_supplierinfo\";",
+        "query": "SELECT \"globals\" FROM odoodata.map_supplierinfo;",
         "options": {}
       },
       "id": "6776c052-11a0-4547-b69f-027a2c5efd1d",
@@ -363,26 +341,12 @@
     },
     {
       "parameters": {
-        "url": "https://node2.biketrax.co.uk/webhook/master-pricelist-sync",
-        "options": {}
-      },
-      "id": "8e1fa3fc-e083-410d-9f49-1de360db7274",
-      "name": "Odoo Sync: Master pricelist sync",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        1280,
-        400
-      ],
-      "executeOnce": true
-    },
-    {
-      "parameters": {
         "url": "=https://node4.biketrax.co.uk/webhook/{{ $json.globals.Webhook }}",
         "options": {
           "response": {
             "response": {}
-          }
+          },
+          "timeout": 7200000
         }
       },
       "id": "68ca27a9-f009-4ea8-8f56-58d22699cb82",
@@ -468,20 +432,6 @@
       "position": [
         2680,
         460
-      ]
-    },
-    {
-      "parameters": {
-        "url": "https://node4.biketrax.co.uk/webhook/master-fdw-resync",
-        "options": {}
-      },
-      "id": "04de9020-e1e8-4df1-b3b2-1d238fc0743b",
-      "name": "HTTP Request2",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        780,
-        400
       ]
     },
     {
@@ -590,6 +540,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2024-10-09T10:52:48.000Z",
-  "versionId": "3e50d406-ed0f-4782-9759-aa5f30b27a0d"
+  "updatedAt": "2024-10-09T18:44:00.000Z",
+  "versionId": "b85da7b6-3054-46ed-8597-dd620010ce00"
 }
