@@ -239,7 +239,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT * FROM map_supplierinfo WHERE transit_queue > 0;",
+        "query": "SELECT * FROM odoodata.map_supplierinfo WHERE transit_queue > 0;",
         "options": {}
       },
       "id": "dfa271c9-2d3a-4540-ab1b-1b10dad634c3",
@@ -328,7 +328,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1200,
+        1400,
         1040
       ],
       "executeOnce": true
@@ -549,6 +549,7 @@
         2180,
         880
       ],
+      "executeOnce": false,
       "credentials": {
         "n8nApi": {
           "id": "40",
@@ -760,6 +761,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-07-08T15:01:18.000Z",
-  "versionId": "600fd42b-3569-4724-a35e-df7f16c2fa4a"
+  "updatedAt": "2024-10-10T08:22:40.000Z",
+  "versionId": "517517ba-efa9-4d8e-8c31-c2562011b60b"
 }
