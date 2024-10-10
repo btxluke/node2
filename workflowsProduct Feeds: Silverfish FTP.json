@@ -180,7 +180,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "CREATE TABLE odoodata.upload_silverfish AS SELECT * FROM template_silverfish;",
+        "query": "CREATE TABLE odoodata.upload_silverfish AS SELECT * FROM odoodata.template_silverfish;",
         "options": {}
       },
       "id": "74b4d61a-a7dc-49d2-9c5b-0e2ab4af4ad2",
@@ -273,6 +273,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-12-04T10:37:12.000Z",
-  "versionId": "2da9fc30-c5b4-4ae8-84ec-27b76d05b58b"
+  "updatedAt": "2024-10-10T07:40:50.000Z",
+  "versionId": "6283f6f1-34cc-43d7-bc45-7d0bcc379898"
 }
