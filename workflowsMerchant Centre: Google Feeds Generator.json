@@ -242,7 +242,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "TRUNCATE google_merchantfeed;",
+        "query": "TRUNCATE datatransit.google_merchantfeed;",
         "options": {}
       },
       "id": "532a3f8f-a272-4db6-b000-914f175b1ec8",
@@ -263,7 +263,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT * FROM map_supplierInfo;",
+        "query": "SELECT * FROM odoodata.map_supplierInfo;",
         "options": {}
       },
       "id": "c85d9932-de93-4fb3-8990-a1db52abe390",
@@ -306,7 +306,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "TRUNCATE odoo_merchantfeed;",
+        "query": "TRUNCATE datatransit.odoo_merchantfeed;",
         "options": {}
       },
       "id": "95cf5431-9487-4617-aae0-89b153bdd326",
@@ -327,7 +327,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "TRUNCATE final_merchantfeed;",
+        "query": "TRUNCATE datatransit.final_merchantfeed;",
         "options": {}
       },
       "id": "fbfe4d2f-a014-484d-9fce-7e4df4e679e6",
@@ -349,7 +349,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO final_merchantfeed\n(\"link\",\"id\",title,description,image_link,quantity,availability,price,brand,gtin,mpn,\"condition\",colour,gender,\"size\",age_group,item_group_id) \nSELECT  \nodoo_merchantfeed.\"link\",\nodoo_merchantfeed.\"id\",\ngoogle_merchantfeed.title,\ngoogle_merchantfeed.description,\nodoo_merchantfeed.image_link,\nodoo_merchantfeed.quantity,\nodoo_merchantfeed.availability,\ngoogle_merchantfeed.price,\ngoogle_merchantfeed.brand,\ngoogle_merchantfeed.gtin,\ngoogle_merchantfeed.mpn,\nodoo_merchantfeed.\"condition\",\ngoogle_merchantfeed.colour,\nodoo_merchantfeed.gender,\ngoogle_merchantfeed.\"size\",\nodoo_merchantfeed.age_group,\nodoo_merchantfeed.item_group_id\nFROM google_merchantfeed INNER JOIN odoo_merchantfeed  ON google_merchantfeed.gtin = odoo_merchantfeed.gtin \nWHERE google_merchantFeed.gtin IS NOT NULL;",
+        "query": "INSERT INTO datatransit.final_merchantfeed\n(\"link\",\"id\",title,description,image_link,quantity,availability,price,brand,gtin,mpn,\"condition\",colour,gender,\"size\",age_group,item_group_id) \nSELECT  \nodoo_merchantfeed.\"link\",\nodoo_merchantfeed.\"id\",\ngoogle_merchantfeed.title,\ngoogle_merchantfeed.description,\nodoo_merchantfeed.image_link,\nodoo_merchantfeed.quantity,\nodoo_merchantfeed.availability,\ngoogle_merchantfeed.price,\ngoogle_merchantfeed.brand,\ngoogle_merchantfeed.gtin,\ngoogle_merchantfeed.mpn,\nodoo_merchantfeed.\"condition\",\ngoogle_merchantfeed.colour,\nodoo_merchantfeed.gender,\ngoogle_merchantfeed.\"size\",\nodoo_merchantfeed.age_group,\nodoo_merchantfeed.item_group_id\nFROM datatransit.google_merchantfeed INNER JOIN datatransit.odoo_merchantfeed  ON google_merchantfeed.gtin = odoo_merchantfeed.gtin \nWHERE google_merchantFeed.gtin IS NOT NULL;",
         "options": {}
       },
       "id": "00482221-5f6f-45b7-9c4a-8e815960ac82",
@@ -443,6 +443,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2024-08-16T08:10:32.000Z",
-  "versionId": "204c4cfe-e952-45e6-bfd1-829fd00ad984"
+  "updatedAt": "2024-10-12T13:12:40.000Z",
+  "versionId": "5cafb13b-15c8-47b7-813d-4455dc3fa53b"
 }
