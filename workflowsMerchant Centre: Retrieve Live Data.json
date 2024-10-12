@@ -261,7 +261,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT * FROM map_supplierinfo;",
+        "query": "SELECT * FROM odoodata.map_supplierinfo;",
         "options": {}
       },
       "id": "99c1afb4-421f-40e4-b5d1-f93bf4f045dd",
@@ -325,6 +325,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-12-11T16:44:51.000Z",
-  "versionId": "a56b5703-f33c-4233-a388-d864c6a493ea"
+  "updatedAt": "2024-10-12T13:13:36.000Z",
+  "versionId": "e85eb016-2e59-4a34-b716-06d38c37852c"
 }
