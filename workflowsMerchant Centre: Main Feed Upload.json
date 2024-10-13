@@ -93,7 +93,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT * FROM final_merchantfeed;",
+        "query": "SELECT * FROM datatransit.final_merchantfeed;",
         "options": {}
       },
       "id": "6b2bc2c2-78f2-4caa-b6ea-0fb438762ebb",
@@ -136,6 +136,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-07-23T16:41:01.000Z",
-  "versionId": "a1f3429b-1725-4dc5-9c76-457cc369717d"
+  "updatedAt": "2024-10-13T08:33:49.000Z",
+  "versionId": "6b70d504-1b80-48d5-b23b-95f985cbd47b"
 }
