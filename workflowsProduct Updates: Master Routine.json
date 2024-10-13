@@ -520,7 +520,7 @@
   ],
   "pinData": {},
   "settings": {
-    "saveDataSuccessExecution": "all",
+    "saveDataSuccessExecution": "none",
     "saveManualExecutions": false,
     "callerPolicy": "workflowsFromSameOwner"
   },
@@ -540,6 +540,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2024-10-10T08:18:41.000Z",
-  "versionId": "ce9a4ffb-b2b6-41cb-bec0-acd6c4d9a46b"
+  "updatedAt": "2024-10-13T14:54:43.000Z",
+  "versionId": "2ebfd459-b91f-4662-b3d4-0a5a330167c8"
 }
