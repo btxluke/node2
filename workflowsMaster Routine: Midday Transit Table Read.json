@@ -230,6 +230,17 @@
           }
         ]
       ]
+    },
+    "Lock Active: Run Blocked": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2024-07-02T10:24:49.098Z",
@@ -316,7 +327,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1060,
+        840,
         680
       ],
       "executeOnce": true
@@ -575,7 +586,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 3,
       "position": [
-        1200,
+        1020,
         880
       ]
     },
@@ -597,7 +608,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        1060,
+        840,
         880
       ]
     },
@@ -761,6 +772,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-10-10T08:22:40.000Z",
-  "versionId": "517517ba-efa9-4d8e-8c31-c2562011b60b"
+  "updatedAt": "2024-10-13T14:54:15.000Z",
+  "versionId": "d168351f-7fda-44e9-86fe-888b4a067c24"
 }
