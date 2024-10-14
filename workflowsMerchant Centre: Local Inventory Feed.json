@@ -125,7 +125,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \"id\", price, quantity, availability FROM final_merchantfeed;",
+        "query": "SELECT \"id\", price, quantity, availability FROM datatransit.final_merchantfeed;",
         "options": {}
       },
       "id": "fe1cc499-4c42-49d7-b3e4-310f853c27ab",
@@ -168,6 +168,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2023-07-23T16:40:48.000Z",
-  "versionId": "7be9c773-efc2-418f-87aa-09771354e179"
+  "updatedAt": "2024-10-14T06:16:13.000Z",
+  "versionId": "149d6690-f0c5-4389-85d4-5c24a51f852f"
 }
