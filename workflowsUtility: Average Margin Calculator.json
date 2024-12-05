@@ -1,0 +1,239 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Item Lists1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists1": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-12-04T14:19:44.015Z",
+  "id": "gXKuLkqvDuAoPtzA",
+  "name": "Utility: Average Margin Calculator",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "97af411c-5c8b-40f5-9a96-4e543e4c9cfd",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "sale.order",
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {
+          "fieldsList": [
+            "id",
+            "create_uid",
+            "user_id",
+            "display_name",
+            "margin",
+            "margin_percent",
+            "create_date",
+            "tax_totals"
+          ]
+        },
+        "filterRequest": {
+          "filter": [
+            {
+              "fieldName": "sale_order_template_id",
+              "value": "={{ [2] }}"
+            }
+          ]
+        }
+      },
+      "id": "c6b833af-1843-474c-8e11-1d04996de617",
+      "name": "Odoo",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        440
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "summarize",
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "average",
+              "field": "margin"
+            },
+            {
+              "aggregation": "average",
+              "field": "tax_totals.amount_total"
+            },
+            {
+              "aggregation": "average",
+              "field": "margin_percent"
+            },
+            {
+              "aggregation": "sum",
+              "field": "tax_totals.amount_total"
+            }
+          ]
+        },
+        "fieldsToSplitBy": "create_uid",
+        "options": {}
+      },
+      "id": "9bcd7cb0-06d8-4ba1-879e-5af19ae0ba32",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3,
+      "position": [
+        1440,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sort",
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "average_margin",
+              "order": "descending"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a16026d4-f823-4ef0-814c-96db5ea9067d",
+      "name": "Item Lists1",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3,
+      "position": [
+        1660,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "dateTime": [
+            {
+              "value1": "={{ $json.create_date }}",
+              "value2": "2023-12-01T00:00:00.000Z"
+            },
+            {
+              "value1": "={{ $json.create_date }}",
+              "operation": "before",
+              "value2": "2024-12-01T00:00:00.000Z"
+            }
+          ]
+        }
+      },
+      "id": "cfb40578-856d-4c7f-88a7-967ad7cd6a4b",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1220,
+        440
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "1ec12cda-c8fe-41e8-bec9-bb6ca4858df9",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        820
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toFile",
+        "options": {}
+      },
+      "id": "a30996a3-58c6-409f-ab04-9ab7aa378510",
+      "name": "Spreadsheet File",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        440
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-12-04T16:14:34.000Z",
+  "versionId": "4c761e76-0966-44c9-8776-b3f28ccb231e"
+}
