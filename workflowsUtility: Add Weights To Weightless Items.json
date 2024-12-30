@@ -70,7 +70,7 @@
           "filter": [
             {
               "fieldName": "weight",
-              "value": "0"
+              "value": "={{0}}"
             }
           ]
         }
@@ -135,7 +135,7 @@
           "filter": [
             {
               "fieldName": "weight",
-              "value": "0"
+              "value": "={{0}}"
             }
           ]
         }
@@ -191,6 +191,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-03-08T12:48:11.000Z",
-  "versionId": "089d68b9-b4c6-4621-bcd9-8f366b3ebfe2"
+  "updatedAt": "2024-12-30T09:22:52.000Z",
+  "versionId": "42b863d1-5f75-4768-b99e-b4e42cf26bb5"
 }
