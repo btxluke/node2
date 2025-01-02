@@ -1,0 +1,176 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Odoo",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Odoo1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Odoo2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo": {
+      "main": [
+        []
+      ]
+    },
+    "Odoo2": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-01-02T10:02:59.196Z",
+  "id": "mGSe2TyDYRqj2Tda",
+  "name": "Sale Pricelist Generator",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "cda3e619-edc0-429a-a3ac-acbe14a93317",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.pricelist",
+        "operation": "get",
+        "customResourceId": "4",
+        "options": {}
+      },
+      "id": "f66a2c72-5db2-4dda-b8be-9c7ff8eebef3",
+      "name": "Odoo",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        380
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.pricelist.item",
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {},
+        "filterRequest": {
+          "filter": [
+            {
+              "fieldName": "pricelist_id",
+              "value": "={{ 65 }}"
+            }
+          ]
+        }
+      },
+      "id": "ae91d8dd-751a-4d0e-972d-544d3c9ca31b",
+      "name": "Odoo1",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        580
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.product",
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {
+          "fieldsList": [
+            "id",
+            "free_qty"
+          ]
+        },
+        "filterRequest": {
+          "filter": [
+            {
+              "fieldName": "additional_product_tag_ids",
+              "operator": "in",
+              "value": "={{ 65 }}"
+            }
+          ]
+        }
+      },
+      "id": "80fa3944-3af4-42b9-b383-f657ba363a93",
+      "name": "Odoo2",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        200
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.free_qty }}",
+              "operation": "larger"
+            }
+          ]
+        }
+      },
+      "id": "5a024239-d25e-458f-b03e-8ea36920d2e5",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        200
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-01-02T10:13:22.000Z",
+  "versionId": "ca7824a4-24bd-40b6-9e27-8d5f46ed3536"
+}
