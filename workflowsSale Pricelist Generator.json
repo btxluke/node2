@@ -10,12 +10,29 @@
             "index": 0
           },
           {
-            "node": "Odoo1",
+            "node": "Odoo2",
             "type": "main",
             "index": 0
-          },
+          }
+        ]
+      ]
+    },
+    "Odoo2": {
+      "main": [
+        [
           {
-            "node": "Odoo2",
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Odoo3",
             "type": "main",
             "index": 0
           }
@@ -24,14 +41,63 @@
     },
     "Odoo": {
       "main": [
-        []
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 1
+          }
+        ]
       ]
     },
-    "Odoo2": {
+    "Compare Datasets": {
       "main": [
         [
           {
             "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [],
+        [
+          {
+            "node": "Odoo1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Odoo",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Odoo2",
             "type": "main",
             "index": 0
           }
@@ -50,32 +116,9 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        820,
-        380
+        580,
+        360
       ]
-    },
-    {
-      "parameters": {
-        "resource": "custom",
-        "customResource": "product.pricelist",
-        "operation": "get",
-        "customResourceId": "4",
-        "options": {}
-      },
-      "id": "f66a2c72-5db2-4dda-b8be-9c7ff8eebef3",
-      "name": "Odoo",
-      "type": "n8n-nodes-base.odoo",
-      "typeVersion": 1,
-      "position": [
-        1040,
-        380
-      ],
-      "credentials": {
-        "odooApi": {
-          "id": "37",
-          "name": "Odoo account"
-        }
-      }
     },
     {
       "parameters": {
@@ -83,23 +126,27 @@
         "customResource": "product.pricelist.item",
         "operation": "getAll",
         "returnAll": true,
-        "options": {},
+        "options": {
+          "fieldsList": [
+            "product_id"
+          ]
+        },
         "filterRequest": {
           "filter": [
             {
               "fieldName": "pricelist_id",
-              "value": "={{ 65 }}"
+              "value": "={{9}}"
             }
           ]
         }
       },
-      "id": "ae91d8dd-751a-4d0e-972d-544d3c9ca31b",
-      "name": "Odoo1",
+      "id": "f66a2c72-5db2-4dda-b8be-9c7ff8eebef3",
+      "name": "Odoo",
       "type": "n8n-nodes-base.odoo",
       "typeVersion": 1,
       "position": [
-        1040,
-        580
+        800,
+        360
       ],
       "credentials": {
         "odooApi": {
@@ -117,7 +164,9 @@
         "options": {
           "fieldsList": [
             "id",
-            "free_qty"
+            "free_qty",
+            "product_tmpl_id",
+            "company_id"
           ]
         },
         "filterRequest": {
@@ -126,6 +175,11 @@
               "fieldName": "additional_product_tag_ids",
               "operator": "in",
               "value": "={{ 65 }}"
+            },
+            {
+              "fieldName": "website_ribbon_id",
+              "operator": "notEqual",
+              "value": "={{ 5 }}"
             }
           ]
         }
@@ -135,8 +189,8 @@
       "type": "n8n-nodes-base.odoo",
       "typeVersion": 1,
       "position": [
-        1040,
-        200
+        800,
+        180
       ],
       "credentials": {
         "odooApi": {
@@ -161,8 +215,204 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1240,
+        1400,
         200
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.pricelist.item",
+        "fieldsToCreateOrUpdate": {
+          "fields": [
+            {
+              "fieldName": "pricelist_id",
+              "fieldValue": "={{ 9}}"
+            },
+            {
+              "fieldName": "active",
+              "fieldValue": "={{ true }}"
+            },
+            {
+              "fieldName": "company_id",
+              "fieldValue": "={{ 1 }}"
+            },
+            {
+              "fieldName": "currency_id",
+              "fieldValue": "={{ 142 }}"
+            },
+            {
+              "fieldName": "date_start",
+              "fieldValue": "={{ false}}"
+            },
+            {
+              "fieldName": "date_end",
+              "fieldValue": "={{false}}"
+            },
+            {
+              "fieldName": "min_quantity",
+              "fieldValue": "={{0}}"
+            },
+            {
+              "fieldName": "applied_on",
+              "fieldValue": "0_product_variant"
+            },
+            {
+              "fieldName": "categ_id",
+              "fieldValue": "={{ false }}"
+            },
+            {
+              "fieldName": "product_tmpl_id",
+              "fieldValue": "={{ $json.product_tmpl_id[0] }}"
+            },
+            {
+              "fieldName": "product_id",
+              "fieldValue": "={{ $json.id }}"
+            },
+            {
+              "fieldName": "base",
+              "fieldValue": "list_price"
+            },
+            {
+              "fieldName": "base_pricelist_id",
+              "fieldValue": "={{ false}}"
+            },
+            {
+              "fieldName": "compute_price",
+              "fieldValue": "percentage"
+            },
+            {
+              "fieldName": "fixed_price",
+              "fieldValue": "={{ 0}}"
+            },
+            {
+              "fieldName": "percent_price",
+              "fieldValue": "={{ 40}}"
+            },
+            {
+              "fieldName": "price_discount",
+              "fieldValue": "={{ 0 }}"
+            },
+            {
+              "fieldName": "=price_round",
+              "fieldValue": "={{0}}"
+            },
+            {
+              "fieldName": "price_surcharge",
+              "fieldValue": "={{ 0 }}"
+            },
+            {
+              "fieldName": "price_min_margin",
+              "fieldValue": "={{ 0 }}"
+            },
+            {
+              "fieldName": "price_max_margin",
+              "fieldValue": "={{ 0}}"
+            }
+          ]
+        }
+      },
+      "id": "040af2ef-25b0-42cd-a1c4-84f76db7f637",
+      "name": "Odoo3",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        200
+      ],
+      "executeOnce": false,
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "id",
+              "field2": "product_id[0]"
+            }
+          ]
+        },
+        "options": {
+          "skipFields": "id,free_qty,product_tmpl_id,product_id,company_id"
+        }
+      },
+      "id": "b4949790-6e34-4682-9691-1ee3d0b77cf5",
+      "name": "Compare Datasets",
+      "type": "n8n-nodes-base.compareDatasets",
+      "typeVersion": 2.2,
+      "position": [
+        1240,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.company_id[0] == 3 }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "76f18b1b-02ca-445c-90ef-3ba26c6a6b37",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        180
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "89220af1-ff02-4774-9eb7-538f0837dfa3",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.pricelist.item",
+        "operation": "delete",
+        "customResourceId": "={{ $json.id }}"
+      },
+      "id": "125ff10c-e48d-4af8-b04d-add01a7699e4",
+      "name": "Odoo1",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        580
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "3263683d-22ae-4924-9177-15c4cb75c852",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        580,
+        180
       ]
     }
   ],
@@ -171,6 +421,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-01-02T10:13:22.000Z",
-  "versionId": "ca7824a4-24bd-40b6-9e27-8d5f46ed3536"
+  "updatedAt": "2025-01-02T13:37:05.000Z",
+  "versionId": "edec9ef2-94bf-42f8-a312-6d756c6d9737"
 }
