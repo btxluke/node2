@@ -107,6 +107,11 @@
             "node": "n8n3",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -719,6 +724,19 @@
         1820,
         240
       ]
+    },
+    {
+      "parameters": {
+        "workflowId": "5jx9YreEH350bCZN"
+      },
+      "id": "4ef2256d-7a22-49dc-9e88-a494e3ab3bdb",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        340,
+        1240
+      ]
     }
   ],
   "pinData": {
@@ -772,6 +790,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-10-13T14:54:15.000Z",
-  "versionId": "d168351f-7fda-44e9-86fe-888b4a067c24"
+  "updatedAt": "2025-01-02T13:31:54.000Z",
+  "versionId": "fc9e2774-2d0f-4cb0-b6ff-7b524aefca20"
 }
