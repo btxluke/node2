@@ -13,6 +13,11 @@
             "node": "Odoo2",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -67,6 +72,17 @@
           }
         ]
       ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Odoo3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-01-02T09:50:54.266Z",
@@ -80,8 +96,8 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1,
       "position": [
-        380,
-        380
+        320,
+        360
       ]
     },
     {
@@ -98,9 +114,14 @@
         "filterRequest": {
           "filter": [
             {
-              "fieldName": "qty_available",
+              "fieldName": "free_qty",
               "operator": "greaterThen",
               "value": "={{ 0 }}"
+            },
+            {
+              "fieldName": "website_ribbon_id",
+              "operator": "notEqual",
+              "value": "={{ 5 }}"
             }
           ]
         }
@@ -125,7 +146,7 @@
         "conditions": {
           "boolean": [
             {
-              "value1": "={{ $json.product_tag_ids.includes(65) }}",
+              "value1": "={{ $json.additional_product_tag_ids.includes(65) }}",
               "value2": true
             }
           ]
@@ -208,7 +229,7 @@
         "filterRequest": {
           "filter": [
             {
-              "fieldName": "qty_available",
+              "fieldName": "free_qty",
               "operator": "lesserOrEqual",
               "value": "={{ 0 }}"
             },
@@ -237,7 +258,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.additional_product_tag_ids.push(65);\n}\n\nreturn $input.all();"
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.additional_product_tag_ids = item.json.additional_product_tag_ids.filter((tag) => tag != 65);\n}\n\nreturn $input.all();"
       },
       "id": "a41c18cc-da64-4197-b087-2e15a490e0dc",
       "name": "Code1",
@@ -247,6 +268,50 @@
         580,
         860
       ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.product",
+        "operation": "update",
+        "customResourceId": "={{ $json.id }}",
+        "fieldsToCreateOrUpdate": {
+          "fields": [
+            {
+              "fieldName": "additional_product_tag_ids",
+              "fieldValue": "={{ $json.additional_product_tag_ids.length === 0 ? false : $json.additional_product_tag_ids.length}}"
+            }
+          ]
+        }
+      },
+      "id": "1034996a-19d0-4dbc-97c1-81556aa6d3ee",
+      "name": "Odoo3",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        760,
+        860
+      ],
+      "credentials": {
+        "odooApi": {
+          "id": "37",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": "mGSe2TyDYRqj2Tda"
+      },
+      "id": "7d5c377b-7e61-4565-bf4e-e2fd62acf212",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        320,
+        1080
+      ],
+      "executeOnce": true
     }
   ],
   "pinData": {},
@@ -254,6 +319,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-01-02T09:53:19.000Z",
-  "versionId": "29fbde94-2920-4b9e-a4f8-c54e8cd2915d"
+  "updatedAt": "2025-01-02T13:29:52.000Z",
+  "versionId": "8494f870-ad7e-46b1-aa4e-1b56cac1859a"
 }
