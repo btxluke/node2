@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "Postgres": {
       "main": [
@@ -790,6 +790,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-01-02T13:31:54.000Z",
-  "versionId": "fc9e2774-2d0f-4cb0-b6ff-7b524aefca20"
+  "updatedAt": "2025-01-16T15:19:50.000Z",
+  "versionId": "8ca9d98b-8f2d-4b82-8f52-51406d872c4f"
 }
